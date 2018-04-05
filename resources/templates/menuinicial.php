@@ -26,7 +26,7 @@
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg " color-on-scroll="500">
     <div class=" container-fluid  ">
-      <a class="navbar-brand" href="#"> Bem Vindo </a>
+      <a class="navbar-brand" href="#"> Bem Vindo xd </a>
       <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-bar burger-lines"></span>
 
@@ -51,86 +51,100 @@
     </div>
   </nav>
   <!-- End Navbar -->
-
   <div class="content">
     <div class="container-fluid">
-      <!--dentro do painel principal-->
-
-      <?php
-      if(!empty($_GET['action'])){
-        $action = basename($_GET['action']);
-        if(!file_exists("resources/pages/$action.php")) $action="../../index";
-        require_once("resources/pages/$action.php");
-      }elseif(isset($_SESSION['U_TIPO'])){
-        /*  switch($_SESSION['U_TIPO']){
-        case "0": require_once('resources/pages/listargestores.php'); break;
-        case "1": require_once('resources/pages/listaranunciosgestor.php'); break;
-        case "2": require_once('resources/pages/listaranunciossenhorio.php'); break;
-        case "3": require_once('resources/pages/anunciosaluno.php'); break;
-        default: require_once('resources/templates/home.php'); break;
-      }*/
-    }else{
-      /*
-      require_once('resources/classes/utilizadordao.class.php');
-      $DAO = new GereUtilizador();
-
-      //Verificar se não existe Administrador (primeira execução do sistema)
-      if(empty($DAO->obter_detalhes_utilizador_id(1)->get_id())){
-      require_once('resources/pages/criaradministrador.php');
-    }else{
-
-    //Ver se a aplicação está desativada
-    require_once('resources/configs/opcoes.php');
-    $bd = new BaseDados();
-    $bd->ligar_bd();
-    $STH = $bd->dbh->query('SELECT 1 FROM opcao WHERE C_NOME=\''.$opcoes[0][0].'\' AND C_ESTADO=1');
-    $bd->desligar_bd();
-    if($STH->fetch(PDO::FETCH_ASSOC)){
-    $_SESSION['active']=true;
+<?php
+//main
+if(!empty($_GET['action'])){
+  $action = basename($_GET['action']);
+  if(!file_exists("resources/pages/$action.php")) $action="../../index";
+  require_once("resources/pages/$action.php");
+}elseif(isset($_SESSION['U_TIPO'])){
+  switch($_SESSION['U_TIPO']){
+    case "0": require_once('./resources/pages/admininicial.php'); break;
+    case "1": require_once('./resources/pages/listaranunciosgestor.php'); break;
+    case "2": require_once('./resources/pages/listaranunciossenhorio.php'); break;
+    case "3": require_once('./resources/pages/anunciosaluno.php'); break;
+    default: require_once('./resources/templates/home.php'); break;
   }
-
-  if(!isset($_SESSION['active']) && !isset($_SESSION['U_TIPO'])){
-  require_once('resources/pages/aplicacaodesativada.php');
+}else{
+  require_once('./resources/pages/home.php');
 }
-
-//Por defeito
-else{
-require_once('resources/pages/home.php');
-}
-}
-*/
-require_once('resources/pages/home.php');
-}
-
 ?>
-
-
-
 </div>
 </div>
+<?php
+
+
+//Footer
+require_once('./resources/templates/footer.html');
+ ?>
+
 
 <div class="modal fade modal-primary" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header justify-content-center">
         <h2 class="modal-title" id="exampleModalLabel">Efetuar Login</h2>
+        <!--arranjar outra maneira para sair sem ter de clicar com botao, para a parte do mobile-->
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
       <div class="modal-body text-center">
+          <form method="POST" id="loginForm" action="">
+
         Email
-        <input type="email" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter email"><br>
+        <input type="email" class="form-control" id="emaillogin"  name="emaillogin" aria-describedby="emailHelp" placeholder="example@email.com"><br>
         Password
-        <input type="password" class="form-control" id="exampleInputPassword" placeholder="Password">
+        <input type="password" class="form-control" id="passlogin" name="passlogin" placeholder="password...">
       </div>
-      <div class="modal-footer">
-        <span></span>
-        <button type="button" class="btn btn-success" >Entrar</button>
-      </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" name="remember" id="remember" name="remember"> Lembrar-me
+          </label>
+        </div>
+        <button type="submit" class="btn btn-success" name="btnLogin" >Entrar</button>
+
+        </form>
+
     </div>
   </div>
 </div>
 
+
+</div>
+</div>
+
 <?php
-require_once('./resources/templates/footer.html');
-?>
-</div>
-</div>
+if($_SERVER['REQUEST_METHOD']==='POST'){
+
+  //Login
+  if(isset($_POST['btnLogin'])){
+    if(isset($_POST['emaillogin'],$_POST['passlogin']) && !empty($_POST['emaillogin']) && !empty($_POST['passlogin'])){
+
+        require_once('resources/classes/gereutilizador.class.php');
+        $DAO=new GereUtilizador();
+        if($DAO->password_correta($_POST['emaillogin'],$_POST['passlogin'])){
+          if($DAO->conta_ativa($_POST['emaillogin'])){
+            if(isset($_POST['remember']) && !empty($_POST['remember'])){
+              setcookie('PHPSESSID', $_COOKIE['PHPSESSID'], time()+(60*60*24*7), "/");
+            }
+            echo '<script>document.location.href = "";</script>';
+          }else{
+            unset($_SESSION['U_ID'],$_SESSION['U_TIPO']);
+            echo '<script>alert("A sua conta esta desativa. Poderá contactar-nos via e-mail para esclarecimentos.");</script>';
+          }
+        }else{
+          echo '<script>alert("O e-mail ou a palavra-passe inseridos não se encontram correctos.");</script>';
+        }
+
+
+    }else{
+      echo '<script>alert("Por favor preencha todos os campos.");</script>';
+    }
+  }
+}
+
+
+ ?>

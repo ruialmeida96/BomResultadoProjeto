@@ -30,8 +30,18 @@
 
 
   <?php
-
-  require_once('resources/templates/menuinicial.php');
+  //header
+  if(isset($_SESSION['U_TIPO'])){
+    switch($_SESSION['U_TIPO']){
+      case "0": require_once('./resources/templates/menuadmin.php'); break;
+      case "1": require_once('./resources/templates/menuassoc.php'); break;
+      case "2": require_once('./resources/templates/menuclube.php'); break;
+      //case "3": require_once('resources/templates/menualuno.php'); break;
+      default: require_once('./resources/templates/menuinicial.php'); break;
+    }
+  }else{
+    require_once('./resources/templates/menuinicial.php');
+  }
 
 
   ?>
@@ -44,7 +54,7 @@
 <!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
 <script src="./js/plugins/bootstrap-switch.js"></script>
 <!--  Google Maps Plugin    -->
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+<!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>-->
 <!--  Chartist Plugin  -->
 <script src="./js/plugins/chartist.min.js"></script>
 <!--  Notifications Plugin    -->
