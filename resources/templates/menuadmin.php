@@ -45,24 +45,36 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=0){
           </a>
           <ul class="dropdown-menu">
             <li class="nav-item ">
-              <a class="nav-link" href="./tables/regular.html">
-                <p>Teste</p>
+              <a  class="dropdown-item" href="?action=clubesadmin">
+                Clubes
               </a>
             </li>
             <li class="nav-item ">
-              <button class="dropdown-item" type="button">Action xd</button>
+              <a  class="dropdown-item" href="?action=atletasadmin">
+                Atletas
+              </a>
             </li>
-            <button class="dropdown-item" type="button">Action</button>
-            <button class="dropdown-item" type="button">Another action</button>
-            <button class="dropdown-item" type="button">Something else here</button>
-            <li class="divider"></li>
-            <button class="dropdown-item" type="button">Separated link</button>
-            <li class="divider"></li>
-            <button class="dropdown-item" type="button">The last one</button>
+            <li class="nav-item ">
+              <a  class="dropdown-item" href="?action=eventosadmin">
+                Eventos
+              </a>
+            </li>
           </ul>
 
         </div>
       </li>
+      <!--<li>
+        <div class="dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown">
+          <i class="nc-icon nc-bank"></i><p>Listagens 2</p><b class="caret"></b>
+          </a>
+          <div class="dropdown-menu nav-link" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item " href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </div>
+        </div>
+      </li>-->
     </ul>
   </div>
 </div>
