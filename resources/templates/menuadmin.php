@@ -20,13 +20,49 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=0){
       </a>
     </div>
     <ul class="nav">
-      <li class="nav-item active">
+      <li>
         <a class="nav-link" href="index.php">
           <i class="nc-icon nc-grid-45"></i>
           <p>Dashboard</p>
         </a>
       </li>
+      <li>
+        <a class="nav-link" href="?action=nuts">
+          <i class="nc-icon nc-pin-3"></i>
+          <p>Regiões</p>
+        </a>
+      </li>
+      <li>
+        <a class="nav-link" href="?action=associacoes">
+          <i class="nc-icon nc-bank"></i>
+          <p>Associações</p>
+        </a>
+      </li>
+      <li>
+        <div class="dropdown">
+          <a class="nav-link" href="#" data-toggle="dropdown">
+            <i class="nc-icon nc-bank"></i><p>Listagens</p><b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li class="nav-item ">
+              <a class="nav-link" href="./tables/regular.html">
+                <p>Teste</p>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <button class="dropdown-item" type="button">Action xd</button>
+            </li>
+            <button class="dropdown-item" type="button">Action</button>
+            <button class="dropdown-item" type="button">Another action</button>
+            <button class="dropdown-item" type="button">Something else here</button>
+            <li class="divider"></li>
+            <button class="dropdown-item" type="button">Separated link</button>
+            <li class="divider"></li>
+            <button class="dropdown-item" type="button">The last one</button>
+          </ul>
 
+        </div>
+      </li>
     </ul>
   </div>
 </div>
@@ -34,7 +70,7 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=0){
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg " color-on-scroll="500">
     <div class=" container-fluid  ">
-      <a class="navbar-brand" href="#">Menu Admin</a>
+      <a class="navbar-brand" href="index.php">Administrador</a>
       <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-bar burger-lines"></span>
 
@@ -49,9 +85,8 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=0){
         </ul>
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a data-color"black">
-              <i class="nc-icon nc-single-02"  data-toggle="modal" data-target="#myModal1"> </i>
-
+            <a class="nav-link" href="?action=logout">
+              <span class="nc-icon nc-button-power"></span>
             </a>
           </li>
         </ul>
@@ -81,12 +116,12 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=0){
       }
       ?>
 
-</div>
-</div>
+    </div>
+  </div>
 
 
-<?php
-require_once('./resources/templates/footer.html');
-?>
+  <?php
+  require_once('./resources/templates/footer.html');
+  ?>
 </div>
 </div>

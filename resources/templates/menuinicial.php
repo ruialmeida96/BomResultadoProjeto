@@ -26,7 +26,7 @@
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg " color-on-scroll="500">
     <div class=" container-fluid  ">
-      <a class="navbar-brand" href="#"> Bem Vindo xd </a>
+      <a class="navbar-brand" href="#"> Bem Vindo</a>
       <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-bar burger-lines"></span>
 
@@ -41,9 +41,8 @@
         </ul>
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a data-color"black">
-              <i class="nc-icon nc-single-02"  data-toggle="modal" data-target="#myModal1"> </i>
-
+            <a class="nav-link">
+              <span class="nc-icon nc-single-02" data-toggle="modal" data-target="#myModal1"></span>
             </a>
           </li>
         </ul>
