@@ -16,7 +16,7 @@ class GereNuts {
     return $res;
   }
 
-  public function editar_nuts(Nuts $nut) {
+  /*public function editar_nuts(Nuts $nut) {
     $bd = new BaseDados();
     $bd->ligar_bd();
     $STH = $bd->dbh->prepare("UPDATE nuts2 SET N_REGIAO = ? WHERE N_ID = ?");
@@ -25,7 +25,7 @@ class GereNuts {
     $res = $STH->execute();
     $bd->desligar_bd();
     return $res;
-  }
+  }*/
 
   public function regiao_existe($regiao) {
     $bd = new BaseDados();

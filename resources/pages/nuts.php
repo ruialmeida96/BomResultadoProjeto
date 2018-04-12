@@ -66,10 +66,6 @@ $obter_todos_os_nuts = $DAO->obter_todos_nuts();
 
 
 
-
-
-
-
 <div class="modal fade modal-primary" id="myModaladdNuts" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">

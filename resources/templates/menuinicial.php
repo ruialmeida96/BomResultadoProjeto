@@ -61,13 +61,21 @@
       }elseif(isset($_SESSION['U_TIPO'])){
         switch($_SESSION['U_TIPO']){
           case "0": require_once('./resources/pages/admininicial.php'); break;
-          case "1": require_once('./resources/pages/listaranunciosgestor.php'); break;
-          case "2": require_once('./resources/pages/listaranunciossenhorio.php'); break;
-          case "3": require_once('./resources/pages/anunciosaluno.php'); break;
+          case "1": require_once('./resources/pages/associnicial.php'); break;
+          case "2": require_once('./resources/pages/clubeinicial.php'); break;
+          //case "3": require_once('./resources/pages/anunciosaluno.php'); break;
           default: require_once('./resources/templates/home.php'); break;
         }
       }else{
-        require_once('./resources/pages/home.php');
+        require_once('resources/classes/gereutilizador.class.php');
+        $DAO = new GereUtilizador();
+
+        //Verificar se não existe Administrador (primeira execução do sistema)
+        if($DAO->obter_admin()==null){
+          require_once('resources/pages/criaradmin.php');
+        }else{
+          require_once('./resources/pages/home.php');
+        }
       }
       ?>
     </div>
