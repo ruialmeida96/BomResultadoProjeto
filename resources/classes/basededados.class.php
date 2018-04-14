@@ -1,5 +1,5 @@
 <?php
-require_once('resources/configs/basededados.php');
+require_once('./resources/configs/basededados.php');
 
 class BaseDados {
   public $dbh;

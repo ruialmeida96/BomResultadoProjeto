@@ -100,7 +100,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
   if(isset($_POST['btnAdd'])){
     if(isset($_POST['nomeregiao']) && !empty($_POST['nomeregiao'])){
 
-      require_once('resources/classes/gerenuts.class.php');
+      require_once('./resources/classes/gerenuts.class.php');
       $DAO=new GereNuts();
       if($DAO->regiao_existe($_POST['nomeregiao'])){
         echo '<script>alert("A região que adicionou já se encontra registada.");</script>';

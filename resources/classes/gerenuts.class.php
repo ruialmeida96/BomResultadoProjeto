@@ -1,6 +1,6 @@
 <?php
-require_once(__DIR__.'/basededados.class.php');
-require_once(__DIR__.'/nuts.class.php');
+require_once('./resources/classes/basededados.class.php');
+require_once('./resources/classes/nuts.class.php');
 
 class GereNuts {
   private $listanuts = [];

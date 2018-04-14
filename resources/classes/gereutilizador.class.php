@@ -1,6 +1,6 @@
 <?php
-require_once(__DIR__.'/basededados.class.php');
-require_once(__DIR__.'/utilizador.class.php');
+require_once('./resources/classes/basededados.class.php');
+require_once('./resources/classes/utilizador.class.php');
 
 class GereUtilizador {
   private $utilizadores = [];

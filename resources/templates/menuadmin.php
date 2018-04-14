@@ -113,8 +113,8 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=0){
       //main
       if(!empty($_GET['action'])){
         $action = basename($_GET['action']);
-        if(!file_exists("resources/pages/$action.php")) $action="../../index";
-        require_once("resources/pages/$action.php");
+        if(!file_exists("./resources/pages/$action.php")) $action="../../index";
+        require_once("./resources/pages/$action.php");
       }elseif(isset($_SESSION['U_TIPO'])){
         switch($_SESSION['U_TIPO']){
           case "0": require_once('./resources/pages/admininicial.php'); break;

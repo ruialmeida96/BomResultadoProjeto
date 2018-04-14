@@ -56,8 +56,8 @@
       //main
       if(!empty($_GET['action'])){
         $action = basename($_GET['action']);
-        if(!file_exists("resources/pages/$action.php")) $action="../../index";
-        require_once("resources/pages/$action.php");
+        if(!file_exists("./resources/pages/$action.php")) $action="../../index";
+        require_once("./resources/pages/$action.php");
       }elseif(isset($_SESSION['U_TIPO'])){
         switch($_SESSION['U_TIPO']){
           case "0": require_once('./resources/pages/admininicial.php'); break;
@@ -67,12 +67,12 @@
           default: require_once('./resources/templates/home.php'); break;
         }
       }else{
-        require_once('resources/classes/gereutilizador.class.php');
+        require_once('./resources/classes/gereutilizador.class.php');
         $DAO = new GereUtilizador();
 
         //Verificar se não existe Administrador (primeira execução do sistema)
         if($DAO->obter_admin()==null){
-          require_once('resources/pages/criaradmin.php');
+          require_once('./resources/pages/criaradmin.php');
         }else{
           require_once('./resources/pages/home.php');
         }
@@ -133,7 +133,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
   if(isset($_POST['btnLogin'])){
     if(isset($_POST['emaillogin'],$_POST['passlogin']) && !empty($_POST['emaillogin']) && !empty($_POST['passlogin'])){
 
-      require_once('resources/classes/gereutilizador.class.php');
+      require_once('./resources/classes/gereutilizador.class.php');
       $DAO=new GereUtilizador();
       if($DAO->password_correta($_POST['emaillogin'],$_POST['passlogin'])){
         if($DAO->conta_ativa($_POST['emaillogin'])){
