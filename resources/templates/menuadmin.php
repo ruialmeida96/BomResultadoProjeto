@@ -7,7 +7,7 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=0){
 }
 ?>
 <div class="wrapper">
-  <div class="sidebar" data-color="black" data-image="./img/run2.jpg">
+  <div class="sidebar" data-color="black" data-image="./img/run.jpg">
     <!--
     Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
 
