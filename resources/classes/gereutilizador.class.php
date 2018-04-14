@@ -79,6 +79,31 @@ class GereUtilizador {
   }
 
 
+  public function obter_nome_apartir_id($id) {
+    $bd = new BaseDados();
+    $bd->ligar_bd();
+    $STH = $bd->dbh->prepare("SELECT * FROM utilizador WHERE U_ID = ?");
+    $STH->bindParam(1,$id);
+    $STH->execute();
+    $bd->desligar_bd();
+    $row = $STH->fetch(PDO::FETCH_NUM);
+    return $row[1];
+  }
+
+
+  public function obter_detalhes_utilizador_email_retorna_id($email) {
+    $bd = new BaseDados();
+    $bd->ligar_bd();
+    $STH = $bd->dbh->prepare("SELECT * FROM utilizador WHERE U_EMAIL = ?");
+    $STH->bindParam(1,$email);
+    $STH->execute();
+    $bd->desligar_bd();
+    $row = $STH->fetch(PDO::FETCH_NUM);
+    return $row[0];
+  }
+
+
+
   public function obter_detalhes_utilizador_id($id) {
     $bd = new BaseDados();
     $bd->ligar_bd();

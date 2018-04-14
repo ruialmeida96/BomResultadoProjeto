@@ -33,7 +33,7 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=0){
         </a>
       </li>
       <li>
-        <a class="nav-link" href="?action=associacoes">
+        <a class="nav-link" href="?action=associacoesadmin">
           <i class="nc-icon nc-bank"></i>
           <p>Associações</p>
         </a>

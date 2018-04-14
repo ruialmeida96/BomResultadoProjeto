@@ -49,18 +49,30 @@ class GereNuts {
     return $STH->fetch(PDO::FETCH_ASSOC);
   }*/
 
+  public function obter_nome_apartir_id($id) {
+    $bd = new BaseDados();
+    $bd->ligar_bd();
+    $STH = $bd->dbh->prepare("SELECT * FROM nuts2 WHERE N_ID = ?");
+    $STH->bindParam(1,$id);
+    $STH->execute();
+    $bd->desligar_bd();
+    $row = $STH->fetch(PDO::FETCH_NUM);
+    return $row[1];
+  }
+
   public function obter_todos_nuts() {
     $bd = new BaseDados();
     $bd->ligar_bd();
     $STH = $bd->dbh->query("SELECT * FROM nuts2");
     if($STH->rowCount() === 0){
       return null;
+    }else{
+      while($row = $STH->fetch(PDO::FETCH_NUM)){
+        $this->listanuts[] = new Nuts($row[0], $row[1]);
+      }
+      $bd->desligar_bd();
+      return $this->listanuts;
     }
-    while($row = $STH->fetch(PDO::FETCH_NUM)){
-      $this->listanuts[] = new Nuts($row[0], $row[1]);
-    }
-    $bd->desligar_bd();
-    return $this->listanuts;
   }
 
 }

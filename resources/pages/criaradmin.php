@@ -117,7 +117,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
         if($DAO->inserir_utilizador(new Utilizador(1,$_POST['nome'], $_POST['email'], password_hash($_POST['pass'], PASSWORD_DEFAULT), $_POST['contacto'], 1,0))){
           //Criar nuts
           //falta criar a pagina para serem inseridos os nuts logo na primeira execução
-          //require_once('resources/pages/criaradmin_nuts.php');
+          require_once('./resources/pages/criaradmin_nuts.php');
           header('Location: index.php');
 
         }
