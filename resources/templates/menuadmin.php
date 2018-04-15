@@ -64,19 +64,19 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=0){
         </div>
       </li>
       <!--<li>
-        <div class="dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown">
-          <i class="nc-icon nc-bank"></i><p>Listagens 2</p><b class="caret"></b>
-          </a>
-          <div class="dropdown-menu nav-link" aria-labelledby="dropdownMenuLink">
-            <a class="dropdown-item " href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
-        </div>
-      </li>-->
-    </ul>
+      <div class="dropdown">
+      <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown">
+      <i class="nc-icon nc-bank"></i><p>Listagens 2</p><b class="caret"></b>
+    </a>
+    <div class="dropdown-menu nav-link" aria-labelledby="dropdownMenuLink">
+    <a class="dropdown-item " href="#">Action</a>
+    <a class="dropdown-item" href="#">Another action</a>
+    <a class="dropdown-item" href="#">Something else here</a>
   </div>
+</div>
+</li>-->
+</ul>
+</div>
 </div>
 <div class="main-panel">
   <!-- Navbar -->
@@ -96,6 +96,11 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=0){
           </li>
         </ul>
         <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="?action=editainfo">
+              <span class="nc-icon nc-circle-09"></span>
+            </a>
+          </li>
           <li class="nav-item">
             <a class="nav-link" href="?action=logout">
               <span class="nc-icon nc-button-power"></span>

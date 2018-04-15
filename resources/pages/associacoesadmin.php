@@ -144,6 +144,7 @@ function gera_password() {
 //  nomeassoc, email, contacto, regiao
 
 if($_SERVER['REQUEST_METHOD']==='POST'){
+  require_once('./resources/configs/email.php');
 
   //Adicionar associação
   if(isset($_POST['btnAdd'])){
@@ -162,7 +163,13 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
             $valorid = $DAO3->obter_detalhes_utilizador_email_retorna_id($_POST['email']);
             if($DAO->inserir_associacao(new Associacao(0,$valorid,$_POST['regiao'],$_POST['nome'],1,true))){
               echo '<script>alert("A associação foi criada com sucesso.");</script>';
-              header("Refresh:0");
+              //header("Refresh:0");
+
+
+              $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+              $corpomensagem = "Olá<br><br>,A sua palavra passe para utilização na nossa aplicação é:$passwordgera.<br>Agradecemos pela disponibilizade<br>BomResultado";
+              enviaMail($email, 'Password Inicial', $corpomensagem);
+
             }else{
               echo '<script>alert("Erro ao criar associação depois de criar utilizador.");</script>';
             }
