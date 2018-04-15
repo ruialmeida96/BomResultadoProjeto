@@ -111,7 +111,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
 
   if(isset($_POST['btnAdd'])){
     if(isset($_POST['nome'], $_POST['contacto'], $_POST['email'], $_POST['pass'], $_POST['pass1']) && !empty($_POST['nome']) && !empty($_POST['contacto']) && !empty($_POST['email']) && !empty($_POST['pass']) && !empty($_POST['pass1'])){
-      require_once('resources/classes/gereutilizador.class.php');
+      require_once('./resources/classes/gereutilizador.class.php');
       $DAO = new GereUtilizador();
 
         if($DAO->inserir_utilizador(new Utilizador(1,$_POST['nome'], $_POST['email'], password_hash($_POST['pass'], PASSWORD_DEFAULT), $_POST['contacto'], 1,0))){
