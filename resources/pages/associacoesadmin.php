@@ -57,8 +57,10 @@ $DAO3 = new GereUtilizador();
                   echo "<td>".$obter_todas_as_assoc[$i]->get_abreviatura()."</td>";
                   ?>
                   <td>
-                    opção se quiser
-                    <!--ver se precisar no criar gestor.php-->
+                    <button class="btn btn-warning" onclick="location.href='?action=editaassoc&id=<?php echo $obter_todas_as_assoc[$i]->get_id()?>'" >Editar</button>
+                    <form method="POST" id="DelAssociacao" action="">
+                      <button type="submit" class="btn btn-danger" name="btnDelete" value="<?php echo $obter_todas_as_assoc[$i]->get_id()?>">Eliminar</button>
+                    </form>
                   </td>
                 </tr>
                 <?php
@@ -119,6 +121,7 @@ $DAO3 = new GereUtilizador();
     </div>
   </div>
 </div>
+
 
 <?php
 
@@ -184,7 +187,22 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
       echo '<script>alert("Por favor preencha todos os campos.");</script>';
     }
   }
+
+  if(isset($_POST['btnDelete'])){
+    $idassoc = $_POST['btnDelete'];
+    $iduser = $DAO->obter_iduser_apartir_idassoc($idassoc);
+    if($DAO->elimina_associacao($idassoc,$iduser)){
+      echo '<script>alert("Associação eliminada com sucesso.");</script>';
+      header("Refresh:0");
+    }else{
+      echo '<script>alert("Ocorreu um erro ao eliminar a associação");</script>';
+    }
+  }
+
+
 }
+
+
 
 
 ?>

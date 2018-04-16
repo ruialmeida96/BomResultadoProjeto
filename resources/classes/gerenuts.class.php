@@ -39,6 +39,18 @@ class GereNuts {
 
   }
 
+  public function regiao_igual($id) {
+    $bd = new BaseDados();
+    $bd->ligar_bd();
+    $STH = $bd->dbh->query("SELECT * FROM nuts2 WHERE N_ID = '$id'");
+    if($STH->rowCount() === 0){
+      return false;
+    }else{
+      return true;
+    }
+
+  }
+
   /*public function regiao_existe($regiao) {
     $bd = new BaseDados();
     $bd->ligar_bd();
