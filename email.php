@@ -8,9 +8,9 @@
 // 2. Descomentar ;extension=openssl (remover o ponto e vírgula)
 
 use PHPMailer\PHPMailer\PHPMailer;
-require_once('./resources/libs/PHPMailer.php');
-require_once('./resources/libs/SMTP.php');
-require_once('./resources/libs/Exception.php');
+require_once('resources/libs/PHPMailer.php');
+require_once('resources/libs/SMTP.php');
+require_once('resources/libs/Exception.php');
 
 //Exemplo de uso da função
 //enviaMail('mail@server.com','assunto','mensagem');
