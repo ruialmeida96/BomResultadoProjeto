@@ -50,7 +50,7 @@
   </div>
 </div>
 
-<!--Validação javascript-->
+
 <script>
 
 /*funçao para mostrar notificaçoes*/
@@ -71,9 +71,7 @@ function showNotification(from, align,communication){
   });
 }
 
-/*
-* Função que valida os campos do fomulário de registo de senhorios
-*/
+
 function validaRegisto() {
   var res = true;
   var input = [document.forms["formAddAdmin"]["contacto"].value, document.forms["formAddAdmin"]["email"].value, document.forms["formAddAdmin"]["pass"].value, document.forms["formAddAdmin"]["pass1"].value];

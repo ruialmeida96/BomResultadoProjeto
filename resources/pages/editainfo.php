@@ -13,6 +13,7 @@ if($DAO->obter_detalhes_utilizador_id($_SESSION['U_ID'])){
   $contactoutl = $utilizador->get_contacto();
   $emailutl = $utilizador->get_email();
   $tipoutl =$_SESSION['U_TIPO'];
+  $emailant = $emailutl;
 }
 ?>
 Acho que é preciso editar o nome, passe contacto, email (talvez mas acho que nao)
@@ -75,3 +76,106 @@ Acho que é preciso editar o nome, passe contacto, email (talvez mas acho que na
     </form>
   </div>
 </div>
+
+
+
+<script>
+
+/*funçao para mostrar notificaçoes*/
+function showNotification(from, align,communication){
+  color = Math.floor((Math.random() * 4) + 1);
+
+  $.notify({
+    icon: "pe-7s-gift",
+    message:communication
+
+  },{
+    type: type[color],
+    timer: 4000,
+    placement: {
+      from: from,
+      align: align
+    }
+  });
+}
+
+
+function validaRegisto() {
+  var res = true;
+  var input = [document.forms["formSaveInfo"]["contacto"].value, document.forms["formSaveInfo"]["email"].value, document.forms["formSaveInfo"]["pass"].value, document.forms["formSaveInfo"]["pass1"].value,document.forms["formSaveInfo"]["passant"].value];
+
+  var emailSplit = String(input[1]).split('@');
+
+  //Expressões regulares para validar contacto, e-mail e password
+  var regexContacto = /[0-9]{9}/;
+  var regexEmail = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+  var regexPassword = /^(?=.*\d)(?=.*[A-Z])(?=.*[!#$%&()*+,-.:;<=>?@_{|}~])/;
+
+  if(!regexContacto.test(String(input[0]))){
+    showNotification('top','center','<strong>Erro!</strong> Por favor insira um contacto válido.');
+    res = false;
+  }
+  if(!regexEmail.test(String(input[1]).toLowerCase())){
+    showNotification('top','center','<strong>Erro!</strong> Por favor insira um <i>e-mail</i> válido.');
+    res = false;
+  }
+  if(String(input[2]) != ""){
+    if(!regexPassword.test(String(input[2]))){
+      showNotification('top','center','<strong>Erro!</strong> A palavra-passe deverá conter uma letra maiúscula, um número e um caractere especial.');
+      res = false;
+    }
+  }
+  if (input[2] != input[3]) {
+    showNotification('top','center','<strong>Erro!</strong> As palavras-passe introduzidas não são iguais.');
+    res = false;
+  }
+  if(!input[4]){
+    showNotification('top','center','<strong>Erro!</strong>Por favor insira a palavra-passe antiga.');
+    return false;
+  }
+  return res;
+}
+</script>
+
+<?php
+
+if($_SERVER['REQUEST_METHOD']==='POST'){
+
+  //Ediçao da informaçao
+  if(isset($_POST['btnSave'])){
+    if(isset($_POST['nome'], $_POST['contacto'], $_POST['email'], $_POST['passant']) && !empty($_POST['nome']) && !empty($_POST['contacto']) && !empty($_POST['email']) && !empty($_POST['passant'])){
+
+      require_once('./resources/classes/gereutilizador.class.php');
+      $DAO = new GereUtilizador();
+
+      //Ver se a password antiga está correta
+      if($DAO->password_correta($emailant, $_POST['passant'])){
+
+        //Ver se o e-mail existe
+        if($DAO->email_existe($_POST['email']) && $_POST['email'] != $utilizador->get_email()){
+          echo '<script>alert("O e-mail já se encontra registado no sistema.");</script>';
+        }else{
+          //Também pretende alterar a palavra-passe
+          if(isset($_POST['pass'], $_POST['pass1']) && !empty($_POST['pass']) && !empty($_POST['pass1'])){
+            if($_POST['pass'] != $_POST['pass1']){
+              echo '<script>alert("As palavras-passe não são iguais.");</script>';
+              return;
+            }else
+            $password = password_hash($_POST['pass'], PASSWORD_DEFAULT);
+          }else
+          $password = $utilizador->get_password();
+
+          if($DAO->editar_utilizador(new Utilizador($idutl, $_POST['nome'], $_POST['email'], $password, $_POST['contacto'],$tipoutl,1,true))){
+
+            echo '<script>alert("Ediçao feita com sucesso.");</script>';
+            echo '<script>document.location.href = "?action=editainfo";</script>';
+          }
+        }
+      }else{
+        echo '<script>alert("A palavra-passe antiga não é a correta.");</script>';
+      }
+    }
+  }else
+  echo '<script>alert("Por favor preencha todos os campos.");</script>';
+}
+?>
