@@ -60,9 +60,9 @@
         require_once("./resources/pages/$action.php");
       }elseif(isset($_SESSION['U_TIPO'])){
         switch($_SESSION['U_TIPO']){
-          case "0": require_once('./resources/pages/admininicial.php'); break;
-          case "1": require_once('./resources/pages/associnicial.php'); break;
-          case "2": require_once('./resources/pages/clubeinicial.php'); break;
+          //case "0": require_once('./resources/pages/admininicial.php'); break;
+          //case "1": require_once('./resources/pages/associnicial.php'); break;
+          //case "2": require_once('./resources/pages/clubeinicial.php'); break;
           //case "3": require_once('./resources/pages/anunciosaluno.php'); break;
           default: require_once('./resources/templates/home.php'); break;
         }
