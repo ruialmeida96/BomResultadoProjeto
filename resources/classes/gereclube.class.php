@@ -47,10 +47,10 @@ class GereClube {
 
 
 
-  /*public function associacao_existe($assoc) {
+  public function clube_existe($clube) {
     $bd = new BaseDados();
     $bd->ligar_bd();
-    $STH = $bd->dbh->query("SELECT * FROM associacao WHERE A_ABREVIATURA LIKE '$assoc'");
+    $STH = $bd->dbh->query("SELECT * FROM clube WHERE C_ABREVIATURA LIKE '$clube'");
     if($STH->rowCount() === 0){
       return false;
     }else{
@@ -58,6 +58,30 @@ class GereClube {
     }
   }
 
+  public function obter_iduser_apartir_idclube($id) {
+    $bd = new BaseDados();
+    $bd->ligar_bd();
+    $STH = $bd->dbh->prepare("SELECT U_ID FROM clube WHERE C_ID = '$id';");
+    $STH->execute();
+    $bd->desligar_bd();
+    $row = $STH->fetch(PDO::FETCH_NUM);
+    return $row[0];
+  }
+
+  public function obter_detalhes_clube_id($id) {
+    $bd = new BaseDados();
+    $bd->ligar_bd();
+    $STH = $bd->dbh->prepare("SELECT * FROM clube WHERE C_ID = ?");
+    $STH->bindParam(1,$id);
+    $STH->execute();
+    $bd->desligar_bd();
+    $row = $STH->fetch(PDO::FETCH_NUM);
+    return new Clube($row[0], $row[1], $row[2], $row[3], $row[4]);
+  }
+
+
+
+/*
   public function obter_todas_assoc() {
     $bd = new BaseDados();
     $bd->ligar_bd();
@@ -73,16 +97,7 @@ class GereClube {
     }
   }
 
-  public function elimina_associacao($idassoc,$iduser) {
-    $bd = new BaseDados();
-    $bd->ligar_bd();
-    $STH = $bd->dbh->prepare("DELETE FROM associacao WHERE A_ID = '$idassoc';");
-    $res = $STH->execute();
-    $STH = $bd->dbh->prepare("DELETE FROM utilizador WHERE U_ID = '$iduser';");
-    $res = $STH->execute();
-    $bd->desligar_bd();
-    return $res;
-  }
+
 
 
   public function obter_iduser_apartir_idassoc($id) {
@@ -96,16 +111,7 @@ class GereClube {
     return $row[0];
   }
 
-  public function obter_detalhes_associação_id($id) {
-    $bd = new BaseDados();
-    $bd->ligar_bd();
-    $STH = $bd->dbh->prepare("SELECT * FROM associacao WHERE A_ID = ?");
-    $STH->bindParam(1,$id);
-    $STH->execute();
-    $bd->desligar_bd();
-    $row = $STH->fetch(PDO::FETCH_NUM);
-    return new Associacao($row[0], $row[1], $row[2], $row[3]);
-  }*/
+  */
 
 
 

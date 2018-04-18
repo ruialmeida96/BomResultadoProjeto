@@ -156,9 +156,11 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
 
       if($DAO->associacao_existe($_POST['nome'])){
         echo '<script>alert("A associação que adicionou já se encontra registada.");</script>';
+        header("Refresh:0");
       }else{
         if($DAO3->email_existe($_POST['email'])){
           echo '<script>alert("O email já existe como utilizador.");</script>';
+          header("Refresh:0");
         }else{
           $nomeassoc = "Associação ".$_POST['nome'];
           $passwordgera = gera_password();
@@ -177,14 +179,17 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
 
             }else{
               echo '<script>alert("Erro ao criar associação depois de criar utilizador.");</script>';
+              header("Refresh:0");
             }
           }else{
             echo '<script>alert("Erro ao criar o utilizador da associação.");</script>';
+            header("Refresh:0");
           }
         }
       }
     }else{
       echo '<script>alert("Por favor preencha todos os campos.");</script>';
+      header("Refresh:0");
     }
   }
 

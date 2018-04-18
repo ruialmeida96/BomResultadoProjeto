@@ -16,7 +16,6 @@ if($DAO->obter_detalhes_utilizador_id($_SESSION['U_ID'])){
   $emailant = $emailutl;
 }
 ?>
-Acho que é preciso editar o nome, passe contacto, email (talvez mas acho que nao)
 
 <div class="card">
   <div class="card-header">

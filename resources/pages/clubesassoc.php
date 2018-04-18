@@ -25,7 +25,6 @@ $DAO3 = new GereUtilizador();
 $iduserassoc = $_SESSION['U_ID'];
 $associacaoid=$DAO2->obter_detalhes_associação_apartir_userid($iduserassoc);
 
-echo '<h2>falta acabar esta parte de adicionar clube e eliminar </h2>';
  if($obter_todos_os_clubes == null){ ?>
   <h4>Não existem Clubes Disponiveis</h4><br><br>
 <?php }else{ ?>
@@ -44,6 +43,7 @@ echo '<h2>falta acabar esta parte de adicionar clube e eliminar </h2>';
               <th>Associação</th>
               <th>Abreviatura</th>
               <th>Localização</th>
+              <th></th>
             </thead>
             <tbody>
               <?php
@@ -55,11 +55,12 @@ echo '<h2>falta acabar esta parte de adicionar clube e eliminar </h2>';
                   <?php
                   echo "<td>".$obter_todos_os_clubes[$i]->get_id()."</td>";
                   echo "<td>".$DAO3->obter_nome_apartir_id($obter_todos_os_clubes[$i]->get_userid())."</td>";
-                  echo "<td>".$DAO2->obter_nome_apartir_id($obter_todos_os_clubes[$i]->get_nutsid())."</td>";
+                  echo "<td>".$DAO2->obter_nome_apartir_id($obter_todos_os_clubes[$i]->get_associd())."</td>";
                   echo "<td>".$obter_todos_os_clubes[$i]->get_abreviatura()."</td>";
+                  echo "<td>".$obter_todos_os_clubes[$i]->get_localizacao()."</td>";
                   ?>
                   <td>
-                    <button class="btn btn-warning" onclick="location.href='?action=editaassoc&id=<?php echo $obter_todos_os_clubes[$i]->get_id()?>'" >Editar</button>
+                    <button class="btn btn-warning" onclick="location.href='?action=editaclubeassoc&id=<?php echo $obter_todos_os_clubes[$i]->get_id()?>'" >Editar</button>
                     <form method="POST" id="DelAssociacao" action="">
                       <button type="submit" class="btn btn-danger" name="btnDelete" value="<?php echo $obter_todos_os_clubes[$i]->get_id()?>">Eliminar</button>
                     </form>
@@ -136,41 +137,43 @@ function gera_password() {
 
   return $password;
 }
-/*
+
+//nome,sigla,email,contacto,local
 if($_SERVER['REQUEST_METHOD']==='POST'){
   require_once('./resources/configs/email.php');
 
-  //Adicionar associação
+  //Adicionar clube
   if(isset($_POST['btnAdd'])){
-    if(isset($_POST['nome'],$_POST['email'],$_POST['contacto'],$_POST['regiao']) && !empty($_POST['nome']) && !empty($_POST['email']) && !empty($_POST['contacto']) && !empty($_POST['regiao'])){
+    if(isset($_POST['nome'],$_POST['email'],$_POST['contacto'],$_POST['sigla'],$_POST['local']) && !empty($_POST['nome']) && !empty($_POST['email']) && !empty($_POST['contacto']) && !empty($_POST['sigla']) && !empty($_POST['local'])){
 
-
-      if($DAO->associacao_existe($_POST['nome'])){
-        echo '<script>alert("A associação que adicionou já se encontra registada.");</script>';
+      if($DAO->clube_existe($_POST['sigla'])){
+        echo '<script>alert("O clube com essa sigla que adicionou já se encontra registado.");</script>';
+        header("Refresh:0");
       }else{
         if($DAO3->email_existe($_POST['email'])){
           echo '<script>alert("O email já existe como utilizador.");</script>';
+          header("Refresh:0");
         }else{
-          $nomeassoc = "Associação ".$_POST['nome'];
+          $nomeclube = $_POST['nome'];
           $passwordgera = gera_password();
-          if($DAO3->inserir_utilizador(new Utilizador(0,$nomeassoc,$_POST['email'],password_hash($passwordgera, PASSWORD_DEFAULT),$_POST['contacto'],1,1,1,true))){
+          if($DAO3->inserir_utilizador(new Utilizador(0,$nomeclube,$_POST['email'],password_hash($passwordgera, PASSWORD_DEFAULT),$_POST['contacto'],1,2,1,true))){
             $valorid = $DAO3->obter_detalhes_utilizador_email_retorna_id($_POST['email']);
-            if($DAO->inserir_associacao(new Associacao(0,$valorid,$_POST['regiao'],$_POST['nome'],1,true))){
-              echo '<script>alert("A associação foi criada com sucesso.");</script>';
-
-
+            if($DAO->inserir_clube(new Clube(0,$associacaoid,$valorid,$_POST['sigla'],$_POST['local'],1,true))){
+              echo '<script>alert("O Clube foi criado com sucesso.");</script>';
 
               $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-              $corpomensagem = "Olá<br><br>,A sua palavra passe para utilização na nossa aplicação é:$passwordgera.<br>Agradecemos pela disponibilizade<br>BomResultado";
+              $corpomensagem = "Olá<br><br>A sua palavra passe para utilização na nossa aplicação é:$passwordgera.<br>Agradecemos pela disponibilizade<br>BomResultado";
               enviaMail($email, 'Password Inicial', $corpomensagem);
 
               header("Refresh:0");
 
             }else{
-              echo '<script>alert("Erro ao criar associação depois de criar utilizador.");</script>';
+              echo '<script>alert("Erro ao criar clube depois de criar utilizador.");</script>';
+              header("Refresh:0");
             }
           }else{
-            echo '<script>alert("Erro ao criar o utilizador da associação.");</script>';
+            echo '<script>alert("Erro ao criar o utilizador do clube.");</script>';
+            header("Refresh:0");
           }
         }
       }
@@ -180,21 +183,17 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
   }
 
   if(isset($_POST['btnDelete'])){
-    $idassoc = $_POST['btnDelete'];
-    $iduser = $DAO->obter_iduser_apartir_idassoc($idassoc);
-    if($DAO->elimina_associacao($idassoc,$iduser)){
-      echo '<script>alert("Associação eliminada com sucesso.");</script>';
+    $idclube = $_POST['btnDelete'];
+
+    $iduser = $DAO->obter_iduser_apartir_idclube($idclube);
+    if($DAO->elimina_clube($idclube,$iduser)){
+      echo '<script>alert("Clube eliminado com sucesso.");</script>';
       header("Refresh:0");
     }else{
       echo '<script>alert("Ocorreu um erro ao eliminar a associação");</script>';
     }
   }
 
-
-}*/
-
-
-
-
+}
 
  ?>

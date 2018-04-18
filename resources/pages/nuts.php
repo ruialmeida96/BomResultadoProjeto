@@ -33,6 +33,7 @@ $obter_todos_os_nuts = $DAO->obter_todos_nuts();
             <thead>
               <th>ID</th>
               <th>Nome</th>
+              <th></th>
             </thead>
             <tbody>
               <?php
@@ -46,7 +47,7 @@ $obter_todos_os_nuts = $DAO->obter_todos_nuts();
                   echo "<td>".$obter_todos_os_nuts[$i]->get_regiao()."</td>";
                   ?>
                   <td>
-                    opção se quiser
+                    opção
                     <!--ver se precisar no criar gestor.php-->
                   </td>
                 </tr>
@@ -61,9 +62,6 @@ $obter_todos_os_nuts = $DAO->obter_todos_nuts();
     </div>
   </div>
 <?php } ?>
-
-
-
 
 
 <div class="modal fade modal-primary" id="myModaladdNuts" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

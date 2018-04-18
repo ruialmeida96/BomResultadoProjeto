@@ -89,6 +89,16 @@ class GereAssociacao {
     return new Associacao($row[0], $row[1], $row[2], $row[3]);
   }
 
+  public function obter_nome_apartir_id($id) {
+    $bd = new BaseDados();
+    $bd->ligar_bd();
+    $STH = $bd->dbh->prepare("SELECT A_ABREVIATURA FROM associacao WHERE A_ID = ?");
+    $STH->bindParam(1,$id);
+    $STH->execute();
+    $bd->desligar_bd();
+    $row = $STH->fetch(PDO::FETCH_NUM);
+    return $row[0];
+  }
 
 
 
