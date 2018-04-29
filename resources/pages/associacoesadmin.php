@@ -57,10 +57,25 @@ $DAO3 = new GereUtilizador();
                   echo "<td>".$obter_todas_as_assoc[$i]->get_abreviatura()."</td>";
                   ?>
                   <td>
-                    <button class="btn btn-warning" onclick="location.href='?action=editaassoc&id=<?php echo $obter_todas_as_assoc[$i]->get_id()?>'" >Editar</button>
+                    <button class="btn btn-info" onclick="location.href='?action=editaassoc&id=<?php echo $obter_todas_as_assoc[$i]->get_id()?>'" >Editar</button>
                     <form method="POST" id="DelAssociacao" action="">
                       <button type="submit" class="btn btn-danger" name="btnDelete" value="<?php echo $obter_todas_as_assoc[$i]->get_id()?>">Eliminar</button>
                     </form>
+                    <?php
+                    if($DAO3->obter_estado_utilizador_id($obter_todas_as_assoc[$i]->get_userid())==1){
+                     ?>
+                    <form method="POST" id="DesativaAssociacao" action="">
+                      <button type="submit" class="btn btn-default" name="btnDesativa" value="<?php echo $obter_todas_as_assoc[$i]->get_id()?>">Desativar</button>
+                    </form>
+                    <?php
+
+                  }else if ($DAO3->obter_estado_utilizador_id($obter_todas_as_assoc[$i]->get_userid())==0){ ?>
+                    <form method="POST" id="AtivaAssociacao" action="">
+                      <button type="submit" class="btn btn-success" name="btnAtiva" value="<?php echo $obter_todas_as_assoc[$i]->get_id()?>">Ativar</button>
+                    </form>
+                    <?php
+                  }
+                     ?>
                   </td>
                 </tr>
                 <?php
@@ -90,14 +105,16 @@ $DAO3 = new GereUtilizador();
         </div>
       </div>
       <div class="modal-body text-center">
-        <form method="POST" id="AddAssociacao" action="">
+        <form  name="formAddAssoc" onsubmit="return validaRegisto()" method="POST" id="AddAssociacao" action="">
           <label>Nome da Associação(Abreviatura)</label>
           <input type="text" name="nome" id="nome" class="form-control" placeholder="Nome da associação..." required >
 
           <label>Email</label>
+          <div id="erroemail"></div>
           <input type="mail" class="form-control" name="email" id="email" placeholder="example@email.com" required>
 
           <label>Contacto</label>
+          <div id="errocontacto"></div>
           <input type="tel" class="form-control" name="contacto" id="contacto"  maxlength="9" required>
 
           <label>Região</label><br>
@@ -121,6 +138,57 @@ $DAO3 = new GereUtilizador();
     </div>
   </div>
 </div>
+
+<script>
+
+/*funçao para mostrar notificaçoes*/
+function showNotification(from, align,communication){
+  color = Math.floor((Math.random() * 4) + 1);
+
+  $.notify({
+    icon: "pe-7s-gift",
+    message:communication
+
+  },{
+    type: type[color],
+    timer: 4000,
+    placement: {
+      from: from,
+      align: align
+    }
+  });
+}
+
+
+function validaRegisto() {
+  var res = true;
+  var input = [document.forms["formAddAssoc"]["nome"].value, document.forms["formAddAssoc"]["email"].value, document.forms["formAddAssoc"]["contacto"].value];
+
+  var emailSplit = String(input[1]).split('@');
+
+  //Expressões regulares para validar contacto, e-mail e password
+  var regexContacto = /[0-9]{9}/;
+  var regexEmail = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+//  var regexPassword = /^(?=.*\d)(?=.*[A-Z])(?=.*[!#$%&()*+,-.:;<=>?@_{|}~])/;
+
+  if(!regexContacto.test(String(input[2]))){
+    showNotification('top','center','<strong>Erro!</strong> Por favor insira um contacto válido.');
+    document.getElementById("errocontacto").innerHTML="<strong>Erro!</strong> Por favor insira um contacto válido.";
+    res = false;
+  }else{
+    document.getElementById("errocontacto").innerHTML="";
+  }
+  if(!regexEmail.test(String(input[1]).toLowerCase())){
+    showNotification('top','center','<strong>Erro!</strong> Por favor insira um <i>e-mail</i> válido.');
+    document.getElementById("erroemail").innerHTML="<strong>Erro!</strong> Por favor insira um <i>e-mail</i> válido.";
+    res = false;
+  }else{
+    document.getElementById("erroemail").innerHTML="";
+  }
+  return res;
+}
+</script>
+
 
 
 <?php
@@ -203,6 +271,29 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
       echo '<script>alert("Ocorreu um erro ao eliminar a associação");</script>';
     }
   }
+
+  if(isset($_POST['btnDesativa'])){
+    $idassoc = $_POST['btnDesativa'];
+    $iduser = $DAO->obter_iduser_apartir_idassoc($idassoc);
+    if($DAO3->desativa_conta($iduser)){
+      //echo '<script>alert("Associação desativa com sucesso.");</script>';
+      header("Refresh:0");
+    }else{
+      echo '<script>alert("Ocorreu um erro ao desativar a associação");</script>';
+    }
+  }
+
+  if(isset($_POST['btnAtiva'])){
+    $idassoc = $_POST['btnAtiva'];
+    $iduser = $DAO->obter_iduser_apartir_idassoc($idassoc);
+    if($DAO3->ativa_conta($iduser)){
+      //echo '<script>alert("Associação ativa com sucesso.");</script>';
+      header("Refresh:0");
+    }else{
+      echo '<script>alert("Ocorreu um erro ao ativar a associação");</script>';
+    }
+  }
+
 
 
 }

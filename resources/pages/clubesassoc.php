@@ -60,7 +60,7 @@ $associacaoid=$DAO2->obter_detalhes_associação_apartir_userid($iduserassoc);
                   echo "<td>".$obter_todos_os_clubes[$i]->get_localizacao()."</td>";
                   ?>
                   <td>
-                    <button class="btn btn-warning" onclick="location.href='?action=editaclubeassoc&id=<?php echo $obter_todos_os_clubes[$i]->get_id()?>'" >Editar</button>
+                    <button class="btn btn-info" onclick="location.href='?action=editaclubeassoc&id=<?php echo $obter_todos_os_clubes[$i]->get_id()?>'" >Editar</button>
                     <form method="POST" id="DelAssociacao" action="">
                       <button type="submit" class="btn btn-danger" name="btnDelete" value="<?php echo $obter_todos_os_clubes[$i]->get_id()?>">Eliminar</button>
                     </form>

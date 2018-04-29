@@ -166,6 +166,35 @@ class GereUtilizador {
 		return $STH->fetch(PDO::FETCH_NUM);
 	}
 
+  public function desativa_conta($id) {
+    $bd = new BaseDados();
+    $bd->ligar_bd();
+    $STH = $bd->dbh->prepare("UPDATE utilizador SET U_ESTADO = 0 WHERE U_ID = '$id';");
+    $res = $STH->execute();
+    $bd->desligar_bd();
+    return $res;
+  }
+
+  public function ativa_conta($id) {
+    $bd = new BaseDados();
+    $bd->ligar_bd();
+    $STH = $bd->dbh->prepare("UPDATE utilizador SET U_ESTADO = 1 WHERE U_ID = '$id';");
+    $res = $STH->execute();
+    $bd->desligar_bd();
+    return $res;
+  }
+
+  public function obter_estado_utilizador_id($id) {
+    $bd = new BaseDados();
+    $bd->ligar_bd();
+    $STH = $bd->dbh->prepare("SELECT U_ESTADO FROM utilizador WHERE U_ID = ?");
+    $STH->bindParam(1,$id);
+    $STH->execute();
+    $bd->desligar_bd();
+    $row = $STH->fetch(PDO::FETCH_NUM);
+    return $row[0];
+  }
+
 
 /*  public function alterar_estado_utilizador($id) {
 		$bd = new BaseDados();
@@ -186,6 +215,9 @@ class GereUtilizador {
 		$bd->desligar_bd();
     return $res;
 	}
+
+
+
 
 
   //FALTA PREPARAR ISTO PARA INSERIR LOG
