@@ -147,16 +147,14 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
       $regiaonova = $_POST['regiao'];
       //$idassoc é o id da associação e $idutl é o id do utilizador
 
-      if($DAO->associacao_existe($_POST['abreviatura'])){
-        echo '<script>alert("Uma associação com essa abreviatura já se encontra registada.");</script>';
-        header("Refresh:0");
-      }else{
+      if(strcmp($abreviaturanovo,$abreviatura)==0){
         if(strcmp($emailass,$emailnovo)==0){
-          echo 'email igual';
           if($DAO2->editar_utilizador_associacao_sem_email($idutl,$nomeassocnovo)){
-            if($DAO->editar_associacao_admin($abreviaturanovo,$regiaonova,$idassoc)){
+            if($DAO->editar_associacao_admin($abreviatura,$regiaonova,$idassoc)){
               echo '<script>alert("A associação foi editada com sucesso.");</script>';
-              header("Refresh:0");
+              //header("Refresh:0");
+              header('Location:?action=associacoesadmin');
+              //showNotification('top','center','A associação foi editada com sucesso.');
             }else{
               echo '<script>alert("Erro ao editar a associação na tabela associação.");</script>';
               header("Refresh:0");
@@ -168,15 +166,15 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
           }
 
         }else if (strcmp($emailass,$emailnovo)!=0){
-          echo 'email diferente';
           if($DAO2->email_existe($_POST['email'])){
             echo '<script>alert("O novo email já existe como email de um utilizador.");</script>';
             header("Refresh:0");
           }else{
             if($DAO2->editar_utilizador_associacao($idutl,$nomeassocnovo,$emailnovo)){
-              if($DAO->editar_associacao_admin($abreviaturanovo,$regiaonova,$idassoc)){
+              if($DAO->editar_associacao_admin($abreviatura,$regiaonova,$idassoc)){
                 echo '<script>alert("A associação foi editada com sucesso.");</script>';
-                header("Refresh:0");
+                //header("Refresh:0");
+                header('Location:?action=associacoesadmin');
               }else{
                 echo '<script>alert("Erro ao editar a associação na tabela associação.");</script>';
                 header("Refresh:0");
@@ -185,6 +183,50 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
             }else{
               echo '<script>alert("Erro ao editar a associação na tabela utilizador.");</script>';
               header("Refresh:0");
+            }
+          }
+        }
+
+      }else if (strcmp($abreviaturanovo,$abreviatura)!=0){
+        if($DAO->associacao_existe($_POST['abreviatura'])){
+          echo '<script>alert("Uma associação com essa abreviatura já se encontra registada.");</script>';
+          header("Refresh:0");
+        }else{
+          if(strcmp($emailass,$emailnovo)==0){
+            if($DAO2->editar_utilizador_associacao_sem_email($idutl,$nomeassocnovo)){
+              if($DAO->editar_associacao_admin($abreviaturanovo,$regiaonova,$idassoc)){
+                echo '<script>alert("A associação foi editada com sucesso.");</script>';
+                //header("Refresh:0");
+                header('Location:?action=associacoesadmin');
+              }else{
+                echo '<script>alert("Erro ao editar a associação na tabela associação.");</script>';
+                header("Refresh:0");
+              }
+
+            }else{
+              echo '<script>alert("Erro ao editar a associação na tabela utilizador.");</script>';
+              header("Refresh:0");
+            }
+
+          }else if (strcmp($emailass,$emailnovo)!=0){
+            if($DAO2->email_existe($_POST['email'])){
+              echo '<script>alert("O novo email já existe como email de um utilizador.");</script>';
+              header("Refresh:0");
+            }else{
+              if($DAO2->editar_utilizador_associacao($idutl,$nomeassocnovo,$emailnovo)){
+                if($DAO->editar_associacao_admin($abreviaturanovo,$regiaonova,$idassoc)){
+                  echo '<script>alert("A associação foi editada com sucesso.");</script>';
+                  //header("Refresh:0");
+                  header('Location:?action=associacoesadmin');
+                }else{
+                  echo '<script>alert("Erro ao editar a associação na tabela associação.");</script>';
+                  header("Refresh:0");
+                }
+
+              }else{
+                echo '<script>alert("Erro ao editar a associação na tabela utilizador.");</script>';
+                header("Refresh:0");
+              }
             }
           }
         }

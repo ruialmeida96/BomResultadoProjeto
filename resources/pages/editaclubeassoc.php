@@ -40,7 +40,7 @@ if($DAO->obter_detalhes_clube_id($idclube)){
     <h4 class="card-title">Editar Informação Clube</h4>
   </div>
   <div class="card-body">
-    <form name="formEditAssoc" onsubmit="return validaRegisto()" method="POST" action="">
+    <form name="formEditaClube" onsubmit="return validaEdicao()" method="POST" action="">
       <div class="row">
         <div class="col-md-5 pr-1">
           <div class="form-group">
@@ -66,10 +66,10 @@ if($DAO->obter_detalhes_clube_id($idclube)){
         </div>
       </div>
       <div class="row">
-        <div class="col-md-4 pr-1">
+        <div class="col-md-2 pr-1">
           <div class="form-group">
             <label>Localização</label><br>
-            <input type="text" class="form-control" name="abreviatura" id="abreviatura" maxlength="75" value ='<?php print($local) ?>' required>
+            <input type="text" class="form-control" name="local" id="local" maxlength="75" value ='<?php print($local) ?>' required>
 
           </div>
         </div>
@@ -79,3 +79,148 @@ if($DAO->obter_detalhes_clube_id($idclube)){
     </form>
   </div>
 </div>
+
+<script>
+
+/*funçao para mostrar notificaçoes*/
+function showNotification(from, align,communication){
+  color = Math.floor((Math.random() * 4) + 1);
+
+  $.notify({
+    icon: "pe-7s-gift",
+    message:communication
+
+  },{
+    type: type[color],
+    timer: 4000,
+    placement: {
+      from: from,
+      align: align
+    }
+  });
+}
+
+function validaEdicao() {
+  var res = true;
+  var input = [document.forms["formEditaClube"]["email"].value];
+
+  var emailSplit = String(input[0]).split('@');
+
+  //Expressões regulares para validar contacto, e-mail e password
+  //var regexContacto = /[0-9]{9}/;
+  var regexEmail = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+  //  var regexPassword = /^(?=.*\d)(?=.*[A-Z])(?=.*[!#$%&()*+,-.:;<=>?@_{|}~])/;
+
+  if(!regexEmail.test(String(input[0]).toLowerCase())){
+    showNotification('top','center','<strong>Erro!</strong> Por favor insira um <i>e-mail</i> válido.');
+    res = false;
+  }
+  return res;
+}
+</script>
+
+<?php
+
+if($_SERVER['REQUEST_METHOD']==='POST'){
+
+  //Adicionar associação
+  if(isset($_POST['btnSave'])){
+    if(isset($_POST['nome'],$_POST['abreviatura'],$_POST['email'],$_POST['local']) && !empty($_POST['nome']) && !empty($_POST['abreviatura']) && !empty($_POST['email']) && !empty($_POST['local'])){
+
+      $nomeclubenovo = $_POST['nome'];
+      $abreviaturanovo = $_POST['abreviatura'];
+      $emailnovo = $_POST['email'];
+      $localnovo = $_POST['local'];
+
+      if(strcmp($abreviaturanovo,$abreviatura)==0){
+        //abreviatura igual
+        if(strcmp($email,$emailnovo)==0){
+          if($DAO2->editar_utilizador_associacao_sem_email($iduserclube,$nomeclubenovo)){
+            if($DAO->editar_clube_assoc($abreviatura,$localnovo,$idclube)){
+              echo '<script>alert("A associação foi editada com sucesso.");</script>';
+              //header("Refresh:0");
+              header('Location:?action=clubesassoc');
+              //showNotification('top','center','A associação foi editada com sucesso.');
+            }else{
+              echo '<script>alert("Erro ao editar a associação na tabela associação.");</script>';
+              header("Refresh:0");
+            }
+
+          }else{
+            echo '<script>alert("Erro ao editar a associação na tabela utilizador.");</script>';
+            header("Refresh:0");
+          }
+
+        }else if (strcmp($email,$emailnovo)!=0){
+          if($DAO2->email_existe($_POST['email'])){
+            echo '<script>alert("O novo email já existe como email de um utilizador.");</script>';
+            header("Refresh:0");
+          }else{
+            if($DAO2->editar_utilizador_associacao($iduserclube,$nomeclubenovo,$emailnovo)){
+              if($DAO->editar_clube_assoc($abreviatura,$localnovo,$idclube)){
+                echo '<script>alert("A associação foi editada com sucesso.");</script>';
+                //header("Refresh:0");
+                header('Location:?action=clubesassoc');
+              }else{
+                echo '<script>alert("Erro ao editar a associação na tabela associação.");</script>';
+                header("Refresh:0");
+              }
+
+            }else{
+              echo '<script>alert("Erro ao editar a associação na tabela utilizador.");</script>';
+              header("Refresh:0");
+            }
+          }
+        }
+      }else if(strcmp($abreviaturanovo,$abreviatura)!=0){
+        //abreviatura diferente
+        if($DAO->clube_existe($_POST['abreviatura'])){
+          echo '<script>alert("Um clube com essa abreviatura já se encontra registado.");</script>';
+          header("Refresh:0");
+        }else{
+          if(strcmp($email,$emailnovo)==0){
+            if($DAO2->editar_utilizador_associacao_sem_email($iduserclube,$nomeclubenovo)){
+              if($DAO->editar_clube_assoc($abreviaturanovo,$localnovo,$idclube)){
+                echo '<script>alert("A associação foi editada com sucesso.");</script>';
+                //header("Refresh:0");
+                header('Location:?action=clubesassoc');
+              }else{
+                echo '<script>alert("Erro ao editar a associação na tabela associação.");</script>';
+                header("Refresh:0");
+              }
+
+            }else{
+              echo '<script>alert("Erro ao editar a associação na tabela utilizador.");</script>';
+              header("Refresh:0");
+            }
+
+          }else if (strcmp($email,$emailnovo)!=0){
+            if($DAO2->email_existe($_POST['email'])){
+              echo '<script>alert("O novo email já existe como email de um utilizador.");</script>';
+              header("Refresh:0");
+            }else{
+              if($DAO2->editar_utilizador_associacao($iduserclube,$nomeclubenovo,$emailnovo)){
+                if($DAO->editar_clube_assoc($abreviaturanovo,$localnovo,$idclube)){
+                  echo '<script>alert("A associação foi editada com sucesso.");</script>';
+                  //header("Refresh:0");
+                  header('Location:?action=clubesassoc');
+                }else{
+                  echo '<script>alert("Erro ao editar a associação na tabela associação.");</script>';
+                  header("Refresh:0");
+                }
+
+              }else{
+                echo '<script>alert("Erro ao editar a associação na tabela utilizador.");</script>';
+                header("Refresh:0");
+              }
+            }
+          }
+        }
+      }
+    }else{
+      echo '<script>alert("Por favor preencha todos os campos.");</script>';
+      header("Refresh:0");
+    }
+  }
+}
+?>

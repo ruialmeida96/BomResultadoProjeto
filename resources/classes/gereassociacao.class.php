@@ -39,9 +39,6 @@ class GereAssociacao {
   }
 
 
-
-
-
   public function obter_todas_assoc() {
     $bd = new BaseDados();
     $bd->ligar_bd();

@@ -68,6 +68,15 @@ class GereClube {
     return $row[0];
   }
 
+  public function editar_clube_assoc($abreviatura,$local,$idclube) {
+    $bd = new BaseDados();
+    $bd->ligar_bd();
+    $STH = $bd->dbh->prepare("UPDATE clube SET C_ABREVIATURA = '$abreviatura',C_LOCALIZACAO = '$local' WHERE C_ID = $idclube;");
+    $res = $STH->execute();
+    $bd->desligar_bd();
+    return $res;
+  }
+
   public function obter_detalhes_clube_id($id) {
     $bd = new BaseDados();
     $bd->ligar_bd();
