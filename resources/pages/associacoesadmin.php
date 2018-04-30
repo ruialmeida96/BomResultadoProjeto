@@ -118,11 +118,11 @@ $DAO3 = new GereUtilizador();
           <input type="text" name="nome" id="nome" class="form-control" placeholder="Nome da associação..." required >
 
           <label>Email</label>
-          <div id="erroemail"></div>
+          <div id="erroemail" style="color:red;"></div>
           <input type="mail" class="form-control" name="email" id="email" placeholder="example@email.com" required>
 
           <label>Contacto</label>
-          <div id="errocontacto"></div>
+          <div id="errocontacto" style="color:red;"></div>
           <input type="tel" class="form-control" name="contacto" id="contacto"  maxlength="9" required>
 
           <label>Região</label><br>

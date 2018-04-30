@@ -36,6 +36,24 @@ class GereUtilizador {
 		return $res;
 	}
 
+  public function editar_utilizador_associacao($utilizador,$nome,$email) {
+		$bd = new BaseDados();
+    $bd->ligar_bd();
+		$STH = $bd->dbh->prepare("UPDATE utilizador SET U_NOME = '$nome', U_EMAIL = '$email' WHERE U_ID = $utilizador;");
+		$res = $STH->execute();
+		$bd->desligar_bd();
+		return $res;
+	}
+
+  public function editar_utilizador_associacao_sem_email($utilizador,$nome) {
+		$bd = new BaseDados();
+    $bd->ligar_bd();
+		$STH = $bd->dbh->prepare("UPDATE utilizador SET U_NOME = '$nome' WHERE U_ID = $utilizador;");
+		$res = $STH->execute();
+		$bd->desligar_bd();
+		return $res;
+	}
+
 
   public function email_existe($email) {
     $bd = new BaseDados();

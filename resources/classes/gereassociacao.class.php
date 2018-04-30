@@ -29,6 +29,19 @@ class GereAssociacao {
     }
   }
 
+  public function editar_associacao_admin($abreviatura,$regiao,$idassoc) {
+    $bd = new BaseDados();
+    $bd->ligar_bd();
+    $STH = $bd->dbh->prepare("UPDATE associacao SET A_ABREVIATURA = '$abreviatura',N_ID = $regiao WHERE A_ID = $idassoc;");
+    $res = $STH->execute();
+    $bd->desligar_bd();
+    return $res;
+  }
+
+
+
+
+
   public function obter_todas_assoc() {
     $bd = new BaseDados();
     $bd->ligar_bd();
