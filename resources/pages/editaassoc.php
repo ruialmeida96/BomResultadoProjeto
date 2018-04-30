@@ -147,8 +147,8 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
       $regiaonova = $_POST['regiao'];
       //$idassoc é o id da associação e $idutl é o id do utilizador
 
-      if(strcmp($abreviaturanovo,$abreviatura)==0){
-        if(strcmp($emailass,$emailnovo)==0){
+      if(strcmp($abreviaturanovo,$abreviatura)===0){
+        if(strcmp($emailass,$emailnovo)===0){
           if($DAO2->editar_utilizador_associacao_sem_email($idutl,$nomeassocnovo)){
             if($DAO->editar_associacao_admin($abreviatura,$regiaonova,$idassoc)){
               echo '<script>alert("A associação foi editada com sucesso.");</script>';
@@ -165,7 +165,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
             header("Refresh:0");
           }
 
-        }else if (strcmp($emailass,$emailnovo)!=0){
+        }else if (strcmp($emailass,$emailnovo)!==0){
           if($DAO2->email_existe($_POST['email'])){
             echo '<script>alert("O novo email já existe como email de um utilizador.");</script>';
             header("Refresh:0");
@@ -187,12 +187,12 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
           }
         }
 
-      }else if (strcmp($abreviaturanovo,$abreviatura)!=0){
+      }else if (strcmp($abreviaturanovo,$abreviatura)!==0){
         if($DAO->associacao_existe($_POST['abreviatura'])){
           echo '<script>alert("Uma associação com essa abreviatura já se encontra registada.");</script>';
           header("Refresh:0");
         }else{
-          if(strcmp($emailass,$emailnovo)==0){
+          if(strcmp($emailass,$emailnovo)===0){
             if($DAO2->editar_utilizador_associacao_sem_email($idutl,$nomeassocnovo)){
               if($DAO->editar_associacao_admin($abreviaturanovo,$regiaonova,$idassoc)){
                 echo '<script>alert("A associação foi editada com sucesso.");</script>';
@@ -208,7 +208,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
               header("Refresh:0");
             }
 
-          }else if (strcmp($emailass,$emailnovo)!=0){
+          }else if (strcmp($emailass,$emailnovo)!==0){
             if($DAO2->email_existe($_POST['email'])){
               echo '<script>alert("O novo email já existe como email de um utilizador.");</script>';
               header("Refresh:0");
