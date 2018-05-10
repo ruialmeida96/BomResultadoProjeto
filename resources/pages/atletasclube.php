@@ -18,6 +18,78 @@ Listar atletas, adicionar e edita-los(editar info e eliminar)
   </div>
 </div>
 
+<?php
+
+$id_user_clube = $_SESSION['U_ID'];
+
+require_once('./resources/classes/gereclube.class.php');
+require_once('./resources/classes/gereatleta.class.php');
+
+$DAO = new GereAtleta();
+
+
+$DAO2 = new GereClube();
+$obter_todos_os_clubes = $DAO2->obter_todas_clubes();
+
+
+$clubeid= $DAO2->obter_clube_id_clube_userid($id_user_clube);
+
+$obter_todos_os_atletas = $DAO->obter_todos_atletas_do_clube($clubeid);
+
+
+ if($obter_todos_os_atletas == null){ ?>
+  <h4>Não existem Atletas Disponiveis</h4><br><br>
+<?php }else{ ?>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card strpied-tabled-with-hover">
+        <div class="card-header ">
+          <h4 class="card-title">Lista de Atletas Disponiveis</h4>
+          <p class="card-category">Detalhes dos atletas disponiveis na aplicação</p>
+        </div>
+        <div class="card-body table-full-width table-responsive">
+          <table class="table table-hover table-striped">
+            <thead>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>Nome Exibição</th>
+              <th>Contacto</th>
+              <th>Email</th>
+              <th>Especialidade</th>
+              <th>Nacionalidade</th>
+              <th>Escalão</th>
+              <th></th>
+            </thead>
+            <tbody>
+              <?php
+              $i = 0;
+              $tamanho = count($obter_todos_os_atletas);
+              do{
+                ?>
+                <tr>
+                  <?php
+                  echo "<td>".$obter_todos_os_atletas[$i]->get_id()."</td>";
+                  echo "<td>".$obter_todos_os_atletas[$i]->get_nome()."</td>";
+                  echo "<td>".$obter_todos_os_atletas[$i]->get_nomeexibe()."</td>";
+                  echo "<td>".$obter_todos_os_atletas[$i]->get_contacto()."</td>";
+                  echo "<td>".$obter_todos_os_atletas[$i]->get_email()."</td>";
+                  echo "<td>".$obter_todos_os_atletas[$i]->get_especialidade()."</td>";
+                  echo "<td>".$obter_todos_os_atletas[$i]->get_nacionalidade()."</td>";
+                  echo "<td>".$obter_todos_os_atletas[$i]->get_escalao()."</td>";
+                  ?>
+                </tr>
+                <?php
+                $i++;
+              }while ($i<$tamanho);
+              ?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+<?php }  ?>
+
 
 <div class="modal fade modal-primary" id="myModaladdAtleta" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">

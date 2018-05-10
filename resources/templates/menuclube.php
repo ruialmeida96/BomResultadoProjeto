@@ -35,7 +35,7 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=2){
       <li>
         <a class="nav-link" href="?action=eventosclube">
           <i class="nc-icon nc-bullet-list-67"></i>
-          <p>Eventos</p>
+          <p>Inscrição em Eventos</p>
         </a>
       </li>
 
