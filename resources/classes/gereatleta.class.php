@@ -31,7 +31,7 @@ class GereAtleta {
       return null;
     }else{
       while($row = $STH->fetch(PDO::FETCH_NUM)){
-        $this->listaatleta[] = new Atleta($row[0], $row[1],$row[2],$row[3],$row[4],$row[5],$row[6],$row[7],$row[8],$row[9]);
+        $this->listaatleta[] = new Atleta($row[0], $row[1],$row[2],$row[3],$row[4],$row[5],$row[6],$row[7],$row[8]);
       }
       $bd->desligar_bd();
       return $this->listaatleta;
@@ -46,11 +46,30 @@ class GereAtleta {
       return null;
     }else{
       while($row = $STH->fetch(PDO::FETCH_NUM)){
-        $this->listaatleta[] = new Atleta($row[0], $row[1],$row[2],$row[3],$row[4],$row[5],$row[6],$row[7],$row[8],$row[9]);
+        $this->listaatleta[] = new Atleta($row[0], $row[1],$row[2],$row[3],$row[4],$row[5],$row[6],$row[7],$row[8]);
       }
       $bd->desligar_bd();
       return $this->listaatleta;
     }
+  }
+
+  public function email_existe($email) {
+    $bd = new BaseDados();
+    $bd->ligar_bd();
+    $STH = $bd->dbh->prepare("SELECT 1 FROM atleta WHERE AT_EMAIL LIKE ?");
+    $STH->bindParam(1, $email);
+    $STH->execute();
+    $bd->desligar_bd();
+    return $STH->fetch(PDO::FETCH_ASSOC);
+	}
+
+  public function elimina_atleta($idatleta) {
+    $bd = new BaseDados();
+    $bd->ligar_bd();
+    $STH = $bd->dbh->prepare("DELETE FROM atleta WHERE AT_ID = '$idatleta';");
+    $res = $STH->execute();
+    $bd->desligar_bd();
+    return $res;
   }
 
   //caso precise, ir ver a gereclube.class.php
