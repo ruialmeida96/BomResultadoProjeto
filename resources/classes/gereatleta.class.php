@@ -72,6 +72,17 @@ class GereAtleta {
     return $res;
   }
 
+  public function obter_detalhes_atleta_id($id){
+    $bd = new BaseDados();
+    $bd->ligar_bd();
+    $STH = $bd->dbh->prepare("SELECT * FROM atleta WHERE AT_ID = ?");
+    $STH->bindParam(1,$id);
+    $STH->execute();
+    $bd->desligar_bd();
+    $row = $STH->fetch(PDO::FETCH_NUM);
+    return new Atleta($row[0], $row[1],$row[2],$row[3],$row[4],$row[5],$row[6],$row[7],$row[8]);
+  }
+
   //caso precise, ir ver a gereclube.class.php
 
 }

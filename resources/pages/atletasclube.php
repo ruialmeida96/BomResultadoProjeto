@@ -159,7 +159,6 @@ if($obter_todos_os_atletas == null){ ?>
             <option value="19">Veteranos 85 - 85 a 89 anos</option>
             <option value="20">Veteranos 90 - 90 anos em diante</option>
           </select>
-
         </div>
         <div class="modal-footer">
           <span></span>
