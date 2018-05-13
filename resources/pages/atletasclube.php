@@ -174,7 +174,7 @@ function validaRegisto() {
   var res = true;
   var input = [document.forms["formAddClube"]["email"].value, document.forms["formAddClube"]["contacto"].value];
 
-  var emailSplit = String(input[1]).split('@');
+  var emailSplit = String(input[0]).split('@');
 
   //Expressões regulares para validar contacto, e-mail e password
   var regexContacto = /[0-9]{9}/;

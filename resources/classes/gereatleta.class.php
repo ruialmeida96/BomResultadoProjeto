@@ -83,6 +83,15 @@ class GereAtleta {
     return new Atleta($row[0], $row[1],$row[2],$row[3],$row[4],$row[5],$row[6],$row[7],$row[8]);
   }
 
+  public function editar_atleta($idatleta,$nome,$nomeexibe,$contacto,$email,$especialidade,$nacionalidade,$escalao) {
+    $bd = new BaseDados();
+    $bd->ligar_bd();
+    $STH = $bd->dbh->prepare("UPDATE atleta SET AT_NOME = '$nome', AT_NOMEEXIBE = '$nomeexibe', AT_CONTACTO= '$contacto', AT_EMAIL='$email', AT_ESPECIALIDADE='$especialidade', AT_NACIONALIDADE='$nacionalidade', AT_ESCALAO='$escalao' WHERE AT_ID = $idatleta;");
+    $res = $STH->execute();
+    $bd->desligar_bd();
+    return $res;
+  }
+
   //caso precise, ir ver a gereclube.class.php
 
 }

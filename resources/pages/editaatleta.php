@@ -49,7 +49,7 @@ $DAO3 = new GereUtilizador();
     <h4 class="card-title">Editar Informação Atleta</h4>
   </div>
   <div class="card-body">
-    <form name="formEditaClube" onsubmit="return validaEdicao()" method="POST" action="">
+    <form name="formEditaAtleta" onsubmit="return validaEdicao()" method="POST" action="">
       <div class="row">
         <div class="col-md-5 pr-1">
           <div class="form-group">
@@ -75,7 +75,7 @@ $DAO3 = new GereUtilizador();
         </div>
       </div>
       <div class="row">
-        <div class="col-md-2 pr-1">
+        <div class="col-md-3 pr-1">
           <div class="form-group">
             <label>Email</label>
             <input type="mail" class="form-control" name="email" id="email" value ='<?php print($email) ?>' required>
@@ -233,3 +233,97 @@ $DAO3 = new GereUtilizador();
     </form>
   </div>
 </div>
+
+<script>
+
+/*funçao para mostrar notificaçoes*/
+function showNotification(from, align,communication){
+  color = Math.floor((Math.random() * 4) + 1);
+
+  $.notify({
+    icon: "pe-7s-gift",
+    message:communication
+
+  },{
+    type: type[color],
+    timer: 4000,
+    placement: {
+      from: from,
+      align: align
+    }
+  });
+}
+
+function validaEdicao() {
+  var res = true;
+  var input = [document.forms["formEditaAtleta"]["email"].value, document.forms["formEditaAtleta"]["contacto"].value];
+
+  var emailSplit = String(input[0]).split('@');
+
+  //Expressões regulares para validar contacto, e-mail e password
+  var regexContacto = /[0-9]{9}/;
+  var regexEmail = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+  //  var regexPassword = /^(?=.*\d)(?=.*[A-Z])(?=.*[!#$%&()*+,-.:;<=>?@_{|}~])/;
+
+  if(!regexContacto.test(String(input[1]))){
+    showNotification('top','center','<strong>Erro!</strong> Por favor insira um contacto válido.');
+    //document.getElementById("errocontacto").innerHTML="<strong>Erro!</strong> Por favor insira um contacto válido.";
+    res = false;
+  }else{
+    //document.getElementById("errocontacto").innerHTML="";
+  }
+  if(!regexEmail.test(String(input[0]).toLowerCase())){
+    showNotification('top','center','<strong>Erro!</strong> Por favor insira um <i>e-mail</i> válido.');
+    //document.getElementById("erroemail").innerHTML="<strong>Erro!</strong> Por favor insira um <i>e-mail</i> válido.";
+    res = false;
+  }else{
+    //document.getElementById("erroemail").innerHTML="";
+  }
+  return res;
+}
+</script>
+<?php
+
+if($_SERVER['REQUEST_METHOD']==='POST'){
+
+  //Adicionar associação
+  if(isset($_POST['btnSave'])){
+
+    if(isset($_POST['nome'],$_POST['nomeex'],$_POST['email'],$_POST['contacto'],$_POST['especialidade'],$_POST['nacionalidade'],$_POST['escalao']) && !empty($_POST['nome']) && !empty($_POST['nomeex']) && !empty($_POST['email']) && !empty($_POST['contacto']) && !empty($_POST['especialidade']) && !empty($_POST['nacionalidade']) && !empty($_POST['escalao'])){
+
+      //caso seja o mesmo email
+      if(strcmp($email,$_POST['email'])===0){
+        //atualizamos apenas os dados
+        if($DAO->editar_atleta($idatleta,$_POST['nome'],$_POST['nomeex'],$_POST['contacto'],$email,$_POST['especialidade'],$_POST['nacionalidade'],$_POST['escalao'])){
+          echo '<script>alert("O Atleta foi editado com sucesso.");</script>';
+          header('Location:?action=atletasclube');
+        }else{
+          echo '<script>alert("Erro ao editar o Atleta.");</script>';
+          header("Refresh:0");
+        }
+      }else if(strcmp($email,$_POST['email'])!==0){
+        //se for diferente é que é necessario verificar nos utilizadores e atletas
+        if($DAO3->email_existe($_POST['email'])){
+          echo '<script>alert("O email já existe como utilizador.");</script>';
+          header("Refresh:0");
+        }else if($DAO->email_existe($_POST['email'])){
+          echo '<script>alert("O email já se encontra registado como atleta.");</script>';
+          header("Refresh:0");
+        }else{
+          if($DAO->editar_atleta($idatleta,$_POST['nome'],$_POST['nomeex'],$_POST['contacto'],$_POST['email'],$_POST['especialidade'],$_POST['nacionalidade'],$_POST['escalao'])){
+            echo '<script>alert("O Atleta foi editado com sucesso.");</script>';
+            header('Location:?action=atletasclube');
+          }else{
+            echo '<script>alert("Erro ao editar o Atleta.");</script>';
+            header("Refresh:0");
+          }
+        }
+      }
+    }else{
+      echo '<script>alert("Por favor preencha todos os campos.");</script>';
+      header("Refresh:0");
+    }
+  }
+}
+
+?>
