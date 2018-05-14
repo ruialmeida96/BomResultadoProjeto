@@ -8,7 +8,7 @@ class GereAtleta {
   public function inserir_atleta(Atleta $atleta) {
     $bd = new BaseDados();
     $bd->ligar_bd();
-    $STH = $bd->dbh->prepare("INSERT INTO atleta(AT_ID, C_ID,AT_NOME,AT_NOMEEXIBE,AT_CONTACTO,AT_EMAIL,AT_ESPECIALIDADE,AT_NACIONALIDADE,AT_ESCALAO) values(?, ?, ?,?,?,?,?,?,?)");
+    $STH = $bd->dbh->prepare("INSERT INTO atleta(AT_ID, C_ID,AT_NOME,AT_NOMEEXIBE,AT_CONTACTO,AT_EMAIL,AT_ESPECIALIDADE,AT_NACIONALIDADE,AT_ESCALAO,AT_SEXO) values(?, ?, ?,?,?,?,?,?,?,?)");
     $STH->bindValue(1, $atleta->get_id());
     $STH->bindValue(2, $atleta->get_clube());
     $STH->bindValue(3, $atleta->get_nome());
@@ -18,6 +18,7 @@ class GereAtleta {
     $STH->bindValue(7, $atleta->get_especialidade());
     $STH->bindValue(8, $atleta->get_nacionalidade());
     $STH->bindValue(9, $atleta->get_escalao());
+    $STH->bindValue(10, $atleta->get_sexo());
     $res = $STH->execute();
     $bd->desligar_bd();
     return $res;
@@ -31,7 +32,7 @@ class GereAtleta {
       return null;
     }else{
       while($row = $STH->fetch(PDO::FETCH_NUM)){
-        $this->listaatleta[] = new Atleta($row[0], $row[1],$row[2],$row[3],$row[4],$row[5],$row[6],$row[7],$row[8]);
+        $this->listaatleta[] = new Atleta($row[0], $row[1],$row[2],$row[3],$row[4],$row[5],$row[6],$row[7],$row[8],$row[9]);
       }
       $bd->desligar_bd();
       return $this->listaatleta;
@@ -46,7 +47,7 @@ class GereAtleta {
       return null;
     }else{
       while($row = $STH->fetch(PDO::FETCH_NUM)){
-        $this->listaatleta[] = new Atleta($row[0], $row[1],$row[2],$row[3],$row[4],$row[5],$row[6],$row[7],$row[8]);
+        $this->listaatleta[] = new Atleta($row[0], $row[1],$row[2],$row[3],$row[4],$row[5],$row[6],$row[7],$row[8],$row[9]);
       }
       $bd->desligar_bd();
       return $this->listaatleta;
@@ -80,7 +81,7 @@ class GereAtleta {
     $STH->execute();
     $bd->desligar_bd();
     $row = $STH->fetch(PDO::FETCH_NUM);
-    return new Atleta($row[0], $row[1],$row[2],$row[3],$row[4],$row[5],$row[6],$row[7],$row[8]);
+    return new Atleta($row[0], $row[1],$row[2],$row[3],$row[4],$row[5],$row[6],$row[7],$row[8],$row[9]);
   }
 
   public function editar_atleta($idatleta,$nome,$nomeexibe,$contacto,$email,$especialidade,$nacionalidade,$escalao) {

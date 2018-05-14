@@ -1,8 +1,8 @@
 <?php
 class Atleta {
-  private $id, $clubeid, $nome, $nomeexibe, $contacto, $email, $especialidade, $nacionalidade,$escalao;
+  private $id, $clubeid, $nome, $nomeexibe, $contacto, $email, $especialidade, $nacionalidade,$escalao,$sexo;
 
-  public function __construct($id, $clube, $name, $exibe ,$contact,$mail, $espec, $nacio, $escal) {
+  public function __construct($id, $clube, $name, $exibe ,$contact,$mail, $espec, $nacio, $escal,$sex) {
     $this->id = $id;
     $this->clubeid = $clube;
     $this->nome = $name;
@@ -12,8 +12,9 @@ class Atleta {
     $this->especialidade = $espec;
     $this->nacionalidade = $nacio;
     $this->escalao = $escal;
+    $this->sexo = $sex;
   }
-  
+
   public function get_id() {
     return $this->id;
   }
@@ -48,6 +49,9 @@ class Atleta {
 
   public function get_escalao() {
     return $this->escalao;
+  }
+  public function get_sexo() {
+    return $this->sexo;
   }
 
 }

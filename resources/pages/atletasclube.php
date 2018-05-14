@@ -159,6 +159,12 @@ if($obter_todos_os_atletas == null){ ?>
             <option value="19">Veteranos 85 - 85 a 89 anos</option>
             <option value="20">Veteranos 90 - 90 anos em diante</option>
           </select>
+          <br>
+          <label>Sexo</label>
+          <br>
+          <input type="radio" name="sexo" id="sexo" value="M">M
+          <input type="radio" name="sexo" value="F">F<br>
+
         </div>
         <div class="modal-footer">
           <span></span>
@@ -246,13 +252,13 @@ function mostraescaloes($num){
 
 
 
-//nome,nomeex,email,contacto,especialidade,nacionalidade,escalao
+//nome,nomeex,email,contacto,especialidade,nacionalidade,escalao,sexo
 if($_SERVER['REQUEST_METHOD']==='POST'){
 
   //Adicionar associação
   if(isset($_POST['btnAdd'])){
 
-    if(isset($_POST['nome'],$_POST['nomeex'],$_POST['email'],$_POST['contacto'],$_POST['especialidade'],$_POST['nacionalidade'],$_POST['escalao']) && !empty($_POST['nome']) && !empty($_POST['nomeex']) && !empty($_POST['email']) && !empty($_POST['contacto']) && !empty($_POST['especialidade']) && !empty($_POST['nacionalidade']) && !empty($_POST['escalao'])){
+    if(isset($_POST['nome'],$_POST['nomeex'],$_POST['email'],$_POST['contacto'],$_POST['especialidade'],$_POST['nacionalidade'],$_POST['escalao'],$_POST['sexo']) && !empty($_POST['nome']) && !empty($_POST['nomeex']) && !empty($_POST['email']) && !empty($_POST['contacto']) && !empty($_POST['especialidade']) && !empty($_POST['nacionalidade']) && !empty($_POST['escalao']) && !empty($_POST['sexo'])){
 
       if($DAO3->email_existe($_POST['email'])){
         echo '<script>alert("O email já existe como utilizador.");</script>';
@@ -261,7 +267,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
         echo '<script>alert("O email já se encontra registado como atleta.");</script>';
         header("Refresh:0");
       }else{
-        if($DAO->inserir_atleta(new Atleta (0,$clubeid,$_POST['nome'],$_POST['nomeex'],$_POST['contacto'],$_POST['email'],$_POST['especialidade'],$_POST['nacionalidade'],$_POST['escalao'],1,true))){
+        if($DAO->inserir_atleta(new Atleta (0,$clubeid,$_POST['nome'],$_POST['nomeex'],$_POST['contacto'],$_POST['email'],$_POST['especialidade'],$_POST['nacionalidade'],$_POST['escalao'],$_POST['sexo'],1,true))){
           echo '<script>alert("Atleta criado com sucesso.");</script>';
           header("Refresh:0");
         }
