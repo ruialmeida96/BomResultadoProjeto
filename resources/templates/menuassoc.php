@@ -32,11 +32,31 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=1){
           <p>Clubes</p>
         </a>
       </li>
-      <li>
+      <!--<li>
         <a class="nav-link" href="?action=eventosassoc">
           <i class="nc-icon nc-bullet-list-67"></i>
           <p>Eventos</p>
         </a>
+      </li>-->
+      <li>
+        <div class="dropdown">
+          <a class="nav-link" href="#" data-toggle="dropdown">
+            <i class="nc-icon nc-bullet-list-67"></i><p>Eventos</p><b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li class="nav-item ">
+              <a  class="dropdown-item" href="?action=eventosassoc">
+                Listar Eventos
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a  class="dropdown-item" href="?action=eventospendentes">
+                Eventos Pendentes
+              </a>
+            </li>
+          </ul>
+
+        </div>
       </li>
 
       <!--<li>

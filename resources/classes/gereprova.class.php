@@ -21,6 +21,21 @@ class GereProva {
     return $res;
   }
 
+  public function obter_todas_provas_eventoid($id) {
+    $bd = new BaseDados();
+    $bd->ligar_bd();
+    $STH = $bd->dbh->query("SELECT * FROM prova WHERE E_ID = '$id';");
+    if($STH->rowCount() === 0){
+      return null;
+    }else{
+      while($row = $STH->fetch(PDO::FETCH_NUM)){
+        $this->listaprova[] = new Prova($row[0], $row[1],$row[2],$row[3],$row[4],$row[5],$row[6]);
+      }
+      $bd->desligar_bd();
+      return $this->listaprova;
+    }
+  }
+
 }
 
 
