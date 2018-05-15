@@ -8,6 +8,19 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=1){
 ?>
 <h3>Atribuir Provas ao Evento</h3>
 
+<?php
+
+require_once('./resources/classes/gereprova.class.php');
+$DAO = new GereProva();
+
+$eventoid = $_GET["id"];
+
+
+$valortotal=0;
+?>
+
+
+
 <div class="card">
   <div class="card-body">
     <form name="formAddProva"  method="POST" id="formAddProva" action="">
@@ -23,13 +36,10 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=1){
 
         </div>
         <script>
-          var num_provas = document.getElementById('num_provas'),
-            subtrai_provas = document.getElementById('subtrai_provas'),
-            adiciona_provas = document.getElementById('adiciona_provas'),
-            num_provas_atual,
-            aviso_max = document.getElementById('aviso_max');
+          var num_provas = document.getElementById('num_provas'),subtrai_provas = document.getElementById('subtrai_provas'),adiciona_provas = document.getElementById('adiciona_provas'),num_provas_atual,aviso_max = document.getElementById('aviso_max');
 
           function adicionaprovas(num){
+
             var div = document.createElement('div');
             div.setAttribute("class", "col");
             div.setAttribute("style", "margin: 3px; border: 1px solid rgba(192,192,192,0.6); border-radius: 5px")
@@ -60,8 +70,8 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=1){
 
             var array = ["Benjamins A","Benjamins B","Infantis","Iniciados","Juvenis","Juniores","Sub-23","Seniores","Veteranos 35","Veteranos 40","Veteranos 45","Veteranos 50","Veteranos 55","Veteranos 60","Veteranos 65","Veteranos 70","Veteranos 75","Veteranos 80","Veteranos 85","Veteranos 90"];
             var sb_esc = document.createElement("select");
-            sb_esc.setAttribute("id", "escalao");
-            sb_esc.setAttribute("name", "escalao");
+            sb_esc.setAttribute("id", "escalao_prova"+num);
+            sb_esc.setAttribute("name", "escalao_prova"+num);
             sb_esc.setAttribute("required","");
             for (var i = 0; i < array.length; i++) {
               var option = document.createElement("option");
@@ -102,8 +112,8 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=1){
 
             var array2 = ["M","F"];
             var sb_sexo = document.createElement("select");
-            sb_sexo.setAttribute("id", "sexo");
-            sb_sexo.setAttribute("name", "sexo");
+            sb_sexo.setAttribute("id", "sexo_prova"+num);
+            sb_sexo.setAttribute("name", "sexo_prova"+num);
             sb_sexo.setAttribute("required","");
             for (var i = 0; i < array2.length; i++) {
               var option2 = document.createElement("option");
@@ -151,6 +161,7 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=1){
             if(num_provas_atual > 1){
               document.getElementById("provas_"+num_provas_atual).remove();
               num_provas.innerHTML = num_provas_atual-1;
+              document.getElementById('total').value=""+num_provas_atual-1;
               aviso_max.innerHTML = "";
             }else aviso_max.innerHTML = "Atingiu valor mínimo de provas!";
           }, false);
@@ -160,10 +171,13 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=1){
             if(num_provas_atual < 24){
               adicionaprovas(parseInt(num_provas_atual)+parseInt(1));
               num_provas.innerHTML = parseInt(num_provas_atual)+parseInt(1);
+              document.getElementById('total').value=""+num_provas_atual;
               aviso_max.innerHTML = "";
             }else aviso_max.innerHTML = "Atingiu valor máximo de provas!";
           }, false);
+
         </script>
+        <input type="hidden" id="total" name="total" value="1" >
       </div>
 
       <button type="submit" class="btn btn-success" name="btnAdd" >Adicionar</button>
@@ -171,6 +185,50 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=1){
   </div>
 </div>
 
+
+
+<?php
+if($_SERVER['REQUEST_METHOD']==='POST'){
+
+  if(isset($_POST['btnAdd'])){
+    $xd =  $_POST['total'];
+    for($i=1;$i<=$xd;$i++){
+      $nome = $_POST['nome_prova'.$i];
+      $escalao = $_POST['escalao_prova'.$i];
+      $dist = $_POST['distancia_provas'.$i];
+      $hora = $_POST['hora_provas'.$i];
+      $sexo = $_POST['sexo_prova'.$i];
+      $DAO->inserir_prova(new Prova (0,$eventoid,$nome,$escalao,$dist,$hora,$sexo));
+      if($i==($xd-1)){
+        echo '<script>alert("As Provas foram criadas com sucesso.");</script>';
+          header('Location:?action=eventosassoc');
+      }
+    }
+
+
+
+
+
+
+    /*if(isset($_POST['nome'],$_POST['datastart'],$_POST['dias'],$_POST['tipo'],$_POST['local']) && !empty($_POST['nome']) && !empty($_POST['datastart']) && !empty($_POST['dias']) && !empty($_POST['tipo']) && !empty($_POST['local'])){
+
+      if($DAO->inserir_evento(new Evento (0,$associacaoid,$_POST['nome'],$_POST['datastart'],$_POST['dias'],$_POST['tipo'],$_POST['local'],$_POST['detalhes'],$nomeAssoc,1,1,true))){
+        echo '<script>alert("O Evento foi criado com sucesso.Vamos passar a proxima fase...");</script>';
+          $ultimoidevento = $DAO->obter_ultimo_evento_assoc($associacaoid);
+          header('Location:?action=addprovasevento&id='.$ultimoidevento);
+      }else{
+        echo '<script>alert("Erro ao criar o Evento.");</script>';
+        header("Refresh:0");
+      }
+    }else{
+      echo '<script>alert("Por favor preencha todos os campos.");</script>';
+    }*/
+
+
+  }
+}
+
+?>
 
 <!--
 <form name="formAddProva"  method="POST" id="formAddProva" action="">
