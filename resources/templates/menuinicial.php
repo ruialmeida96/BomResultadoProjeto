@@ -64,7 +64,7 @@
           //case "1": require_once('./resources/pages/associnicial.php'); break;
           //case "2": require_once('./resources/pages/clubeinicial.php'); break;
           //case "3": require_once('./resources/pages/anunciosaluno.php'); break;
-          default: require_once('./resources/templates/home.php'); break;
+          default: require_once('./resources/pages/home.php'); break;
         }
       }else{
         require_once('./resources/classes/gereutilizador.class.php');
@@ -88,73 +88,97 @@
   ?>
 
 
-  <div class="modal fade modal-primary" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header justify-content-center">
-          <h2 class="modal-title" id="exampleModalLabel">Efetuar Login</h2>
-          <!--arranjar outra maneira para sair sem ter de clicar com botao, para a parte do mobile-->
-          <div style=" position:absolute;top:0;right:0;">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
+      <div class="modal fade modal-primary" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header justify-content-center">
+              <h2 class="modal-title" id="exampleModalLabel">Efetuar Login</h2>
+              <!--arranjar outra maneira para sair sem ter de clicar com botao, para a parte do mobile-->
+              <div style=" position:absolute;top:0;right:0;">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            </div>
+            <div class="modal-body text-center">
+              <form method="POST" id="loginForm" action="">
+
+                Email
+                <input type="email" class="form-control" id="emaillogin"  name="emaillogin" aria-describedby="emailHelp" placeholder="example@email.com"><br>
+                Password
+                <input type="password" class="form-control" id="passlogin" name="passlogin" placeholder="password...">
+              </div>
+              <div class="modal-footer">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" name="remember" id="remember" name="remember"> Lembrar-me
+                  </label>
+                </div>
+                <button type="submit" class="btn btn-success" name="btnLogin" >Entrar</button>
+              </div>
+            </form>
+
           </div>
         </div>
-        <div class="modal-body text-center">
-          <form method="POST" id="loginForm" action="">
-
-            Email
-            <input type="email" class="form-control" id="emaillogin"  name="emaillogin" aria-describedby="emailHelp" placeholder="example@email.com"><br>
-            Password
-            <input type="password" class="form-control" id="passlogin" name="passlogin" placeholder="password...">
-          </div>
-          <div class="modal-footer">
-            <div class="checkbox">
-              <label>
-                <input type="checkbox" name="remember" id="remember" name="remember"> Lembrar-me
-              </label>
-            </div>
-            <button type="submit" class="btn btn-success" name="btnLogin" >Entrar</button>
-          </div>
-        </form>
-
       </div>
-    </div>
-  </div>
 
 
-</div>
-</div>
+<!--modal teste bootstrap responsive
 
-<?php
-if($_SERVER['REQUEST_METHOD']==='POST'){
 
-  //Login
-  if(isset($_POST['btnLogin'])){
-    if(isset($_POST['emaillogin'],$_POST['passlogin']) && !empty($_POST['emaillogin']) && !empty($_POST['passlogin'])){
+        <div class="modal fade" id="myModal">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
 
-      require_once('./resources/classes/gereutilizador.class.php');
-      $DAO=new GereUtilizador();
-      if($DAO->password_correta($_POST['emaillogin'],$_POST['passlogin'])){
-        if($DAO->conta_ativa($_POST['emaillogin'])){
-          if(isset($_POST['remember']) && !empty($_POST['remember'])){
-            setcookie('PHPSESSID', $_COOKIE['PHPSESSID'], time()+(60*60*24*7), "/");
+
+              <div class="modal-header">
+                <h4 class="modal-title">Modal Heading</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+              </div>
+
+
+              <div class="modal-body">
+                Modal body..
+              </div>
+
+              
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+
+            </div>
+          </div>
+        </div>-->
+
+  <?php
+  if($_SERVER['REQUEST_METHOD']==='POST'){
+
+    //Login
+    if(isset($_POST['btnLogin'])){
+      if(isset($_POST['emaillogin'],$_POST['passlogin']) && !empty($_POST['emaillogin']) && !empty($_POST['passlogin'])){
+
+        require_once('./resources/classes/gereutilizador.class.php');
+        $DAO=new GereUtilizador();
+        if($DAO->password_correta($_POST['emaillogin'],$_POST['passlogin'])){
+          if($DAO->conta_ativa($_POST['emaillogin'])){
+            if(isset($_POST['remember']) && !empty($_POST['remember'])){
+              setcookie('PHPSESSID', $_COOKIE['PHPSESSID'], time()+(60*60*24*7), "/");
+            }
+            echo '<script>document.location.href = "";</script>';
+          }else{
+            unset($_SESSION['U_ID'],$_SESSION['U_TIPO']);
+            echo '<script>alert("A sua conta esta desativa. Poderá contactar-nos via e-mail para esclarecimentos.");</script>';
           }
-          echo '<script>document.location.href = "";</script>';
         }else{
-          unset($_SESSION['U_ID'],$_SESSION['U_TIPO']);
-          echo '<script>alert("A sua conta esta desativa. Poderá contactar-nos via e-mail para esclarecimentos.");</script>';
+          echo '<script>alert("O e-mail ou a palavra-passe inseridos não se encontram correctos.");</script>';
         }
+
+
       }else{
-        echo '<script>alert("O e-mail ou a palavra-passe inseridos não se encontram correctos.");</script>';
+        echo '<script>alert("Por favor preencha todos os campos.");</script>';
       }
-
-
-    }else{
-      echo '<script>alert("Por favor preencha todos os campos.");</script>';
     }
   }
-}
 
 
-?>
+  ?>
