@@ -78,6 +78,21 @@ class GereEvento {
     }
   }
 
+  public function obter_todos_eventos_assoc_recusados($id) {
+    $bd = new BaseDados();
+    $bd->ligar_bd();
+    $STH = $bd->dbh->query("SELECT * FROM evento WHERE A_ID = '$id' AND E_ESTADO = 2;");
+    if($STH->rowCount() === 0){
+      return null;
+    }else{
+      while($row = $STH->fetch(PDO::FETCH_NUM)){
+        $this->listaeventos[] = new Evento($row[0], $row[1],$row[2],$row[3],$row[4],$row[5],$row[6],$row[7],$row[8],$row[9]);
+      }
+      $bd->desligar_bd();
+      return $this->listaeventos;
+    }
+  }
+
   public function obter_info_evento($id) {
     $bd = new BaseDados();
     $bd->ligar_bd();
@@ -98,6 +113,14 @@ class GereEvento {
     return $res;
   }
 
+  public function recusa_evento($id) {
+    $bd = new BaseDados();
+    $bd->ligar_bd();
+    $STH = $bd->dbh->prepare("UPDATE evento SET E_ESTADO = 2 WHERE E_ID = '$id';");
+    $res = $STH->execute();
+    $bd->desligar_bd();
+    return $res;
+  }
 
 
 }

@@ -139,13 +139,13 @@ $organizadores =  $eventoinfo->get_organizadores();
     </div>
     <br>
     <div class="row">
-      <button class="btn btn-primary" onclick="location.href='?action=eventospendentes'">Voltar</button>
+      <button class="btn btn-primary" onclick="location.href='?action=eventosrecusados'">Voltar</button>
 
       <form method="POST" id="Aceita" action="">
-        <button type="submit" class="btn btn-success " name="btnAceita" value="<?php echo $eventoid?>">Aceitar</button>
+        <button type="submit" class="btn btn-success " name="btnAceita" value="<?php echo $eventoid?>">Aceitar de Volta</button>
       </form>
-      <form method="POST" id="Recusa" action="">
-        <button type="submit" class="btn btn-danger  " name="btnRecusa" value="<?php echo $eventoid?>">Recusar</button>
+      <form method="POST" id="Editar" action="">
+        <button type="submit" class="btn btn-info" name="btnEdita" value="<?php echo $eventoid?>">Editar</button>
       </form>
     </div>
   </div>
@@ -158,22 +158,16 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
     $idevento = $_POST['btnAceita'];
 
     if($DAO->aceita_evento($idevento)){
-      header('Location:?action=eventospendentes');
+      header('Location:?action=eventosrecusados');
     }else{
       echo '<script>alert("Ocorreu um erro ao aceitar o evento");</script>';
     }
   }
 
-  if(isset($_POST['btnRecusa'])){
-    $idevento = $_POST['btnRecusa'];
-
-    if($DAO->recusa_evento($idevento)){
-      header('Location:?action=eventospendentes');
-    }else{
-      echo '<script>alert("Ocorreu um erro ao recusar o evento");</script>';
-    }
+  if(isset($_POST['btnEdita'])){
+    $idevento = $_POST['btnEdita'];
+    header('Location:?action=editaeventoassoc&id='.$idevento);
   }
-
 
 }
 ?>

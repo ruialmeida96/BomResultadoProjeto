@@ -6,11 +6,12 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=1){
   die();
 }
 ?>
-<h3>Eventos Pendentes</h3>
+<h3>Eventos Recusados</h3>
 
 
-Aceitar eventos ou recusa-los pendentes atribuidos a nossa associação
+Listagem de Eventos que foram anteriormente recusados
 <br>
+
 <?php
 
 require_once('./resources/classes/gereevento.class.php');
@@ -24,7 +25,7 @@ $associacaoid = $DAO2->obter_detalhes_associação_apartir_userid($_SESSION['U_I
 $associacao = $DAO2->obter_detalhes_associação_id($associacaoid);
 $nomeAssoc = $associacao->get_abreviatura();
 
-$obter_todos_os_eventos=$DAO->obter_todos_eventos_assoc_inativos($associacaoid);
+$obter_todos_os_eventos=$DAO->obter_todos_eventos_assoc_recusados($associacaoid);
 
 
 if($obter_todos_os_eventos == null){ ?>
@@ -34,8 +35,8 @@ if($obter_todos_os_eventos == null){ ?>
     <div class="col-md-12">
       <div class="card strpied-tabled-with-hover">
         <div class="card-header ">
-          <h4 class="card-title">Lista de Eventos Disponiveis</h4>
-          <p class="card-category">Detalhes dos eventos disponiveis na aplicação</p>
+          <h4 class="card-title">Lista de Eventos Recusados</h4>
+          <p class="card-category">Detalhes dos eventos recusados para esta associação</p>
         </div>
         <div class="card-body table-full-width table-responsive">
           <table class="table table-hover table-striped">
@@ -65,7 +66,7 @@ if($obter_todos_os_eventos == null){ ?>
                   echo "<td>".$obter_todos_os_eventos[$i]->get_organizadores()."</td>";
                   ?>
                   <td>
-                    <button class="btn btn-primary" onclick="location.href='?action=verinfoeventopend&id=<?php echo $obter_todos_os_eventos[$i]->get_id()?>'" >Ver Info</button>
+                    <button class="btn btn-primary" onclick="location.href='?action=verinfoeventorecus&id=<?php echo $obter_todos_os_eventos[$i]->get_id()?>'" >Ver Info</button>
 
                   </td>
                 </tr>

@@ -54,6 +54,11 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=1){
                 Eventos Pendentes
               </a>
             </li>
+            <li class="nav-item ">
+              <a  class="dropdown-item" href="?action=eventosrecusados">
+                Eventos Recusados
+              </a>
+            </li>
           </ul>
 
         </div>
