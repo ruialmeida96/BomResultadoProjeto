@@ -261,7 +261,7 @@ $organizadores =  $eventoinfo->get_organizadores();
                 option.setAttribute("value", i+1);
                 option.text = array[i];
                 if(escalao==i+1){
-                 option.setAttribute("selected", "");
+                 //option.setAttribute("selected", "");
                 }
                 sb_esc.appendChild(option);
 
@@ -310,7 +310,7 @@ $organizadores =  $eventoinfo->get_organizadores();
                 option2.setAttribute("value", array2[i]);
                 option2.text = array2[i];
                 if(sex==array2[i]){
-                  option2.setAttribute("selected", "");
+                  //option2.setAttribute("selected", "");
                 }
                 sb_sexo.appendChild(option2);
               }
