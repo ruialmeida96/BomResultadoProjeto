@@ -9,8 +9,8 @@ class GereAtletaProva {
     $bd = new BaseDados();
     $bd->ligar_bd();
     $STH = $bd->dbh->prepare("INSERT INTO atleta_prova(AT_ID,P_ID) values(?,?)");
-    $STH->bindValue(1, $atleta->get_idatleta());
-    $STH->bindValue(2, $atleta->get_idprova());
+    $STH->bindValue(1, $atletaprova->get_idatleta());
+    $STH->bindValue(2, $atletaprova->get_idprova());
     $res = $STH->execute();
     $bd->desligar_bd();
     return $res;

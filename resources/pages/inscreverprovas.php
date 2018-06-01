@@ -31,13 +31,12 @@ $provas_do_evento = $DAO3->obter_todas_provas_eventoid($evento_id);
 
 $atletas_do_clube = $DAO4->obter_todos_atletas_do_clube($clube->get_id());
 
-//agora é fazer um card com a lista de provas e correspondente a lista de provas e escalao e sexo, aparecerem os atletas dispostos a poderem ser inscritos numa determinada prova!
-//tambem é necessario consultar se um determinado atleta ja se encontra inscrito numa determinada prova ou nao
-
-if($provas_do_evento == null){ ?>
-  <h4>Não existem Provas neste Evento</h4><br><br>
-<?php }else{ ?>
-  <form name="formAtletasProvas" method="POST" id="formAtletasProvas" action="">
+?>
+<form name="formAtletasProvas" method="POST" id="formAtletasProvas" action="">
+  <?php
+  if($provas_do_evento == null){ ?>
+    <h4>Não existem Provas neste Evento</h4><br><br>
+  <?php }else{ ?>
     <div class="row">
       <div class="col-md-12">
         <div class="card strpied-tabled-with-hover">
@@ -74,31 +73,28 @@ if($provas_do_evento == null){ ?>
 
                     <td>
                       <div>
-                      <?php
-                      $sex = $provas_do_evento[$i]->get_sexo();
-                      $esc = $provas_do_evento[$i]->get_escalao();
-                      $atletas_definidos = null;
-                      $atletas_definidos = $DAO4->obter_todos_atletas_sexo_e_escalao($sex,$esc);
-                      if($atletas_definidos!=null){
-                        $x = 0;
-                        $tamanho2  = count($atletas_definidos);
-                        do{
-                          if(!$DAO5->verificar_atletas_provas($atletas_definidos[$x]->get_id(),$provas_do_evento[$i]->get_id())){
-                            //atleta nao esta inscrito na prova
-                            ?>
-                            <input type="checkbox" <?php echo "id=prova_".$provas_do_evento[$i]->get_id()." name=prova_".$provas_do_evento[$i]->get_id() ?>  value="<?php echo $provas_do_evento[$i]->get_id()."_".$atletas_definidos[$x]->get_id() ?>">
-                            <?php
-                             echo $atletas_definidos[$x]->get_nome();
-                             echo "<br>";
-                          }
-
-
-
-                          $x++;
-                        }while ($x<$tamanho2);
-                      }
-                      ?>
-                    </div>
+                        <?php
+                        $sex = $provas_do_evento[$i]->get_sexo();
+                        $esc = $provas_do_evento[$i]->get_escalao();
+                        $atletas_definidos = null;
+                        $atletas_definidos = $DAO4->obter_todos_atletas_sexo_e_escalao($sex,$esc);
+                        if($atletas_definidos!=null){
+                          $x = 0;
+                          $tamanho2  = count($atletas_definidos);
+                          do{
+                            if(!$DAO5->verificar_atletas_provas($atletas_definidos[$x]->get_id(),$provas_do_evento[$i]->get_id())){
+                              //atleta nao esta inscrito na prova
+                              ?>
+                              <input type="checkbox" id="provas[]" name="provas[]" value="<?php echo $provas_do_evento[$i]->get_id()."_".$atletas_definidos[$x]->get_id() ?>">
+                              <?php
+                              echo $atletas_definidos[$x]->get_nome();
+                              echo "<br>";
+                            }
+                            $x++;
+                          }while ($x<$tamanho2);
+                        }
+                        ?>
+                      </div>
                     </td>
                   </tr>
                   <?php
@@ -113,7 +109,32 @@ if($provas_do_evento == null){ ?>
       </div>
     </div>
 
-  </form>
-<?php }
-//falta um botao para confirmar coisas
+  <?php } ?>
+  <button type="submit" class="btn btn-success" name="btnAdd">Inscrever Atletas</button>
+</form>
+
+<?php
+
+
+if($_SERVER['REQUEST_METHOD']==='POST'){
+
+  if(isset($_POST['btnAdd'])){
+
+
+    if(isset($_POST['provas']) && !empty($_POST['provas'])){
+      $inscreve = null;
+      $inscreve = $_POST['provas'];
+      foreach ($inscreve as $inscricao){
+        echo $inscricao;
+        echo "<br>";
+        list($trial, $athlete) = explode("_", $inscricao);
+        if($DAO5->inserir_atleta_prova(new AtletaProva($athlete,$trial,1,true))){
+          //tudo correu bem
+        }
+      }
+    }
+    header('Location:?action=eventosclube');
+
+  }
+}
 ?>
