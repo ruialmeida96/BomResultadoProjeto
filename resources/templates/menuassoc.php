@@ -32,6 +32,8 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=1){
           <p>Clubes</p>
         </a>
       </li>
+
+
       <!--<li>
         <a class="nav-link" href="?action=eventosassoc">
           <i class="nc-icon nc-bullet-list-67"></i>
@@ -57,6 +59,26 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=1){
             <li class="nav-item ">
               <a  class="dropdown-item" href="?action=eventosrecusados">
                 Eventos Recusados
+              </a>
+            </li>
+          </ul>
+
+        </div>
+      </li>
+      <li>
+        <div class="dropdown">
+          <a class="nav-link" href="#" data-toggle="dropdown">
+            <i class="nc-icon nc-chart-bar-32"></i><p>Resultados</p><b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li class="nav-item ">
+              <a  class="dropdown-item" href="?action=resultadosprovasassoc">
+                Identificar Resultados
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a  class="dropdown-item" href="?action=listarresultadosassoc">
+                Listar Resultados
               </a>
             </li>
           </ul>
