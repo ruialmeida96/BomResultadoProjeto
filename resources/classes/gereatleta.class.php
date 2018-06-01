@@ -54,6 +54,23 @@ class GereAtleta {
     }
   }
 
+  public function obter_todos_atletas_sexo_e_escalao($sexo,$escalao) {
+    $this->listaatleta = [];
+    $bd = new BaseDados();
+    $bd->ligar_bd();
+    $STH = $bd->dbh->query("SELECT * FROM atleta WHERE AT_SEXO='$sexo' AND AT_ESCALAO='$escalao';");
+    if($STH->rowCount() === 0){
+      return null;
+    }else{
+      while($row = $STH->fetch(PDO::FETCH_NUM)){
+        $this->listaatleta[] = new Atleta($row[0], $row[1],$row[2],$row[3],$row[4],$row[5],$row[6],$row[7],$row[8],$row[9]);
+      }
+      //$bd->desligar_bd();
+      return $this->listaatleta;
+    }
+    $bd->desligar_bd();
+  }
+
   public function email_existe($email) {
     $bd = new BaseDados();
     $bd->ligar_bd();
