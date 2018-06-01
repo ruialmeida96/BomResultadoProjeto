@@ -33,10 +33,24 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=2){
         </a>
       </li>
       <li>
-        <a class="nav-link" href="?action=eventosclube">
-          <i class="nc-icon nc-bullet-list-67"></i>
-          <p>Inscrição em Eventos</p>
-        </a>
+        <div class="dropdown">
+          <a class="nav-link" href="#" data-toggle="dropdown">
+            <i class="nc-icon nc-bullet-list-67"></i><p>Inscrição em Eventos</p><b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li class="nav-item ">
+              <a  class="dropdown-item" href="?action=eventosclube">
+                Inscrever Atletas
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a  class="dropdown-item" href="?action=inscricaoprovas">
+                Lista de Inscrições
+              </a>
+            </li>
+          </ul>
+
+        </div>
       </li>
 
       <!--<li>
