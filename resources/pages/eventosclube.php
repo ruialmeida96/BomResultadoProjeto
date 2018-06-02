@@ -25,7 +25,7 @@ $clube = $DAO->obter_detalhes_clube_userid($id_user_clube);
 $associaçao_pretence = $clube->get_associd();
 
 
-$eventos_assoc_disponiveis= $DAO2->obter_todos_eventos_assoc($associaçao_pretence);
+$eventos_assoc_disponiveis= $DAO2->obter_todos_eventos_assoc_especial_inscriçao($associaçao_pretence);
 
 if($eventos_assoc_disponiveis == null){ ?>
   <h4>Não existem Eventos Disponiveis para Inscrição</h4><br><br>

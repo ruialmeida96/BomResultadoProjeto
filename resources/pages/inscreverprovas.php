@@ -132,7 +132,13 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
           //tudo correu bem
         }
       }
+    }else{
+      echo '<script>alert("Selecione atletas.");</script>';
     }
+
+    $DAO2->inscricao_em_evento($evento_id);
+    //indicar que houve inscrições neste evento
+
     header('Location:?action=eventosclube');
 
   }

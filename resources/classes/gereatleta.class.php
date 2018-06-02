@@ -101,6 +101,17 @@ class GereAtleta {
     return new Atleta($row[0], $row[1],$row[2],$row[3],$row[4],$row[5],$row[6],$row[7],$row[8],$row[9]);
   }
 
+  public function obter_nome_apartir_atleta_id($id){
+    $bd = new BaseDados();
+    $bd->ligar_bd();
+    $STH = $bd->dbh->prepare("SELECT AT_NOME FROM atleta WHERE AT_ID = ?");
+    $STH->bindParam(1,$id);
+    $STH->execute();
+    $bd->desligar_bd();
+    $row = $STH->fetch(PDO::FETCH_NUM);
+    return$row[0];
+  }
+
   public function editar_atleta($idatleta,$nome,$nomeexibe,$contacto,$email,$especialidade,$nacionalidade,$escalao) {
     $bd = new BaseDados();
     $bd->ligar_bd();

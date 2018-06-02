@@ -31,6 +31,21 @@ class GereAtletaProva {
     }
   }
 
+  public function obter_todos_atletas_provas_idprova($id) {
+    $bd = new BaseDados();
+    $bd->ligar_bd();
+    $STH = $bd->dbh->query("SELECT * FROM atleta_prova WHERE P_ID='$id';");
+    if($STH->rowCount() === 0){
+      return null;
+    }else{
+      while($row = $STH->fetch(PDO::FETCH_NUM)){
+        $this->listaatletaprova[] = new AtletaProva($row[0], $row[1]);
+      }
+      $bd->desligar_bd();
+      return $this->listaatletaprova;
+    }
+  }
+
   public function verificar_atletas_provas($atleta,$prova) {
     $bd = new BaseDados();
     $bd->ligar_bd();

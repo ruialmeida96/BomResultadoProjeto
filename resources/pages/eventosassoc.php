@@ -74,7 +74,19 @@ if($obter_todos_os_eventos == null){ ?>
                   ?>
                   <td>
                     <button class="btn btn-primary" onclick="location.href='?action=verinfoevento&id=<?php echo $obter_todos_os_eventos[$i]->get_id()?>'" >Ver Info</button>
-                    <button class="btn btn-info" onclick="location.href='?action=editaeventoassoc&id=<?php echo $obter_todos_os_eventos[$i]->get_id()?>'" >Editar</button>
+                    <?php
+                    $data_hoje = date("Y-m-d");
+                    $dataprova = $obter_todos_os_eventos[$i]->get_data();
+
+                    $hoje = strtotime($data_hoje);
+                    $data =  strtotime($dataprova);
+
+                    if ($data > $hoje) {
+                      ?>
+                      <button class="btn btn-info" onclick="location.href='?action=editaeventoassoc&id=<?php echo $obter_todos_os_eventos[$i]->get_id()?>'" >Editar</button>
+                      <?php
+                    }
+                    ?>
                   </td>
                 </tr>
                 <?php
