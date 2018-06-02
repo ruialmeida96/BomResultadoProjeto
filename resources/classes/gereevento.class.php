@@ -164,6 +164,15 @@ class GereEvento {
     return $res;
   }
 
+  public function conclusao_do_evento($id) {
+    $bd = new BaseDados();
+    $bd->ligar_bd();
+    $STH = $bd->dbh->prepare("UPDATE evento SET E_ESTADO = 4 WHERE E_ID = '$id';");
+    $res = $STH->execute();
+    $bd->desligar_bd();
+    return $res;
+  }
+
 
 }
 ?>

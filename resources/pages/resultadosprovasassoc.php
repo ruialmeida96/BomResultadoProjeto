@@ -50,8 +50,7 @@ if($eventoscominscrições == null){ ?>
                 $hoje = strtotime($data_hoje);
                 $data =  strtotime($dataprova);
 
-                //este simbulo esta ao contrario, é para ser < pois é para provas que ja passaram... isto é apenas para testar
-                if ($data > $hoje) {
+                if ($data < $hoje) {
                   ?>
                   <tr>
                     <?php

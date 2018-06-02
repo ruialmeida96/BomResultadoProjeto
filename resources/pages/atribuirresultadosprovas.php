@@ -14,11 +14,13 @@ require_once('./resources/classes/gereevento.class.php');
 require_once('./resources/classes/gereprova.class.php');
 require_once('./resources/classes/gereatleta.class.php');
 require_once('./resources/classes/gereatletaprova.class.php');
+require_once('./resources/classes/gerehistorico.class.php');
 
 $DAO = new GereEvento();
 $DAO2 = new GereProva();
 $DAO3 = new GereAtletaProva();
 $DAO4 = new GereAtleta();
+$DAO5 = new GereHistorico();
 
 $provasevento = $DAO2->obter_todas_provas_eventoid($eventoid);
 
@@ -59,82 +61,140 @@ $local =  $eventoinfo->get_local();
     <div class="row">
       <div class="col-md-12">
         <label>Provas</label><br>
-        <?php
-        if($provasevento == null){ ?>
-          <h4>Não existem provas disponiveis para este evento.</h4><br><br>
-        <?php }else{ ?>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="card strpied-tabled-with-hover">
-                <div class="card-header ">
-                  <h4 class="card-title">Lista de Provas</h4>
-                  <p class="card-category">Detalhes das provas disponiveis para este evento</p>
-                </div>
-                <div class="card-body table-full-width table-responsive">
-                  <table class="table table-hover table-striped">
-                    <thead>
-                      <th>ID</th>
-                      <th>Nome</th>
-                      <th>Escalão</th>
-                      <th>Distância</th>
-                      <th>Hora</th>
-                      <th>Sexo</th>
-                      <th>Inscriçoes</th>
-                    </thead>
-                    <tbody>
-                      <?php
-                      $i = 0;
-                      $tamanho = count($provasevento);
-                      do{
-                        ?>
-                        <tr>
-                          <?php
-                          echo "<td>".$provasevento[$i]->get_id()."</td>";
-                          echo "<td>".$provasevento[$i]->get_nome()."</td>";
-                          echo "<td>".$provasevento[$i]->get_escalao()."</td>";
-                          echo "<td>".$provasevento[$i]->get_distancia()."</td>";
-                          echo "<td>".$provasevento[$i]->get_hora()."</td>";
-                          echo "<td>".$provasevento[$i]->get_sexo()."</td>";
-
-                          $atletas_nesta_prova = $DAO3->obter_todos_atletas_provas_idprova($provasevento[$i]->get_id());
-                          if($atletas_nesta_prova==null){
-                            echo "<td><p><small>Nenhum Atleta Inscrito</small></p></td>";
-                          }else{
-                            echo "<td>";
-                            $y = 0;
-                            $tamanhoatletas = count($atletas_nesta_prova);
-                            do{
-                              echo "<div style= 'border: 1px solid black;  margin-left:10px; border-radius: 8px; text-align: center;'>";
-                              echo $DAO4->obter_nome_apartir_atleta_id($atletas_nesta_prova[$y]->get_idatleta());
-                              ?><br><input id="appt-time" type="time" name="appt-time" step="2"><br>
-                            <input type="number" id="quantity" name="quantity" min="1" max="100">
-                              <?php
-                              echo "</div>";
-                              echo "<br><br>";
-                              $y++;
-                            }while($y<$tamanhoatletas);
-                            echo "</td>";
-                          }
-
-                          ?>
-
-
-
-                        </tr>
+        <form name="formResultadosProvas" method="POST" id="formResultadosProvas" action="">
+          <?php
+          if($provasevento == null){ ?>
+            <h4>Não existem provas disponiveis para este evento.</h4><br><br>
+          <?php }else{ ?>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card strpied-tabled-with-hover">
+                  <div class="card-header ">
+                    <h4 class="card-title">Lista de Provas</h4>
+                    <p class="card-category">Detalhes das provas disponiveis para este evento</p>
+                  </div>
+                  <div class="card-body table-full-width table-responsive">
+                    <table class="table table-hover table-striped">
+                      <thead>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Escalão</th>
+                        <th>Distância</th>
+                        <th>Hora</th>
+                        <th>Sexo</th>
+                        <th>Inscriçoes</th>
+                      </thead>
+                      <tbody>
                         <?php
-                        $i++;
-                      }while ($i<$tamanho);
-                      ?>
-                    </tbody>
-                  </table>
+                        $i = 0;
+                        $tamanho = count($provasevento);
+                        do{
+                          ?>
+                          <tr>
+                            <?php
+                            echo "<td>".$provasevento[$i]->get_id()."</td>";
+                            echo "<td>".$provasevento[$i]->get_nome()."</td>";
+                            echo "<td>".$provasevento[$i]->get_escalao()."</td>";
+                            echo "<td>".$provasevento[$i]->get_distancia()."</td>";
+                            echo "<td>".$provasevento[$i]->get_hora()."</td>";
+                            echo "<td>".$provasevento[$i]->get_sexo()."</td>";
+
+                            $atletas_nesta_prova = $DAO3->obter_todos_atletas_provas_idprova($provasevento[$i]->get_id());
+                            if($atletas_nesta_prova==null){
+                              echo "<td><p><small>Nenhum Atleta Inscrito</small></p></td>";
+                            }else{
+                              echo "<td>";
+                              $y = 0;
+                              $tamanhoatletas = count($atletas_nesta_prova);
+                              do{
+                                echo "<div style= 'border: 1px solid black;  margin-left:10px; border-radius: 8px; text-align: center;'>";
+                                echo $DAO4->obter_nome_apartir_atleta_id($atletas_nesta_prova[$y]->get_idatleta());
+                                ?><br><input type="time"  <?php echo "id=time_".$provasevento[$i]->get_id()."[] name=time_".$provasevento[$i]->get_id()."[]" ?> step="1" required><br>
+                                <input type="number" <?php echo "id=lugar_".$provasevento[$i]->get_id()."[] name=lugar_".$provasevento[$i]->get_id()."[]" ?> min="1" max="100" required>
+                                <?php
+                                echo "</div>";
+                                echo "<br><br>";
+                                $y++;
+                              }while($y<$tamanhoatletas);
+                              echo "</td>";
+                            }
+                            ?>
+                          </tr>
+                          <?php
+                          $i++;
+                        }while ($i<$tamanho);
+                        ?>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        <?php } ?>
+          <?php } ?>
+        </div>
       </div>
-    </div>
-    <br>
-     <button class="btn btn-primary" onclick="location.href='?action=resultadosprovasassoc'">Voltar</button>
+      <br>
+      <div class="row">
+        <button class="btn btn-primary" onclick="location.href='?action=resultadosprovasassoc'">Voltar</button>
+        <form method="POST" id="Aceita" action="">
+          <button type="submit" class="btn btn-success " name="btnGuarda" value="<?php echo $eventoid?>">Guardar</button>
+        </form>
+      </div>
+    </div></form>
   </div>
-</div>
+
+
+
+  <?php
+  if($_SERVER['REQUEST_METHOD']==='POST'){
+
+    if(isset($_POST['btnGuarda'])){
+
+      $j = 0;
+      $tamanhoj = count($provasevento);
+      do{
+        $idprova = $provasevento[$j]->get_id();
+        if(isset($_POST['time_'.$idprova],$_POST['lugar_'.$idprova]) && !empty($_POST['time_'.$idprova]) && !empty($_POST['lugar_'.$idprova])){
+          $resultado = $_POST['time_'.$idprova];
+          $resultado1 = $_POST['lugar_'.$idprova];
+          $atletas_nesta_prova = $DAO3->obter_todos_atletas_provas_idprova($idprova);
+
+          $z = 0;
+          $tamanhoatletas = count($atletas_nesta_prova);
+
+
+          $valora = 1;
+          $valorb = 1;
+
+          foreach ($resultado as $time){
+            $idatleta = $atletas_nesta_prova[$z]->get_idatleta();
+            $valorb = 1;
+            foreach ($resultado1 as $place){
+              if($valora==$valorb){
+              /*  echo $time;
+                echo ":";
+                echo $place;
+                echo "|";
+                echo $idprova;
+                echo ";;";
+                echo $idatleta;
+                echo "//";
+                echo "<br>";*/
+                $DAO5->inserir_historico(new Historico (0,$idprova,$idatleta,$time,$place,1,true));
+              }
+              $valorb++;
+            }
+            $valora++;
+            $z++;
+          }
+
+        }
+        $j++;
+      }while ($j<$tamanhoj);
+
+      $DAO->conclusao_do_evento($eventoid);
+      header('Location:?action=resultadosprovasassoc');
+    }
+
+  }
+  ?>

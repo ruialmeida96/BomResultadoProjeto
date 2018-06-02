@@ -32,9 +32,10 @@ class GereAtletaProva {
   }
 
   public function obter_todos_atletas_provas_idprova($id) {
+    $this->listaatletaprova = [];
     $bd = new BaseDados();
     $bd->ligar_bd();
-    $STH = $bd->dbh->query("SELECT * FROM atleta_prova WHERE P_ID='$id';");
+    $STH = $bd->dbh->query("SELECT * FROM atleta_prova WHERE P_ID='$id' ORDER BY AT_ID DESC;");
     if($STH->rowCount() === 0){
       return null;
     }else{
