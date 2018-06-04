@@ -20,7 +20,7 @@ class GereHistorico {
   }
 
   public function obter_todos_historicos() {
-      $this->listahistorico=[];
+    $this->listahistorico=[];
     $bd = new BaseDados();
     $bd->ligar_bd();
     $STH = $bd->dbh->query("SELECT * FROM historico;");
@@ -35,28 +35,28 @@ class GereHistorico {
     }
   }
 
-  /*public function obter_todos_atletas_provas_idprova($id) {
-  $this->listaatletaprova = [];
+  public function obter_historicos_provaid($id) {
+    $this->listahistorico=[];
+    $bd = new BaseDados();
+    $bd->ligar_bd();
+    $STH = $bd->dbh->query("SELECT * FROM historico WHERE P_ID='$id';");
+    if($STH->rowCount() === 0){
+      return null;
+    }else{
+      while($row = $STH->fetch(PDO::FETCH_NUM)){
+        $this->listahistorico[] = new Historico($row[0], $row[1],$row[2],$row[3],$row[4]);
+      }
+      $bd->desligar_bd();
+      return $this->listahistorico;
+    }
+  }
+  /*
+  public function verificar_atletas_provas($atleta,$prova) {
   $bd = new BaseDados();
   $bd->ligar_bd();
-  $STH = $bd->dbh->query("SELECT * FROM atleta_prova WHERE P_ID='$id' ORDER BY AT_ID DESC;");
+  $STH = $bd->dbh->query("SELECT * FROM atleta_prova WHERE AT_ID='$atleta' AND P_ID='$prova';");
   if($STH->rowCount() === 0){
   return null;
-}else{
-while($row = $STH->fetch(PDO::FETCH_NUM)){
-$this->listaatletaprova[] = new AtletaProva($row[0], $row[1]);
-}
-$bd->desligar_bd();
-return $this->listaatletaprova;
-}
-}
-
-public function verificar_atletas_provas($atleta,$prova) {
-$bd = new BaseDados();
-$bd->ligar_bd();
-$STH = $bd->dbh->query("SELECT * FROM atleta_prova WHERE AT_ID='$atleta' AND P_ID='$prova';");
-if($STH->rowCount() === 0){
-return null;
 }else{
 return true;
 }

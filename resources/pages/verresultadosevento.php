@@ -15,9 +15,11 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=1){
 $eventoid = $_GET["id"];
 require_once('./resources/classes/gereevento.class.php');
 require_once('./resources/classes/gereprova.class.php');
+require_once('./resources/classes/gerehistorico.class.php');
 
 $DAO = new GereEvento();
 $DAO2 = new GereProva();
+$DAO3 = new GereHistorico();
 
 $provasevento = $DAO2->obter_todas_provas_eventoid($eventoid);
 
@@ -59,42 +61,43 @@ if($provasevento == null){ ?>
                   echo "<td>".$provasevento[$i]->get_sexo()."</td>";
                   ?>
                   <td>
-                  <button class="btn btn-primary" onclick="addProvas(this.value)" <?php echo "value=".$provasevento[$i]->get_id()." id=".$provasevento[$i]->get_id() ?> >Ver</button><br></td>
-                </tr>
-                <?php
-                $i++;
-              }while ($i<$tamanho);
-              ?>
-            </tbody>
-          </table>
+                    <button class="btn btn-primary" onclick="addProvas(this.value)" <?php echo "value=".$provasevento[$i]->get_id()." id=".$provasevento[$i]->get_id() ?> >Ver</button><br></td>
+                  </tr>
+                  <?php
+                  $i++;
+                }while ($i<$tamanho);
+                ?>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
+
     </div>
-  </div>
-<?php } ?>
+  <?php } ?>
 
-<div id="container"></div>
-<div id="valor" style="display: none;"> </div>
-<script>
+  <div id="container"></div>
+  <script>
 
-function addProvas(idbotao){
-  var myDiv = document.getElementById("container");
-  var myDiv2 = document.getElementById("valor");
-  myDiv2.innerHTML=idbotao;
-  var valorbotao = idbotao;
-  myDiv.innerHTML="idbotao=";
-  myDiv.innerHTML+=idbotao;
-  myDiv.innerHTML+="<br> Escrever mais coisas<br>";
-  myDiv.innerHTML+="";
-  <?php
-  
+  function addProvas(idbotao){
+    var myDiv = document.getElementById("container");
+    myDiv.innerHTML="Prova número = ";
+    myDiv.innerHTML+=idbotao;
+    //myDiv.innerHTML+="";
 
-  //fazer as coisas iguais ao que foi feito para adicionar provas
+    <?php
+    //fazer as coisas iguais ao que foi feito para adicionar provas
+  //  echo '<script>idbotao</script>';
 
-   ?>
+  $resultadosprova = $DAO3->obter_historicos_provaid(idbotao);
 
+  if($resultadosprova == null){
+    ?>myDiv.innerHTML+="<br>Nenhuma inscrição foi encontrada!<br>";<?php
+  }else{
+    ?>myDiv.innerHTML+="<br>Inscrição foi encontrada!<br>";<?php
+  }
+    ?>
 
-
-}
+  }
 
 </script>
