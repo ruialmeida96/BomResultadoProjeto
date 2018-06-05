@@ -16,12 +16,16 @@ $eventoid = $_GET["id"];
 require_once('./resources/classes/gereevento.class.php');
 require_once('./resources/classes/gereprova.class.php');
 require_once('./resources/classes/gerehistorico.class.php');
+require_once('./resources/classes/gereatleta.class.php');
 
 $DAO = new GereEvento();
 $DAO2 = new GereProva();
 $DAO3 = new GereHistorico();
+$DAO4 = new GereAtleta();
 
 $provasevento = $DAO2->obter_todas_provas_eventoid($eventoid);
+
+
 
 
 if($provasevento == null){ ?>
@@ -76,28 +80,62 @@ if($provasevento == null){ ?>
     </div>
   <?php } ?>
 
-  <div id="container"></div>
   <script>
-
   function addProvas(idbotao){
-    var myDiv = document.getElementById("container");
-    myDiv.innerHTML="Prova número = ";
-    myDiv.innerHTML+=idbotao;
-    //myDiv.innerHTML+="";
-
-    <?php
-    //fazer as coisas iguais ao que foi feito para adicionar provas
-  //  echo '<script>idbotao</script>';
-
-  $resultadosprova = $DAO3->obter_historicos_provaid(idbotao);
-
-  if($resultadosprova == null){
-    ?>myDiv.innerHTML+="<br>Nenhuma inscrição foi encontrada!<br>";<?php
-  }else{
-    ?>myDiv.innerHTML+="<br>Inscrição foi encontrada!<br>";<?php
+    window.location.href = "?action=verresultadosevento&id="+<?php echo $eventoid ?> +"&prova=" + idbotao;
   }
-    ?>
-
-  }
-
 </script>
+<?php
+if(isset($_GET["prova"])){
+  $idprovaselecionada=$_GET["prova"];
+
+
+$resultadosprova = $DAO3->obter_historicos_provaid($idprovaselecionada);
+
+
+if($resultadosprova == null){ ?>
+  <h4>Não existe historicos de resultados para esta prova.</h4><br><br>
+<?php }else{ ?>
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card strpied-tabled-with-hover">
+        <div class="card-header ">
+          <h4 class="card-title">Prova com ID <?php echo $resultadosprova[0]->get_provaid(); ?></h4>
+          <p class="card-category">Detalhes dos resultados  para esta prova</p>
+        </div>
+        <div class="card-body table-full-width table-responsive">
+          <table class="table table-hover table-striped">
+            <thead>
+              <th>ID</th>
+              <th>Nome Atleta</th>
+              <th>Tempo</th>
+              <th>Lugar</th>
+            </thead>
+            <tbody>
+              <?php
+              $x = 0;
+              $tamanho2 = count($resultadosprova);
+              do{
+                ?>
+                <tr>
+                  <?php
+                  echo "<td>".$resultadosprova[$x]->get_id()."</td>";
+                  echo "<td>".$DAO4->obter_nome_apartir_atleta_id($resultadosprova[$x]->get_atletaid())."</td>";
+                  echo "<td>".$resultadosprova[$x]->get_tempo()."</td>";
+                  echo "<td>".$resultadosprova[$x]->get_local()."</td>";
+                  ?>
+                  </tr>
+                  <?php
+                  $x++;
+                }while ($x<$tamanho2);
+                ?>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  <?php }
+
+  }?>
