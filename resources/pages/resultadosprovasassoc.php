@@ -7,6 +7,8 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=1){
 }
 ?>
 <h3>Identificar de Resultados de Provas</h3>
+
+<h4>Neste aqui falta descomentar a parte que identifica se o evento ainda esta para ocorrer, ou se ja ocorreu</h4>
 <?php
 
 require_once('./resources/classes/gereevento.class.php');
@@ -50,7 +52,8 @@ if($eventoscominscrições == null){ ?>
                 $hoje = strtotime($data_hoje);
                 $data =  strtotime($dataprova);
 
-                if ($data < $hoje) {
+              //  if ($data < $hoje) {
+
                   ?>
                   <tr>
                     <?php
@@ -65,7 +68,7 @@ if($eventoscominscrições == null){ ?>
                   </tr>
 
                   <?php
-                }
+                //}
                 $i++;
               }while ($i<$tamanho);
               ?>

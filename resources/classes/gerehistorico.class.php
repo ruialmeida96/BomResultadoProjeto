@@ -50,6 +50,20 @@ class GereHistorico {
       return $this->listahistorico;
     }
   }
+
+  public function historico_ja_existente($prova, $atleta) {
+    $bd = new BaseDados();
+    $bd->ligar_bd();
+    $STH = $bd->dbh->prepare("SELECT * FROM historico WHERE P_ID = '$prova' AND AT_ID= '$atleta';");
+    $STH->execute();
+    $bd->desligar_bd();
+    $row = $STH->fetch(PDO::FETCH_ASSOC);
+    if($STH->rowCount()>0){
+      return true;
+    }else{
+      return false;
+    }
+  }
   /*
   public function verificar_atletas_provas($atleta,$prova) {
   $bd = new BaseDados();
