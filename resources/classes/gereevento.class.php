@@ -188,6 +188,22 @@ class GereEvento {
     return $res;
   }
 
+  public function editar_evento(Evento $evento) {
+		$bd = new BaseDados();
+    $bd->ligar_bd();
+		$STH = $bd->dbh->prepare("UPDATE evento SET E_NOME = ?, E_DATASTART = ?, E_DIASDURACAO = ?, E_TIPO = ?, E_LOCAL = ?,E_DETALHES = ? WHERE E_ID = ?");
+		$STH->bindValue(1, $evento->get_nome());
+		$STH->bindValue(2, $evento->get_data());
+		$STH->bindValue(3, $evento->get_dias());
+		$STH->bindValue(4, $evento->get_tipo());
+    $STH->bindValue(5, $evento->get_local());
+    $STH->bindValue(6, $evento->get_detalhes());
+    $STH->bindValue(7, $evento->get_id());
+		$res = $STH->execute();
+		$bd->desligar_bd();
+		return $res;
+	}
+
 
 }
 ?>

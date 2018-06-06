@@ -91,7 +91,7 @@ if($obter_todos_os_eventos == null){ ?>
                     $hoje = strtotime($data_hoje);
                     $data =  strtotime($dataprova);
 
-                    if ($data > $hoje) {
+                    if ($data >= $hoje) {
                       ?>
                       <button class="btn btn-info" onclick="location.href='?action=editaeventoassoc&id=<?php echo $obter_todos_os_eventos[$i]->get_id()?>'" >Editar</button>
                       <?php

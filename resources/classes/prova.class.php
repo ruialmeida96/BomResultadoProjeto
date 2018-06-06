@@ -39,5 +39,10 @@ class Prova {
   public function get_sexo() {
     return $this->sexo;
   }
+
+
+  public function get_hora_string() {
+    return (string) $this->hora;
+  }
 }
 ?>

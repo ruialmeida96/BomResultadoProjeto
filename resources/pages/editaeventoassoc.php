@@ -17,14 +17,16 @@ require_once('./resources/classes/prova.class.php');
 $DAO = new GereEvento();
 $DAO2 = new GereProva();
 
+
 $provasevento = $DAO2->obter_todas_provas_eventoid($eventoid);
 if($provasevento!=null){
   $tamanho = count($provasevento);
+  for($i=0;$i<$tamanho;$i++){
+    $ideventos[$i] = $provasevento[$i]->get_id();
+  }
 }else{
   $tamanho=0;
 }
-
-echo $tamanho;
 
 
 
@@ -97,7 +99,7 @@ $organizadores =  $eventoinfo->get_organizadores();
 
       <br><br>
       <div class="row">
-        <div class="col-md-5 pr-1">
+        <div class="col-md-12 ">
           <label>Provas</label><br>
 
           <div class="form-group">
@@ -226,8 +228,7 @@ $organizadores =  $eventoinfo->get_organizadores();
               div.appendChild(document.createElement('br'));
             }
 
-            function adicionaprovas_valores(num,nome,escalao,dist,time,sex){
-
+            function adicionaprovas_valores(num,nome,escalao,dist,time,sexo){
               var div = document.createElement('div');
               div.setAttribute("class", "col");
               div.setAttribute("style", "margin: 3px; border: 1px solid rgba(192,192,192,0.6); border-radius: 5px")
@@ -256,6 +257,7 @@ $organizadores =  $eventoinfo->get_organizadores();
               var lbl_esc = document.createElement('label');
               lbl_esc.innerHTML = "Escalão:";
 
+
               var array = ["Benjamins A","Benjamins B","Infantis","Iniciados","Juvenis","Juniores","Sub-23","Seniores","Veteranos 35","Veteranos 40","Veteranos 45","Veteranos 50","Veteranos 55","Veteranos 60","Veteranos 65","Veteranos 70","Veteranos 75","Veteranos 80","Veteranos 85","Veteranos 90"];
               var sb_esc = document.createElement("select");
               sb_esc.setAttribute("id", "escalao_prova"+num);
@@ -264,10 +266,10 @@ $organizadores =  $eventoinfo->get_organizadores();
               for (var i = 0; i < array.length; i++) {
                 var option = document.createElement("option");
                 option.setAttribute("value", i+1);
-                option.text = array[i];
-                if(escalao==i+1){
-                  //option.setAttribute("selected", "");
+                if((i+1)==escalao){
+                  option.setAttribute("selected","");
                 }
+                option.text = array[i];
                 sb_esc.appendChild(option);
               }
 
@@ -295,7 +297,6 @@ $organizadores =  $eventoinfo->get_organizadores();
               input_time.setAttribute("name", "hora_provas"+num);
               input_time.setAttribute("id", "hora_provas"+num);
               input_time.setAttribute("value", ""+time);
-              input_time.setAttribute("step", "1");
               input_time.setAttribute("required","");
 
               var lbl_sexo = document.createElement('label');
@@ -305,15 +306,14 @@ $organizadores =  $eventoinfo->get_organizadores();
               var sb_sexo = document.createElement("select");
               sb_sexo.setAttribute("id", "sexo_prova"+num);
               sb_sexo.setAttribute("name", "sexo_prova"+num);
-              //sb_sexo.setAttribute("value", ""+sex);
               sb_sexo.setAttribute("required","");
               for (var i = 0; i < array2.length; i++) {
                 var option2 = document.createElement("option");
                 option2.setAttribute("value", array2[i]);
-                option2.text = array2[i];
-                if(sex==array2[i]){
-                  //option2.setAttribute("selected", "");
+                if(array2[i].localeCompare(sexo)===0){
+                  option2.setAttribute("selected","");
                 }
+                option2.text = array2[i];
                 sb_sexo.appendChild(option2);
               }
 
@@ -343,122 +343,93 @@ $organizadores =  $eventoinfo->get_organizadores();
               div.appendChild(sb_sexo);
               document.getElementById('provas').appendChild(div);
               div.appendChild(document.createElement('br'));
+
             }
 
-            //adicionaprovas(1);
+            //adicionaprovas_valores(1,'Teste nome',3,800,'16:00:00','F');
 
             /*subtrai_provas.addEventListener('click', function(){
-              num_provas_atual = num_provas.innerHTML;
-              if(num_provas_atual > 1){
-                document.getElementById("provas_"+num_provas_atual).remove();
-                num_provas.innerHTML = num_provas_atual-1;
-                document.getElementById('total').value=""+num_provas.innerHTML;
-                aviso_max.innerHTML = "";
-              }else aviso_max.innerHTML = "Atingiu valor mínimo de provas!";
-            }, false);
+            num_provas_atual = num_provas.innerHTML;
+            if(num_provas_atual > 1){
+            document.getElementById("provas_"+num_provas_atual).remove();
+            num_provas.innerHTML = num_provas_atual-1;
+            document.getElementById('total').value=""+num_provas.innerHTML;
+            aviso_max.innerHTML = "";
+          }else aviso_max.innerHTML = "Atingiu valor mínimo de provas!";
+        }, false);
 
-            adiciona_provas.addEventListener('click', function(){
-              num_provas_atual = num_provas.innerHTML;
-              if(num_provas_atual < 24){
-                adicionaprovas(parseInt(num_provas_atual)+parseInt(1));
-                num_provas.innerHTML = parseInt(num_provas_atual)+parseInt(1);
-                document.getElementById('total').value=""+num_provas.innerHTML;
-                aviso_max.innerHTML = "";
-              }else aviso_max.innerHTML = "Atingiu valor máximo de provas!";
-            }, false);*/
+        adiciona_provas.addEventListener('click', function(){
+        num_provas_atual = num_provas.innerHTML;
+        if(num_provas_atual < 24){
+        adicionaprovas(parseInt(num_provas_atual)+parseInt(1));
+        num_provas.innerHTML = parseInt(num_provas_atual)+parseInt(1);
+        document.getElementById('total').value=""+num_provas.innerHTML;
+        aviso_max.innerHTML = "";
+      }else aviso_max.innerHTML = "Atingiu valor máximo de provas!";
+    }, false);*/
 
-            </script>
-            <input type="hidden" id="total" name="total" value="<?php echo $tamanho ?>" >
-          </div>
+    num_provas.innerHTML = <?php echo $tamanho;?>
+    //
+    </script>
+    <input type="hidden" id="total" name="total" value="<?php echo $tamanho ?>" >
+  </div>
 
-          <?php
+  <?php
 
-          for($i=0;$i<$tamanho;$i++){
-            echo "<script>adicionaprovas_valores(".($i+1).",".$provasevento[$i]->get_nome().",".$provasevento[$i]->get_escalao().",".$provasevento[$i]->get_distancia().",".$provasevento[$i]->get_hora().",".$provasevento[$i]->get_sexo().");</script>";
-          }
-          /*
-          if($provasevento == null){ ?>
-          <h4>Não existem provas disponiveis para este evento.</h4><br><br>
-          <?php }else{ ?>
-          <div class="row">
-          <div class="col-md-12">
-          <div class="card strpied-tabled-with-hover">
-          <div class="card-header ">
-          <h4 class="card-title">Lista de Provas</h4>
-          <p class="card-category">Detalhes das provas disponiveis para este evento</p>
-          </div>
-          <div class="card-body table-full-width table-responsive">
-          <table class="table table-hover table-striped">
-          <thead>
-          <th>ID</th>
-          <th>Nome</th>
-          <th>Escalão</th>
-          <th>Distância</th>
-          <th>Hora</th>
-          <th>Sexo</th>
-          </thead>
-          <tbody>
-          <?php
-          $i = 0;
-          $tamanho = count($provasevento);
-          do{
-          ?>
-          <tr>
-          <?php
-          echo "<td>".$provasevento[$i]->get_id()."</td>";
-          echo "<td>".$provasevento[$i]->get_nome()."</td>";
-          echo "<td>".$provasevento[$i]->get_escalao()."</td>";
-          echo "<td>".$provasevento[$i]->get_distancia()."</td>";
-          echo "<td>".$provasevento[$i]->get_hora()."</td>";
-          echo "<td>".$provasevento[$i]->get_sexo()."</td>";
-          ?>
-          </tr>
-          <?php
-          $i++;
-        }while ($i<$tamanho);
-        ?>
-        </tbody>
-        </table>
-        </div>
-        </div>
-        </div>
-        </div>
-        <?php } */?>
+  for($i=0;$i<$tamanho;$i++){
+    $valor = ($i+1);
+    $nome = (string) $provasevento[$i]->get_nome();
+    $escalao = $provasevento[$i]->get_escalao();
+    $distancia = $provasevento[$i]->get_distancia();
+    $hora=  $provasevento[$i]->get_hora_string();
+    $sexo =$provasevento[$i]->get_sexo();
+    //echo "adicionaprovas_valores(".$valor.",".$nome.",".$escalao.",".$distancia.",".$hora.",".$sexo.");</script>";
+    echo "<script>adicionaprovas_valores($valor,'$nome',$escalao,$distancia,'$hora','$sexo');</script>";
+  }?>
+  <script>
+  document.getElementById('total').value = <?php echo $tamanho;?>
+  </script>
 
-
-      </div>
-    </div>
-    <br>
-    <button type="submit" class="btn btn-success" name="btnConfirm" >Confirmar</button>
-  </form>
 </div>
 </div>
-
-<!--
-<form name="formAddEvento"  method="POST" id="formAddEvento" action="">
-<label>Nome do Evento</label>
-<input type="text" name="nome" id="nome" class="form-control" placeholder="Nome do Evento..." maxlength="130" required >
-
-<label>Data de Inicio</label>
 <br>
-<input type="date" id="datastart" name="datastart" required><br>
 
-<label>Dias de Duração</label><br>
-<input type="number" id="dias" name="dias" min="1" max="30" required ><br>
-
-<label>Tipo de Evento</label>
-<input type="text" name="tipo" id="tipo" class="form-control" placeholder="Prova de ... (ex:Estrada)" maxlength="25" required>
-
-<label>Localização do Evento</label>
-<input type="text" name="local" id="local" class="form-control" placeholder="Localização do Evento..." required>
-
-<label>Detalhes</label>
-<br>
-<textarea rows="4" cols="50"  name="detalhes" id="detalhes"  maxlength="130" placeholder="Introduza algo..."> </textarea>
+<button type="submit" class="btn btn-success" name="btnConfirm" >Guardar</button>
+</form>
+<button class="btn btn-primary" onclick="location.href='?action=eventosrecusados'">Voltar</button>
 
 </div>
-<div class="modal-footer">
-<span></span>
-<button type="submit" class="btn btn-success" name="btnAdd" >Adicionar</button>
 </div>
-</form>-->
+<?php
+if($_SERVER['REQUEST_METHOD']==='POST'){
+
+  if(isset($_POST['btnConfirm'])){
+    if(isset($_POST['nome'],$_POST['datastart'],$_POST['dias'],$_POST['tipo'],$_POST['local']) && !empty($_POST['nome']) && !empty($_POST['datastart']) && !empty($_POST['dias']) && !empty($_POST['tipo']) && !empty($_POST['local'])){
+
+if($DAO->editar_evento(new Evento($eventoid,0,$_POST['nome'],$_POST['datastart'],$_POST['dias'],$_POST['tipo'],$_POST['local'],$_POST['detalhes'],'',1))){
+
+  $xd =  $_POST['total'];
+  if($xd>0){
+    for($j=1;$j<=$xd;$j++){
+      $idprovaeste= $ideventos[$j-1];
+      $nome = $_POST['nome_prova'.$j];
+      $escalao = $_POST['escalao_prova'.$j];
+      $dist = $_POST['distancia_provas'.$j];
+      $hora = $_POST['hora_provas'.$j];
+      $sexo = $_POST['sexo_prova'.$j];
+      $DAO2->editar_prova(new Prova ($idprovaeste,$eventoid,$nome,$escalao,$dist,$hora,$sexo));
+      if($j==($xd)){
+        header('Location:?action=eventosrecusados');
+      }
+    }
+  }
+
+
+}
+
+
+    }
+  }
+}
+
+?>

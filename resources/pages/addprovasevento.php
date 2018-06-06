@@ -199,7 +199,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
       $hora = $_POST['hora_provas'.$i];
       $sexo = $_POST['sexo_prova'.$i];
       $DAO->inserir_prova(new Prova (0,$eventoid,$nome,$escalao,$dist,$hora,$sexo));
-      if($i==($xd-1)){
+      if($i==($xd)){
         echo '<script>alert("As Provas foram criadas com sucesso.");</script>';
         header('Location:?action=eventosassoc');
       }

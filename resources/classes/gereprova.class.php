@@ -36,6 +36,21 @@ class GereProva {
     }
   }
 
+  public function editar_prova(Prova $prova) {
+		$bd = new BaseDados();
+    $bd->ligar_bd();
+		$STH = $bd->dbh->prepare("UPDATE prova SET P_NOME = ?, P_ESCALAO = ?, P_DISTANCIA = ?, P_HORA = ?, P_SEXO = ? WHERE P_ID = ?");
+		$STH->bindValue(1, $prova->get_nome());
+		$STH->bindValue(2, $prova->get_escalao());
+		$STH->bindValue(3, $prova->get_distancia());
+		$STH->bindValue(4, $prova->get_hora());
+    $STH->bindValue(5, $prova->get_sexo());
+    $STH->bindValue(6, $prova->get_id());
+		$res = $STH->execute();
+		$bd->desligar_bd();
+		return $res;
+	}
+
 }
 
 
