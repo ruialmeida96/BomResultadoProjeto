@@ -28,7 +28,7 @@ $obter_todos_os_eventos=$DAO->obter_todos_eventos_assoc_inativos($associacaoid);
 
 
 if($obter_todos_os_eventos == null){ ?>
-  <h4>Não existem eventos disponiveis.</h4><br><br>
+  <h4>Não existem eventos pendentes disponiveis.</h4><br><br>
 <?php }else{ ?>
   <div class="row">
     <div class="col-md-12">
@@ -66,9 +66,8 @@ if($obter_todos_os_eventos == null){ ?>
                   $data =  strtotime($dataprova);
 
                   if ($data < $hoje) {
-                     echo "<br><div><p><small>Este evento já passou de data</small></p></div></td>";
-                   }
-
+                    echo "<br><div><p><small>Este evento já passou de data</small></p></div></td>";
+                  }
                   echo "<td>".$obter_todos_os_eventos[$i]->get_dias()."</td>";
                   echo "<td>".$obter_todos_os_eventos[$i]->get_tipo()."</td>";
                   echo "<td>".$obter_todos_os_eventos[$i]->get_local()."</td>";

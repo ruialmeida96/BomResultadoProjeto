@@ -48,7 +48,7 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=1){
           <ul class="dropdown-menu">
             <li class="nav-item ">
               <a  class="dropdown-item" href="?action=eventosassoc">
-                Listar Eventos
+                Listar Eventos (Ativos)
               </a>
             </li>
             <li class="nav-item ">

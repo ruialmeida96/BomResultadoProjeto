@@ -59,7 +59,17 @@ if($obter_todos_os_eventos == null){ ?>
                   <?php
                   echo "<td>".$obter_todos_os_eventos[$i]->get_id()."</td>";
                   echo "<td>".$obter_todos_os_eventos[$i]->get_nome()."</td>";
-                  echo "<td>".$obter_todos_os_eventos[$i]->get_data()."</td>";
+                  echo "<td>".$obter_todos_os_eventos[$i]->get_data()."";
+                  $data_hoje = date("Y-m-d");
+                  $dataprova = $obter_todos_os_eventos[$i]->get_data();
+
+                  $hoje = strtotime($data_hoje);
+                  $data =  strtotime($dataprova);
+
+                  if ($data < $hoje) {
+                    echo "<br><div><p><small>Este evento já passou de data</small></p></div></td>";
+                  }
+
                   echo "<td>".$obter_todos_os_eventos[$i]->get_dias()."</td>";
                   echo "<td>".$obter_todos_os_eventos[$i]->get_tipo()."</td>";
                   echo "<td>".$obter_todos_os_eventos[$i]->get_local()."</td>";

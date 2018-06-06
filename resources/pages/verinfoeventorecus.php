@@ -141,12 +141,23 @@ $organizadores =  $eventoinfo->get_organizadores();
     <div class="row">
       <button class="btn btn-primary" onclick="location.href='?action=eventosrecusados'">Voltar</button>
 
-      <form method="POST" id="Aceita" action="">
-        <button type="submit" class="btn btn-success " name="btnAceita" value="<?php echo $eventoid?>">Aceitar de Volta</button>
-      </form>
-      <form method="POST" id="Editar" action="">
-        <button type="submit" class="btn btn-info" name="btnEdita" value="<?php echo $eventoid?>">Editar</button>
-      </form>
+      <?php
+      $data_hoje = date("Y-m-d");
+      $dataprova = $data;
+
+      $hoje = strtotime($data_hoje);
+      $data =  strtotime($dataprova);
+
+      if ($data > $hoje) {
+        //caso a prova ainda possa vir a acontecer no futuro
+        ?>
+        <form method="POST" id="Aceita" action="">
+          <button type="submit" class="btn btn-success " name="btnAceita" value="<?php echo $eventoid?>">Aceitar de Volta</button>
+        </form>
+        <form method="POST" id="Editar" action="">
+          <button type="submit" class="btn btn-info" name="btnEdita" value="<?php echo $eventoid?>">Editar</button>
+        </form>
+      <?php } ?>
     </div>
   </div>
 </div>
