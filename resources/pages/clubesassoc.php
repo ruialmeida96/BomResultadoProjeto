@@ -24,7 +24,7 @@ require_once('./resources/classes/gereassociacao.class.php');
 require_once('./resources/classes/gereutilizador.class.php');
 
 $DAO = new GereClube();
-$obter_todos_os_clubes = $DAO->obter_todas_clubes();
+
 
 $DAO2 = new GereAssociacao();
 $obter_todas_as_assoc = $DAO2->obter_todas_assoc();
@@ -32,6 +32,8 @@ $obter_todas_as_assoc = $DAO2->obter_todas_assoc();
 $DAO3 = new GereUtilizador();
 $iduserassoc = $_SESSION['U_ID'];
 $associacaoid=$DAO2->obter_detalhes_associação_apartir_userid($iduserassoc);
+
+$obter_todos_os_clubes = $DAO->obter_todas_clubes_apartir_da_associd($associacaoid);
 
  if($obter_todos_os_clubes == null){ ?>
   <h4>Não existem Clubes Disponiveis</h4><br><br>
