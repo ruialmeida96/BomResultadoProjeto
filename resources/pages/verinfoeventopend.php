@@ -118,7 +118,7 @@ $organizadores =  $eventoinfo->get_organizadores();
                           <?php
                           echo "<td>".$provasevento[$i]->get_id()."</td>";
                           echo "<td>".$provasevento[$i]->get_nome()."</td>";
-                          echo "<td>".$provasevento[$i]->get_escalao()."</td>";
+                          echo "<td>".mostraescaloes($provasevento[$i]->get_escalao())."</td>";
                           echo "<td>".$provasevento[$i]->get_distancia()."</td>";
                           echo "<td>".$provasevento[$i]->get_hora()."</td>";
                           echo "<td>".$provasevento[$i]->get_sexo()."</td>";
@@ -183,7 +183,51 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
       echo '<script>alert("Ocorreu um erro ao recusar o evento");</script>';
     }
   }
-
-
 }
+
+function mostraescaloes($num){
+  if($num==1){
+    return "Benjamins A";
+  }else if($num==2){
+    return "Benjamins B";
+  }else if($num==3){
+    return "Infantis";
+  }else if($num==4){
+    return "Iniciados";
+  }else if($num==5){
+    return "Juvenis";
+  }else if($num==6){
+    return "Juniores";
+  }else if($num==7){
+    return "Sub-23";
+  }else if($num==8){
+    return "Seniores";
+  }else if($num==9){
+    return "Veteranos 35";
+  }else if($num==10){
+    return "Veteranos 40";
+  }else if($num==11){
+    return "Veteranos 45";
+  }else if($num==12){
+    return "Veteranos 50";
+  }else if($num==13){
+    return "Veteranos 55";
+  }else if($num==14){
+    return "Veteranos 60";
+  }else if($num==15){
+    return "Veteranos 65";
+  }else if($num==16){
+    return "Veteranos 70";
+  }else if($num==17){
+    return "Veteranos 75";
+  }else if($num==18){
+    return "Veteranos 80";
+  }else if($num==19){
+    return "Veteranos 85";
+  }else if($num==20){
+    return "Veteranos 90";
+  }
+}
+
+
 ?>
