@@ -406,26 +406,28 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
   if(isset($_POST['btnConfirm'])){
     if(isset($_POST['nome'],$_POST['datastart'],$_POST['dias'],$_POST['tipo'],$_POST['local']) && !empty($_POST['nome']) && !empty($_POST['datastart']) && !empty($_POST['dias']) && !empty($_POST['tipo']) && !empty($_POST['local'])){
 
-if($DAO->editar_evento(new Evento($eventoid,0,$_POST['nome'],$_POST['datastart'],$_POST['dias'],$_POST['tipo'],$_POST['local'],$_POST['detalhes'],'',1))){
+      if($DAO->editar_evento(new Evento($eventoid,0,$_POST['nome'],$_POST['datastart'],$_POST['dias'],$_POST['tipo'],$_POST['local'],$_POST['detalhes'],'',1))){
 
-  $xd =  $_POST['total'];
-  if($xd>0){
-    for($j=1;$j<=$xd;$j++){
-      $idprovaeste= $ideventos[$j-1];
-      $nome = $_POST['nome_prova'.$j];
-      $escalao = $_POST['escalao_prova'.$j];
-      $dist = $_POST['distancia_provas'.$j];
-      $hora = $_POST['hora_provas'.$j];
-      $sexo = $_POST['sexo_prova'.$j];
-      $DAO2->editar_prova(new Prova ($idprovaeste,$eventoid,$nome,$escalao,$dist,$hora,$sexo));
-      if($j==($xd)){
-        header('Location:?action=eventosrecusados');
+        $xd =  $_POST['total'];
+        if($xd>0){
+          for($j=1;$j<=$xd;$j++){
+            $idprovaeste= $ideventos[$j-1];
+            $nome = $_POST['nome_prova'.$j];
+            $escalao = $_POST['escalao_prova'.$j];
+            $dist = $_POST['distancia_provas'.$j];
+            $hora = $_POST['hora_provas'.$j];
+            $sexo = $_POST['sexo_prova'.$j];
+            $DAO2->editar_prova(new Prova ($idprovaeste,$eventoid,$nome,$escalao,$dist,$hora,$sexo));
+            if($j==($xd)){
+              header('Location:?action=eventosrecusados');
+            }
+          }
+        }else{
+          header('Location:?action=eventosrecusados');
+        }
+
+
       }
-    }
-  }
-
-
-}
 
 
     }
