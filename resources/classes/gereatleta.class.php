@@ -121,6 +121,18 @@ class GereAtleta {
     return $res;
   }
 
+  public function obter_detalhes_atleta_email($email){
+    $bd = new BaseDados();
+    $bd->ligar_bd();
+    $STH = $bd->dbh->query("SELECT * FROM atleta WHERE AT_EMAIL='$email';");
+    if($STH->rowCount() === 0){
+      return null;
+    }else{
+      return new Atleta($row[0], $row[1],$row[2],$row[3],$row[4],$row[5],$row[6],$row[7],$row[8],$row[9]);
+    }
+    $bd->desligar_bd();
+  }
+
   //caso precise, ir ver a gereclube.class.php
 
 }

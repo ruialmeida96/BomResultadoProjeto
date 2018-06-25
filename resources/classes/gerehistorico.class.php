@@ -51,6 +51,22 @@ class GereHistorico {
     }
   }
 
+  public function obter_historicos_atletaid($id) {
+    $this->listahistorico=[];
+    $bd = new BaseDados();
+    $bd->ligar_bd();
+    $STH = $bd->dbh->query("SELECT * FROM historico WHERE AT_ID='$id';");
+    if($STH->rowCount() === 0){
+      return null;
+    }else{
+      while($row = $STH->fetch(PDO::FETCH_NUM)){
+        $this->listahistorico[] = new Historico($row[0], $row[1],$row[2],$row[3],$row[4]);
+      }
+      $bd->desligar_bd();
+      return $this->listahistorico;
+    }
+  }
+
   public function historico_ja_existente($prova, $atleta) {
     $bd = new BaseDados();
     $bd->ligar_bd();
