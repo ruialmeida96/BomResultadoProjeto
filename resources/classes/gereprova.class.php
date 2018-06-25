@@ -51,6 +51,15 @@ class GereProva {
 		return $res;
 	}
 
+  public function elimina_provas_evento($idevento) {
+    $bd = new BaseDados();
+    $bd->ligar_bd();
+    $STH = $bd->dbh->prepare("DELETE FROM prova WHERE E_ID = '$idevento';");
+    $res = $STH->execute();
+    $bd->desligar_bd();
+    return $res;
+  }
+
 }
 
 

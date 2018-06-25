@@ -23,10 +23,11 @@ Adicionar, listar eventos, listar todos os eventos (que irao acontecer e que ja 
 
 require_once('./resources/classes/gereevento.class.php');
 require_once('./resources/classes/gereassociacao.class.php');
-
+require_once('./resources/classes/gereprova.class.php');
 
 $DAO = new GereEvento();
 $DAO2= new GereAssociacao();
+$DAO3 = new GereProva();
 
 $associacaoid = $DAO2->obter_detalhes_associação_apartir_userid($_SESSION['U_ID']);
 $associacao = $DAO2->obter_detalhes_associação_id($associacaoid);
@@ -94,6 +95,8 @@ if($obter_todos_os_eventos == null){ ?>
                     if ($data >= $hoje) {
                       ?>
                       <button class="btn btn-info" onclick="location.href='?action=editaeventoassoc&id=<?php echo $obter_todos_os_eventos[$i]->get_id()?>'" >Editar</button>
+                      <form name="formDeleteEvento"  method="POST"action="">
+                      <button type="submit" class="btn btn-danger" name="btnDelete" value="<?php echo $obter_todos_os_eventos[$i]->get_id()?>" >Eliminar</button></form>
                       <?php
                     }
                     ?>
@@ -175,5 +178,22 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
       echo '<script>alert("Por favor preencha todos os campos.");</script>';
     }
   }
+
+
+  if(isset($_POST['btnDelete'])){
+    $idevento = $_POST['btnDelete'];
+
+    if($DAO->elimina_evento($idevento)){
+      if($DAO3->elimina_provas_evento($idevento)){
+        echo '<script>alert("Evento eliminado com sucesso.");</script>';
+        header("Refresh:0");
+      }else{
+        echo '<script>alert("Ocorreu um erro ao eliminar as provas do evento");</script>';
+      }
+    }else{
+      echo '<script>alert("Ocorreu um erro ao eliminar o evento");</script>';
+    }
+  }
+
 }
 ?>

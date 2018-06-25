@@ -205,5 +205,14 @@ class GereEvento {
 	}
 
 
+  public function elimina_evento($idevento) {
+    $bd = new BaseDados();
+    $bd->ligar_bd();
+    $STH = $bd->dbh->prepare("DELETE FROM evento WHERE E_ID = '$idevento';");
+    $res = $STH->execute();
+    $bd->desligar_bd();
+    return $res;
+  }
+  
 }
 ?>
