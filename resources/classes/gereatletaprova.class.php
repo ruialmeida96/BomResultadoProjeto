@@ -59,5 +59,17 @@ class GereAtletaProva {
     $bd->desligar_bd();
   }
 
+  public function verificar_atleta_inscricao_geral($atleta) {
+    $bd = new BaseDados();
+    $bd->ligar_bd();
+    $STH = $bd->dbh->query("SELECT * FROM atleta_prova WHERE AT_ID='$atleta';");
+    if($STH->rowCount() === 0){
+      return null;
+    }else{
+      return true;
+    }
+    $bd->desligar_bd();
+  }
+
 }
 ?>
