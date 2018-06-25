@@ -5,6 +5,7 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO'])){
   header("Location: $url");
   die();
 }
+
 ?>
 <h3>Perfil</h3>
 

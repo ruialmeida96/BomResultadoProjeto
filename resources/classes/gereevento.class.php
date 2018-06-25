@@ -46,6 +46,22 @@ class GereEvento {
   return new Evento($row[0], $row[1],$row[2],$row[3],$row[4],$row[5],$row[6],$row[7],$row[8],$row[9]);
   }
 
+  public function obter_todos_eventos() {
+    $listaeventos=[];
+    $bd = new BaseDados();
+    $bd->ligar_bd();
+    $STH = $bd->dbh->query("SELECT * FROM evento;");
+    if($STH->rowCount() === 0){
+      return null;
+    }else{
+      while($row = $STH->fetch(PDO::FETCH_NUM)){
+        $this->listaeventos[] = new Evento($row[0], $row[1],$row[2],$row[3],$row[4],$row[5],$row[6],$row[7],$row[8],$row[9]);
+      }
+      $bd->desligar_bd();
+      return $this->listaeventos;
+    }
+  }
+
 
 
   public function obter_todos_eventos_assoc($id) {
@@ -213,6 +229,6 @@ class GereEvento {
     $bd->desligar_bd();
     return $res;
   }
-  
+
 }
 ?>
