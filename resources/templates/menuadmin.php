@@ -41,7 +41,7 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=0){
       <li>
         <div class="dropdown">
           <a class="nav-link" href="#" data-toggle="dropdown">
-            <i class="nc-icon nc-bank"></i><p>Listagens</p><b class="caret"></b>
+            <i class="nc-icon nc-single-copy-04"></i><p>Listagens</p><b class="caret"></b>
           </a>
           <ul class="dropdown-menu">
             <li class="nav-item ">
@@ -62,6 +62,12 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=0){
           </ul>
 
         </div>
+      </li>
+      <li>
+        <a class="nav-link" href="?action=logsadmin">
+          <i class="nc-icon nc-notes"></i>
+          <p>Logs</p>
+        </a>
       </li>
       <!--<li>
       <div class="dropdown">
