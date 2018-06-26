@@ -79,7 +79,7 @@ class GereAtleta {
     $STH->execute();
     $bd->desligar_bd();
     return $STH->fetch(PDO::FETCH_ASSOC);
-	}
+  }
 
   public function elimina_atleta($idatleta) {
     $bd = new BaseDados();
@@ -125,6 +125,7 @@ class GereAtleta {
     $bd = new BaseDados();
     $bd->ligar_bd();
     $STH = $bd->dbh->query("SELECT * FROM atleta WHERE AT_EMAIL='$email';");
+    $row = $STH->fetch(PDO::FETCH_NUM);
     if($STH->rowCount() === 0){
       return null;
     }else{

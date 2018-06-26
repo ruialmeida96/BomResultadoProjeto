@@ -16,7 +16,7 @@
     <p>Es atleta e pretendes receber os teus resultados via email?</p>
     <div id="erroemail" style="color:red;"></div>
     <form  name="formMail" onsubmit="return validaRegisto()" method="POST" id="AddAssociacao" action="">
-      <input type="mail" class="form-control" name="email" id="email" placeholder="example@email.com" required>
+      <input type="mail" class="form-control" name="emailresultados" id="emailresultados" placeholder="example@email.com" required>
       <button type="submit" class="btn btn-info" name="btnAdd" >Enviar</button>
     </form>
   </div>
@@ -51,11 +51,11 @@ function validaRegisto() {
   //Expressões regulares para validar contacto, e-mail e password
   var regexContacto = /[0-9]{9}/;
   var regexEmail = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-//  var regexPassword = /^(?=.*\d)(?=.*[A-Z])(?=.*[!#$%&()*+,-.:;<=>?@_{|}~])/;
+  //  var regexPassword = /^(?=.*\d)(?=.*[A-Z])(?=.*[!#$%&()*+,-.:;<=>?@_{|}~])/;
 
   if(!regexEmail.test(String(input[0]).toLowerCase())){
     showNotification('top','center','<strong>Erro!</strong> Por favor insira um <i>e-mail</i> válido.');
-    document.getElementById("erroemail").innerHTML="<strong>Erro!</strong> Por favor insira um <i>e-mail</i> válido.";
+    //document.getElementById("erroemail").innerHTML="<strong>Erro!</strong> Por favor insira um <i>e-mail</i> válido.";
     res = false;
   }else{
     document.getElementById("erroemail").innerHTML="";
@@ -68,8 +68,12 @@ function validaRegisto() {
 
 require_once('./resources/classes/gereatleta.class.php');
 require_once('./resources/classes/gerehistorico.class.php');
+require_once('./resources/classes/gereprova.class.php');
+require_once('./resources/classes/gereevento.class.php');
 $DAO = new GereAtleta();
 $DAO2 = new GereHistorico();
+$DAO3 = new GereProva();
+$DAO4 = new GereEvento();
 
 
 if($_SERVER['REQUEST_METHOD']==='POST'){
@@ -77,68 +81,46 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
 
   //Adicionar associação
   if(isset($_POST['btnAdd'])){
-    if(isset($_POST['mail']) && !empty($_POST['mail'])){
+    if(isset($_POST['emailresultados']) && !empty($_POST['emailresultados'])){
 
-       $atleta = $DAO->obter_detalhes_atleta_email($_POST['mail']);
-       $resultados = $DAO2->obter_historicos_atletaid($atleta->get_id());
-
-       if($resultados==null){
-         $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-         $corpomensagem = "Olá,<br><br>O seu Historico de Resultados encontra-se vazio.<br><br>Agradecemos pela disponibilizade<br>BomResultado";
-         enviaMail($email, 'Resultados Atleta: '.$atleta->get_nome(), $corpomensagem);
-       }else{
-         $tamanho = count($resultados);
-         $x=0;
-         $corpomensagem="Olá,<br><br>O seu Historico de Resultados é o seguinte:";
-         do{
-           
-           $corpomensagem."";
-         }while($x<$resultados);
-         $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-         $corpomensagem = "<br><br>Agradecemos pela disponibilizade<br>BomResultado";
-         enviaMail($email, 'Resultados Atleta: '.$atleta->get_nome(), $corpomensagem);
-       }
-
-
-
-
-
-/*
-      if($DAO->associacao_existe($_POST['nome'])){
-        echo '<script>alert("A associação que adicionou já se encontra registada.");</script>';
+      $atleta = $DAO->obter_detalhes_atleta_email($_POST['emailresultados']);
+      if($atleta==null){
+        echo '<script>alert("Não existe nenhum atleta com esse email.");</script>';
         header("Refresh:0");
       }else{
-        if($DAO3->email_existe($_POST['email'])){
-          echo '<script>alert("O email já existe como utilizador.");</script>';
-          header("Refresh:0");
+        $resultados = $DAO2->obter_historicos_atletaid($atleta->get_id());
+
+        if($resultados==null){
+          $email = filter_var($_POST['emailresultados'], FILTER_SANITIZE_EMAIL);
+          $corpomensagem = "Olá,<br><br>O seu Historico de Resultados encontra-se vazio.<br><br>Agradecemos pelo contacto.<br>BomResultado";
+          enviaMail($email, 'Resultados Atleta: '.$atleta->get_nome(), $corpomensagem);
         }else{
-          $nomeassoc = "Associação ".$_POST['nome'];
-          $passwordgera = gera_password();
-          if($DAO3->inserir_utilizador(new Utilizador(0,$nomeassoc,$_POST['email'],password_hash($passwordgera, PASSWORD_DEFAULT),$_POST['contacto'],1,1,1,true))){
-            $valorid = $DAO3->obter_detalhes_utilizador_email_retorna_id($_POST['email']);
-            if($DAO->inserir_associacao(new Associacao(0,$valorid,$_POST['regiao'],$_POST['nome'],1,true))){
-              echo '<script>alert("A associação foi criada com sucesso.");</script>';
+          $tamanho = count($resultados);
+          $x=0;
+          $corpomensagem="Olá,<br><br>O seu Historico de Resultados é o seguinte:";
+          do{
+            $prova = $resultados[$x]->get_provaid();
+            $tempo = $resultados[$x]->get_tempo();
+            $lugar = $resultados[$x]->get_local();
 
-
-
-              $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-              $corpomensagem = "Olá<br><br>,A sua palavra passe para utilização na nossa aplicação é:$passwordgera.<br>Agradecemos pela disponibilizade<br>BomResultado";
-              enviaMail($email, 'Password Inicial', $corpomensagem);
-
-              header("Refresh:0");
-
-            }else{
-              echo '<script>alert("Erro ao criar associação depois de criar utilizador.");</script>';
-              header("Refresh:0");
-            }
-          }else{
-            echo '<script>alert("Erro ao criar o utilizador da associação.");</script>';
-            header("Refresh:0");
-          }
+            $prova_dados = $DAO3->obter_dados_provaid($prova);
+            $evento_prova = $DAO4->obter_info_evento($prova_dados->get_eventoid());
+            
+            //nome do evento
+            $nomeevento =$evento_prova->get_nome();
+            //nome da prova
+            $nomeprova = $prova_dados->get_nome();
+            //tempo e lugar
+            $corpomensagem.="<br>No Evento ".$nomeevento." na prova ".$nomeprova.", obteve o ".$lugar."º lugar com o tempo de:".$tempo.".";
+            $x++;
+          }while($x<$tamanho);
+          $email = filter_var($_POST['emailresultados'], FILTER_SANITIZE_EMAIL);
+          $corpomensagem.="<br><br>Agradecemos pelo contacto.<br>BomResultado";
+          enviaMail($email, 'Resultados Atleta: '.$atleta->get_nome(), $corpomensagem);
+          echo '<script>alert("Dados enviados com sucesso via e-mail.");</script>';
+          header("Refresh:0");
         }
       }
-
-      */
     }else{
       echo '<script>alert("Por favor preencha todos os campos.");</script>';
       header("Refresh:0");
