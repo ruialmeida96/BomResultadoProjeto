@@ -94,6 +94,8 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
           $email = filter_var($_POST['emailresultados'], FILTER_SANITIZE_EMAIL);
           $corpomensagem = "Olá,<br><br>O seu Historico de Resultados encontra-se vazio.<br><br>Agradecemos pelo contacto.<br>BomResultado";
           enviaMail($email, 'Resultados Atleta: '.$atleta->get_nome(), $corpomensagem);
+          echo '<script>alert("Dados enviados com sucesso via e-mail.");</script>';
+          header("Refresh:0");
         }else{
           $tamanho = count($resultados);
           $x=0;
@@ -105,7 +107,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
 
             $prova_dados = $DAO3->obter_dados_provaid($prova);
             $evento_prova = $DAO4->obter_info_evento($prova_dados->get_eventoid());
-            
+
             //nome do evento
             $nomeevento =$evento_prova->get_nome();
             //nome da prova
