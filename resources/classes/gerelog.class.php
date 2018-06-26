@@ -31,7 +31,7 @@ class GereLog {
         $this->listalog[] = new Log($row[0], $row[1],$row[2],$row[3],$row[4]);
       }
       $bd->desligar_bd();
-      return $this->listahistorico;
+      return $this->listalog;
     }
   }
 
