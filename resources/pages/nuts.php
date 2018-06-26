@@ -21,8 +21,13 @@ Listar regioes, adicionar regioes(botao na parte de cima), e edita-las(editar in
 
 <?php
 require_once('./resources/classes/gerenuts.class.php');
+require_once('./resources/classes/gerelog.class.php');
+$DAO10 = new GereLog();
+
 $DAO = new GereNuts();
 $obter_todos_os_nuts = $DAO->obter_todos_nuts();
+
+$DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Listagem dos NUTS"));
 ?>
 
 <?php if($obter_todos_os_nuts == null){ ?>
@@ -113,6 +118,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
 
         if($DAO->inserir_nuts(new Nuts(0,$_POST['nomeregiao'],1,true))){
           echo '<script>alert("A Região foi criada com sucesso.");</script>';
+          $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Inserção de uma nova Região"));
           header("Refresh:0");
         }
       }

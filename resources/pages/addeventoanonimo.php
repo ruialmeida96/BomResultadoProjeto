@@ -3,9 +3,12 @@
 <?php
 require_once('./resources/classes/gereevento.class.php');
 require_once('./resources/classes/gereassociacao.class.php');
+require_once('./resources/classes/gerelog.class.php');
+
 
 $DAO = new GereEvento();
 $DAO2= new GereAssociacao();
+$DAO10 = new GereLog();
 
 $obterassocs=$DAO2->obter_todas_assoc();
 

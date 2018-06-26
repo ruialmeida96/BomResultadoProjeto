@@ -12,9 +12,12 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=1){
 $eventoid = $_GET["id"];
 require_once('./resources/classes/gereevento.class.php');
 require_once('./resources/classes/gereprova.class.php');
-
+require_once('./resources/classes/gerelog.class.php');
 $DAO = new GereEvento();
 $DAO2 = new GereProva();
+$DAO10 = new GereLog();
+
+$DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Apresentação de informação de um Evento Pendente"));
 
 $provasevento = $DAO2->obter_todas_provas_eventoid($eventoid);
 
@@ -168,6 +171,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
     $idevento = $_POST['btnAceita'];
 
     if($DAO->aceita_evento($idevento)){
+      $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Aceitação de um Evento Pendente"));
       header('Location:?action=eventospendentes');
     }else{
       echo '<script>alert("Ocorreu um erro ao aceitar o evento");</script>';
@@ -178,6 +182,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
     $idevento = $_POST['btnRecusa'];
 
     if($DAO->recusa_evento($idevento)){
+      $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Recuso de um Evento Pendente"));
       header('Location:?action=eventospendentes');
     }else{
       echo '<script>alert("Ocorreu um erro ao recusar o evento");</script>';

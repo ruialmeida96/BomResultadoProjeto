@@ -14,7 +14,8 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=2){
 $id_user_clube = $_SESSION['U_ID'];
 require_once('./resources/classes/gereclube.class.php');
 require_once('./resources/classes/gereevento.class.php');
-
+require_once('./resources/classes/gerelog.class.php');
+$DAO10 = new GereLog();
 
 
 $DAO = new GereClube();
@@ -26,6 +27,8 @@ $associaçao_pretence = $clube->get_associd();
 
 
 $eventos_assoc_disponiveis= $DAO2->obter_todos_eventos_assoc_especial_inscriçao($associaçao_pretence);
+
+$DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Listagem de Eventos que se pode inscrever Atletas"));
 
 if($eventos_assoc_disponiveis == null){ ?>
   <h4>Não existem Eventos Disponiveis para Inscrição</h4><br><br>

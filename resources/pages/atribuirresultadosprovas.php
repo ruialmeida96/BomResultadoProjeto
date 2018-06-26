@@ -15,6 +15,8 @@ require_once('./resources/classes/gereprova.class.php');
 require_once('./resources/classes/gereatleta.class.php');
 require_once('./resources/classes/gereatletaprova.class.php');
 require_once('./resources/classes/gerehistorico.class.php');
+require_once('./resources/classes/gerelog.class.php');
+$DAO10 = new GereLog();
 
 $DAO = new GereEvento();
 $DAO2 = new GereProva();
@@ -187,6 +189,7 @@ $local =  $eventoinfo->get_local();
       }while ($j<$tamanhoj);
 
       $DAO->conclusao_do_evento($eventoid);
+      $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Conclusão de um Evento"));
       header('Location:?action=resultadosprovasassoc');
     }
 

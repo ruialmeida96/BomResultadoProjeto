@@ -25,20 +25,22 @@ $id_user_clube = $_SESSION['U_ID'];
 require_once('./resources/classes/gereclube.class.php');
 require_once('./resources/classes/gereatleta.class.php');
 require_once('./resources/classes/gereutilizador.class.php');
-
+require_once('./resources/classes/gerelog.class.php');
+$DAO10 = new GereLog();
 
 $DAO = new GereAtleta();
 
-
 $DAO2 = new GereClube();
 $obter_todos_os_clubes = $DAO2->obter_todas_clubes();
-
 
 $clubeid= $DAO2->obter_clube_id_clube_userid($id_user_clube);
 
 $obter_todos_os_atletas = $DAO->obter_todos_atletas_do_clube($clubeid);
 
 $DAO3 = new GereUtilizador();
+
+
+$DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Listagem de Atletas ao Clube"));
 
 
 if($obter_todos_os_atletas == null){ ?>
@@ -269,6 +271,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
       }else{
         if($DAO->inserir_atleta(new Atleta (0,$clubeid,$_POST['nome'],$_POST['nomeex'],$_POST['contacto'],$_POST['email'],$_POST['especialidade'],$_POST['nacionalidade'],$_POST['escalao'],$_POST['sexo'],1,true))){
           echo '<script>alert("Atleta criado com sucesso.");</script>';
+          $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Inserção de um novo Atleta"));
           header("Refresh:0");
         }
       }
@@ -283,13 +286,12 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
 
     if($DAO->elimina_atleta($idatleta)){
       echo '<script>alert("Atleta eliminado com sucesso.");</script>';
+      $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Eliminação de um Atleta"));
       header("Refresh:0");
     }else{
       echo '<script>alert("Ocorreu um erro ao eliminar o atleta.");</script>';
     }
   }
-
-
 }
 
 ?>

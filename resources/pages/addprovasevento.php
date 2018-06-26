@@ -201,6 +201,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
       $DAO->inserir_prova(new Prova (0,$eventoid,$nome,$escalao,$dist,$hora,$sexo));
       if($i==($xd)){
         echo '<script>alert("As Provas foram criadas com sucesso.");</script>';
+        $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Inserção de um Evento com as respetivas provas"));
         header('Location:?action=eventosassoc');
       }
     }

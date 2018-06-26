@@ -15,6 +15,8 @@ $idclube = $_GET["id"];
 
 require_once('./resources/classes/gereclube.class.php');
 require_once('./resources/classes/gereutilizador.class.php');
+require_once('./resources/classes/gerelog.class.php');
+$DAO10 = new GereLog();
 
 $DAO = new GereClube();
 $DAO2 = new GereUtilizador();
@@ -137,7 +139,8 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
         if(strcmp($email,$emailnovo)===0){
           if($DAO2->editar_utilizador_associacao_sem_email($iduserclube,$nomeclubenovo)){
             if($DAO->editar_clube_assoc($abreviatura,$localnovo,$idclube)){
-              echo '<script>alert("A associação foi editada com sucesso.");</script>';
+              echo '<script>alert("O Clube foi editado com sucesso.");</script>';
+              $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Edição de um Clube"));
               //header("Refresh:0");
               header('Location:?action=clubesassoc');
               //showNotification('top','center','A associação foi editada com sucesso.');
@@ -158,7 +161,8 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
           }else{
             if($DAO2->editar_utilizador_associacao($iduserclube,$nomeclubenovo,$emailnovo)){
               if($DAO->editar_clube_assoc($abreviatura,$localnovo,$idclube)){
-                echo '<script>alert("A associação foi editada com sucesso.");</script>';
+                echo '<script>alert("O Clube foi editado com sucesso.");</script>';
+                $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Edição de um Clube"));
                 //header("Refresh:0");
                 header('Location:?action=clubesassoc');
               }else{
@@ -181,7 +185,8 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
           if(strcmp($email,$emailnovo)===0){
             if($DAO2->editar_utilizador_associacao_sem_email($iduserclube,$nomeclubenovo)){
               if($DAO->editar_clube_assoc($abreviaturanovo,$localnovo,$idclube)){
-                echo '<script>alert("A associação foi editada com sucesso.");</script>';
+                echo '<script>alert("O Clube foi editado com sucesso.");</script>';
+                $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Edição de um Clube"));
                 //header("Refresh:0");
                 header('Location:?action=clubesassoc');
               }else{
@@ -202,13 +207,13 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
               if($DAO2->editar_utilizador_associacao($iduserclube,$nomeclubenovo,$emailnovo)){
                 if($DAO->editar_clube_assoc($abreviaturanovo,$localnovo,$idclube)){
                   echo '<script>alert("A associação foi editada com sucesso.");</script>';
+                  $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Edição de um Clube"));
                   //header("Refresh:0");
                   header('Location:?action=clubesassoc');
                 }else{
                   echo '<script>alert("Erro ao editar a associação na tabela associação.");</script>';
                   header("Refresh:0");
                 }
-
               }else{
                 echo '<script>alert("Erro ao editar a associação na tabela utilizador.");</script>';
                 header("Refresh:0");

@@ -16,6 +16,8 @@ $idassoc = $_GET["id"];
 require_once('./resources/classes/gereassociacao.class.php');
 require_once('./resources/classes/gereutilizador.class.php');
 require_once('./resources/classes/gerenuts.class.php');
+require_once('./resources/classes/gerelog.class.php');
+$DAO10 = new GereLog();
 
 $DAO=new GereAssociacao();
 $DAO2=new GereUtilizador();
@@ -152,6 +154,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
           if($DAO2->editar_utilizador_associacao_sem_email($idutl,$nomeassocnovo)){
             if($DAO->editar_associacao_admin($abreviatura,$regiaonova,$idassoc)){
               echo '<script>alert("A associação foi editada com sucesso.");</script>';
+              $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Edição de uma Associação"));
               //header("Refresh:0");
               header('Location:?action=associacoesadmin');
               //showNotification('top','center','A associação foi editada com sucesso.');
@@ -173,6 +176,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
             if($DAO2->editar_utilizador_associacao($idutl,$nomeassocnovo,$emailnovo)){
               if($DAO->editar_associacao_admin($abreviatura,$regiaonova,$idassoc)){
                 echo '<script>alert("A associação foi editada com sucesso.");</script>';
+                $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Edição de uma Associação"));
                 //header("Refresh:0");
                 header('Location:?action=associacoesadmin');
               }else{
@@ -196,6 +200,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
             if($DAO2->editar_utilizador_associacao_sem_email($idutl,$nomeassocnovo)){
               if($DAO->editar_associacao_admin($abreviaturanovo,$regiaonova,$idassoc)){
                 echo '<script>alert("A associação foi editada com sucesso.");</script>';
+                $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Edição de uma Associação"));
                 //header("Refresh:0");
                 header('Location:?action=associacoesadmin');
               }else{
@@ -216,6 +221,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
               if($DAO2->editar_utilizador_associacao($idutl,$nomeassocnovo,$emailnovo)){
                 if($DAO->editar_associacao_admin($abreviaturanovo,$regiaonova,$idassoc)){
                   echo '<script>alert("A associação foi editada com sucesso.");</script>';
+                  $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Edição de uma Associação"));
                   //header("Refresh:0");
                   header('Location:?action=associacoesadmin');
                 }else{

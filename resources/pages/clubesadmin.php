@@ -12,6 +12,8 @@ Listar clubes e as suas respetivas informações<br>
 require_once('./resources/classes/gereclube.class.php');
 require_once('./resources/classes/gereassociacao.class.php');
 require_once('./resources/classes/gereutilizador.class.php');
+require_once('./resources/classes/gerelog.class.php');
+$DAO10 = new GereLog();
 
 $DAO = new GereClube();
 $obter_todos_os_clubes = $DAO->obter_todas_clubes();
@@ -22,6 +24,8 @@ $obter_todas_as_assoc = $DAO2->obter_todas_assoc();
 $DAO3 = new GereUtilizador();
 $iduserassoc = $_SESSION['U_ID'];
 $associacaoid=$DAO2->obter_detalhes_associação_apartir_userid($iduserassoc);
+
+$DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Listagem de Clubes"));
 
 if($obter_todos_os_clubes == null){ ?>
  <h4>Não existem Clubes Disponiveis</h4><br><br>

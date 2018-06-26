@@ -4,7 +4,11 @@
 <?php
 
 require_once('./resources/classes/gereprova.class.php');
+require_once('./resources/classes/gerelog.class.php');
+$DAO10 = new GereLog();
 $DAO = new GereProva();
+
+
 
 $eventoid = $_GET["id"];
 
@@ -213,6 +217,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
       $DAO->inserir_prova(new Prova (0,$eventoid,$nome,$escalao,$dist,$hora,$sexo));
       if($i==($xd)){
         ?> <script> showNotification('top','center','As Provas foram criadas com sucesso.');</script> <?php
+        $DAO10->inserir_log(new Log(0,0,date("Y-m-d"),date("H:i:s"),"Inserção de um Evento Anonimo com as respetivas provas"));
         header('Location:index.php');
       }
     }

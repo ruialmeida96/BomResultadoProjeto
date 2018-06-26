@@ -13,6 +13,8 @@ $eventoid = $_GET["id"];
 require_once('./resources/classes/gereevento.class.php');
 require_once('./resources/classes/gereprova.class.php');
 require_once('./resources/classes/prova.class.php');
+require_once('./resources/classes/gerelog.class.php');
+$DAO10 = new GereLog();
 
 $DAO = new GereEvento();
 $DAO2 = new GereProva();
@@ -419,17 +421,14 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
             $sexo = $_POST['sexo_prova'.$j];
             $DAO2->editar_prova(new Prova ($idprovaeste,$eventoid,$nome,$escalao,$dist,$hora,$sexo));
             if($j==($xd)){
+              $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Edição de um Evento"));
               header('Location:?action=eventosrecusados');
             }
           }
         }else{
           header('Location:?action=eventosrecusados');
         }
-
-
       }
-
-
     }
   }
 }

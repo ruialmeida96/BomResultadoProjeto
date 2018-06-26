@@ -14,11 +14,15 @@ Listar eventos e as informaçoes relativas a estes mesmos
 <?php
 require_once('./resources/classes/gereevento.class.php');
 require_once('./resources/classes/gereassociacao.class.php');
+require_once('./resources/classes/gerelog.class.php');
+$DAO10 = new GereLog();
 
 $DAO = new GereEvento();
 $DAO2= new GereAssociacao();
 
 $eventos=$DAO->obter_todos_eventos();
+
+$DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Listagem de Eventos"));
 
 if($eventos == null){ ?>
   <h4>Não existem eventos disponiveis.</h4><br><br>

@@ -14,7 +14,8 @@ Eventos que já se encontram concluidos
 
 require_once('./resources/classes/gereevento.class.php');
 require_once('./resources/classes/gereassociacao.class.php');
-
+require_once('./resources/classes/gerelog.class.php');
+$DAO10 = new GereLog();
 
 $DAO = new GereEvento();
 $DAO2= new GereAssociacao();

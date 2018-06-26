@@ -12,6 +12,8 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=1){
 $eventoid = $_GET["id"];
 require_once('./resources/classes/gereevento.class.php');
 require_once('./resources/classes/gereprova.class.php');
+require_once('./resources/classes/gerelog.class.php');
+$DAO10 = new GereLog();
 
 $DAO = new GereEvento();
 $DAO2 = new GereProva();
@@ -28,6 +30,7 @@ $local =  $eventoinfo->get_local();
 $detalhes =  $eventoinfo->get_detalhes();
 $organizadores =  $eventoinfo->get_organizadores();
 
+$DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Apresentação de informação de um Evento Recusado"));
 ?>
 <div class="card">
   <div class="card-header">
@@ -169,6 +172,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
     $idevento = $_POST['btnAceita'];
 
     if($DAO->aceita_evento($idevento)){
+      $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Aceitação de volta de um Evento Recusado"));
       header('Location:?action=eventosrecusados');
     }else{
       echo '<script>alert("Ocorreu um erro ao aceitar o evento");</script>';

@@ -16,10 +16,14 @@ Listar atletas e os seus respetivos clubes e associaçoes
 require_once('./resources/classes/gereclube.class.php');
 require_once('./resources/classes/gereatleta.class.php');
 require_once('./resources/classes/gereassociacao.class.php');
+require_once('./resources/classes/gerelog.class.php');
+$DAO10 = new GereLog();
 
 $DAO = new GereAtleta();
 $DAO2 = new GereClube();
 $DAO3 = new GereAssociacao();
+
+$DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Listagem de Atletas"));
 
 
 $atletas = $DAO->obter_todos_atletas();

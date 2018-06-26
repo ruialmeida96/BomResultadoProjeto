@@ -13,6 +13,9 @@ Editar informação do utilizador
 <br>
 <?php
 require_once('./resources/classes/gereutilizador.class.php');
+require_once('./resources/classes/gerelog.class.php');
+$DAO10 = new GereLog();
+
 $DAO=new GereUtilizador();
 
 if($DAO->obter_detalhes_utilizador_id($_SESSION['U_ID'])){
@@ -176,6 +179,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
           if($DAO->editar_utilizador(new Utilizador($idutl, $_POST['nome'], $_POST['email'], $password, $_POST['contacto'],$tipoutl,1,true))){
 
             echo '<script>alert("Ediçao feita com sucesso.");</script>';
+            $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Edição da propria informação"));
             echo '<script>document.location.href = "?action=editainfo";</script>';
           }
         }

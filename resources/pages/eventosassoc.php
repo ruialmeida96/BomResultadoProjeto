@@ -24,6 +24,8 @@ Adicionar, listar eventos, listar todos os eventos (que irao acontecer e que ja 
 require_once('./resources/classes/gereevento.class.php');
 require_once('./resources/classes/gereassociacao.class.php');
 require_once('./resources/classes/gereprova.class.php');
+require_once('./resources/classes/gerelog.class.php');
+$DAO10 = new GereLog();
 
 $DAO = new GereEvento();
 $DAO2= new GereAssociacao();
@@ -186,6 +188,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
     if($DAO->elimina_evento($idevento)){
       if($DAO3->elimina_provas_evento($idevento)){
         echo '<script>alert("Evento eliminado com sucesso.");</script>';
+        $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Eliminação de um Evento"));
         header("Refresh:0");
       }else{
         echo '<script>alert("Ocorreu um erro ao eliminar as provas do evento");</script>';

@@ -22,6 +22,8 @@ Listar clubes, adicionar clubes(botao na parte de cima), e edita-los(editar info
 require_once('./resources/classes/gereclube.class.php');
 require_once('./resources/classes/gereassociacao.class.php');
 require_once('./resources/classes/gereutilizador.class.php');
+require_once('./resources/classes/gerelog.class.php');
+$DAO10 = new GereLog();
 
 $DAO = new GereClube();
 
@@ -34,6 +36,8 @@ $iduserassoc = $_SESSION['U_ID'];
 $associacaoid=$DAO2->obter_detalhes_associação_apartir_userid($iduserassoc);
 
 $obter_todos_os_clubes = $DAO->obter_todas_clubes_apartir_da_associd($associacaoid);
+
+$DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Listagem de Clubes"));
 
  if($obter_todos_os_clubes == null){ ?>
   <h4>Não existem Clubes Disponiveis</h4><br><br>
@@ -242,6 +246,8 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
               $corpomensagem = "Olá<br><br>A sua palavra passe para utilização na nossa aplicação é:$passwordgera.<br>Agradecemos pela disponibilizade<br>BomResultado";
               enviaMail($email, 'Password Inicial', $corpomensagem);
 
+              $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Inserção de um novo Clube"));
+
               header("Refresh:0");
 
             }else{
@@ -265,6 +271,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
     $iduser = $DAO->obter_iduser_apartir_idclube($idclube);
     if($DAO->elimina_clube($idclube,$iduser)){
       echo '<script>alert("Clube eliminado com sucesso.");</script>';
+      $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Eliminação de um Clube"));
       header("Refresh:0");
     }else{
       echo '<script>alert("Ocorreu um erro ao eliminar a associação");</script>';
@@ -276,6 +283,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
     $iduser = $DAO2->obter_iduser_apartir_idassoc($idassoc);
     if($DAO3->desativa_conta($iduser)){
       //echo '<script>alert("Associação desativa com sucesso.");</script>';
+      $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Desativação de um Clube"));
       header("Refresh:0");
     }else{
       echo '<script>alert("Ocorreu um erro ao desativar a associação");</script>';
@@ -286,6 +294,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
     $idassoc = $_POST['btnAtiva'];
     $iduser = $DAO2->obter_iduser_apartir_idassoc($idassoc);
     if($DAO3->ativa_conta($iduser)){
+      $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),""));
       //echo '<script>alert("Associação ativa com sucesso.");</script>';
       header("Refresh:0");
     }else{

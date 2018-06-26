@@ -17,6 +17,8 @@ require_once('./resources/classes/gereevento.class.php');
 require_once('./resources/classes/gereprova.class.php');
 require_once('./resources/classes/gerehistorico.class.php');
 require_once('./resources/classes/gereatleta.class.php');
+require_once('./resources/classes/gerelog.class.php');
+$DAO10 = new GereLog();
 
 $DAO = new GereEvento();
 $DAO2 = new GereProva();
@@ -25,7 +27,7 @@ $DAO4 = new GereAtleta();
 
 $provasevento = $DAO2->obter_todas_provas_eventoid($eventoid);
 
-
+$DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Listagem de Resultados de Eventos"));
 
 
 if($provasevento == null){ ?>

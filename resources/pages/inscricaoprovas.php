@@ -14,7 +14,8 @@ require_once('./resources/classes/gereclube.class.php');
 require_once('./resources/classes/gereevento.class.php');
 require_once('./resources/classes/gereatleta.class.php');
 require_once('./resources/classes/gereatletaprova.class.php');
-
+require_once('./resources/classes/gerelog.class.php');
+$DAO10 = new GereLog();
 $DAO = new GereClube();
 $DAO2 = new GereEvento();
 $DAO3 = new GereAtleta();
@@ -35,3 +36,5 @@ $DAO4->verificar_atleta_inscricao_geral($atletas_clube[$i]->get_id());
 ?>
 <p>neste aqui temos de ver se existem Eventos, temos de ver se esses eventos tem inscriçoes (estado = 3 acho), verificar se existem atletas inscritos em provas e quais...
 </p>
+
+<p>FALTA ADICIONAR A PARTE DOS LOGS</p>

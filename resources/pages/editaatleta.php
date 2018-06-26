@@ -15,6 +15,8 @@ $idatleta = $_GET["id"];
 require_once('./resources/classes/gereclube.class.php');
 require_once('./resources/classes/gereatleta.class.php');
 require_once('./resources/classes/gereutilizador.class.php');
+require_once('./resources/classes/gerelog.class.php');
+$DAO10 = new GereLog();
 
 
 $DAO = new GereAtleta();
@@ -296,6 +298,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
         //atualizamos apenas os dados
         if($DAO->editar_atleta($idatleta,$_POST['nome'],$_POST['nomeex'],$_POST['contacto'],$email,$_POST['especialidade'],$_POST['nacionalidade'],$_POST['escalao'])){
           echo '<script>alert("O Atleta foi editado com sucesso.");</script>';
+          $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Edição de um Atleta"));
           header('Location:?action=atletasclube');
         }else{
           echo '<script>alert("Erro ao editar o Atleta.");</script>';
@@ -312,6 +315,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
         }else{
           if($DAO->editar_atleta($idatleta,$_POST['nome'],$_POST['nomeex'],$_POST['contacto'],$_POST['email'],$_POST['especialidade'],$_POST['nacionalidade'],$_POST['escalao'])){
             echo '<script>alert("O Atleta foi editado com sucesso.");</script>';
+            $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Edição de um Atleta"));
             header('Location:?action=atletasclube');
           }else{
             echo '<script>alert("Erro ao editar o Atleta.");</script>';

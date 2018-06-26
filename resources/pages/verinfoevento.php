@@ -12,6 +12,8 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=1){
 $eventoid = $_GET["id"];
 require_once('./resources/classes/gereevento.class.php');
 require_once('./resources/classes/gereprova.class.php');
+require_once('./resources/classes/gerelog.class.php');
+$DAO10 = new GereLog();
 
 $DAO = new GereEvento();
 $DAO2 = new GereProva();
@@ -28,6 +30,7 @@ $local =  $eventoinfo->get_local();
 $detalhes =  $eventoinfo->get_detalhes();
 $organizadores =  $eventoinfo->get_organizadores();
 
+$DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Apresentação de informação de um Evento"));
 ?>
 <div class="card">
   <div class="card-header">

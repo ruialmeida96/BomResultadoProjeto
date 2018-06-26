@@ -14,6 +14,8 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=1){
 require_once('./resources/classes/gereevento.class.php');
 require_once('./resources/classes/gereprova.class.php');
 require_once('./resources/classes/gereassociacao.class.php');
+require_once('./resources/classes/gerelog.class.php');
+$DAO10 = new GereLog();
 
 $DAO = new GereEvento();
 $DAO2= new GereProva();
@@ -22,6 +24,7 @@ $DAO3= new GereAssociacao();
 $associacaoid = $DAO3->obter_detalhes_associação_apartir_userid($_SESSION['U_ID']);
 $eventoscominscrições = $DAO->obter_todos_eventos_ja_inscritos($associacaoid);
 
+$DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Listagem de Eventos passiveis de serem identificados Resultados"));
 if($eventoscominscrições == null){ ?>
   <h4>Não existem eventos com inscrições.</h4><br><br>
 <?php }else{ ?>

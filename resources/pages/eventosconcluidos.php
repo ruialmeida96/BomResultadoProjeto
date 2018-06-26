@@ -15,7 +15,8 @@ Eventos que já se encontram concluidos
 
 require_once('./resources/classes/gereevento.class.php');
 require_once('./resources/classes/gereassociacao.class.php');
-
+require_once('./resources/classes/gerelog.class.php');
+$DAO10 = new GereLog();
 
 $DAO = new GereEvento();
 $DAO2= new GereAssociacao();
@@ -26,6 +27,7 @@ $nomeAssoc = $associacao->get_abreviatura();
 
 $obter_todos_os_eventos=$DAO->obter_todos_eventos_assoc_concluidos($associacaoid);
 
+$DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Listagem de Eventos Concluidos"));
 
 if($obter_todos_os_eventos == null){ ?>
   <h4>Não existem eventos disponiveis.</h4><br><br>

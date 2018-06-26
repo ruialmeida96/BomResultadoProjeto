@@ -8,6 +8,7 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=0){
 ?>
 <h3>Associações</h3>
 
+
 Listar associações, adicionar associaçoes(botao na parte de cima), e edita-las(editar info e eliminar)
 <br>
 <div class="row">
@@ -22,6 +23,8 @@ Listar associações, adicionar associaçoes(botao na parte de cima), e edita-la
 require_once('./resources/classes/gereassociacao.class.php');
 require_once('./resources/classes/gerenuts.class.php');
 require_once('./resources/classes/gereutilizador.class.php');
+require_once('./resources/classes/gerelog.class.php');
+$DAO10 = new GereLog();
 
 $DAO = new GereAssociacao();
 $obter_todas_as_assoc = $DAO->obter_todas_assoc();
@@ -30,6 +33,8 @@ $DAO2 = new GereNuts();
 $obter_todos_os_nuts = $DAO2->obter_todos_nuts();
 
 $DAO3 = new GereUtilizador();
+
+$DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Listagem de Associações"));
 
 ?>
 
@@ -250,7 +255,8 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
               $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
               $corpomensagem = "Olá<br><br>,A sua palavra passe para utilização na nossa aplicação é:$passwordgera.<br>Agradecemos pela disponibilizade<br>BomResultado";
               enviaMail($email, 'Password Inicial', $corpomensagem);
-
+              $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Inserção de uma nova Associação"));
+              header('Location:index.php');
               header("Refresh:0");
 
             }else{
@@ -274,6 +280,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
     $iduser = $DAO->obter_iduser_apartir_idassoc($idassoc);
     if($DAO->elimina_associacao($idassoc,$iduser)){
       echo '<script>alert("Associação eliminada com sucesso.");</script>';
+      $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Eliminação de uma associação"));
       header("Refresh:0");
     }else{
       echo '<script>alert("Ocorreu um erro ao eliminar a associação");</script>';
@@ -285,6 +292,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
     $iduser = $DAO->obter_iduser_apartir_idassoc($idassoc);
     if($DAO3->desativa_conta($iduser)){
       //echo '<script>alert("Associação desativa com sucesso.");</script>';
+      $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Desativação de uma Associação"));
       header("Refresh:0");
     }else{
       echo '<script>alert("Ocorreu um erro ao desativar a associação");</script>';
@@ -296,17 +304,12 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
     $iduser = $DAO->obter_iduser_apartir_idassoc($idassoc);
     if($DAO3->ativa_conta($iduser)){
       //echo '<script>alert("Associação ativa com sucesso.");</script>';
+      $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Ativação de uma Associação"));
       header("Refresh:0");
     }else{
       echo '<script>alert("Ocorreu um erro ao ativar a associação");</script>';
     }
   }
-
-
-
 }
-
-
-
 
 ?>

@@ -70,6 +70,8 @@ require_once('./resources/classes/gereatleta.class.php');
 require_once('./resources/classes/gerehistorico.class.php');
 require_once('./resources/classes/gereprova.class.php');
 require_once('./resources/classes/gereevento.class.php');
+require_once('./resources/classes/gerelog.class.php');
+$DAO10 = new GereLog();
 $DAO = new GereAtleta();
 $DAO2 = new GereHistorico();
 $DAO3 = new GereProva();
@@ -120,6 +122,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
           $corpomensagem.="<br><br>Agradecemos pelo contacto.<br>BomResultado";
           enviaMail($email, 'Resultados Atleta: '.$atleta->get_nome(), $corpomensagem);
           echo '<script>alert("Dados enviados com sucesso via e-mail.");</script>';
+          $DAO10->inserir_log(new Log(0,0,date("Y-m-d"),date("H:i:s"),"Envio de Historico de Resultados para um Atleta"));
           header("Refresh:0");
         }
       }

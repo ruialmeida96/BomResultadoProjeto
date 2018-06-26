@@ -17,7 +17,8 @@ require_once('./resources/classes/gereevento.class.php');
 require_once('./resources/classes/gereprova.class.php');
 require_once('./resources/classes/gereatleta.class.php');
 require_once('./resources/classes/gereatletaprova.class.php');
-
+require_once('./resources/classes/gerelog.class.php');
+$DAO10 = new GereLog();
 $DAO = new GereClube();
 $DAO2 = new GereEvento();
 $DAO3 = new GereProva();
@@ -182,7 +183,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
 
     $DAO2->inscricao_em_evento($evento_id);
     //indicar que houve inscrições neste evento
-
+    $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Inscrição de Atletas em Eventos"));
     header('Location:?action=eventosclube');
 
   }
