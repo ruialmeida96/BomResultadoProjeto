@@ -83,13 +83,15 @@ $atletas_do_clube = $DAO4->obter_todos_atletas_do_clube($clube->get_id());
                           $x = 0;
                           $tamanho2  = count($atletas_definidos);
                           do{
-                            if(!$DAO5->verificar_atletas_provas($atletas_definidos[$x]->get_id(),$provas_do_evento[$i]->get_id())){
-                              //atleta nao esta inscrito na prova
-                              ?>
-                              <input type="checkbox" id="provas[]" name="provas[]" value="<?php echo $provas_do_evento[$i]->get_id()."_".$atletas_definidos[$x]->get_id() ?>">
-                              <?php
-                              echo $atletas_definidos[$x]->get_nome();
-                              echo "<br>";
+                            if($DAO4->verificar_atleta_clube($atletas_definidos[$x]->get_id(),$clube->get_id())){
+                              if(!$DAO5->verificar_atletas_provas($atletas_definidos[$x]->get_id(),$provas_do_evento[$i]->get_id())){
+                                //atleta nao esta inscrito na prova
+                                ?>
+                                <input type="checkbox" id="provas[]" name="provas[]" value="<?php echo $provas_do_evento[$i]->get_id()."_".$atletas_definidos[$x]->get_id() ?>">
+                                <?php
+                                echo $atletas_definidos[$x]->get_nome();
+                                echo "<br>";
+                              }
                             }
                             $x++;
                           }while ($x<$tamanho2);
