@@ -52,6 +52,12 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=2){
 
         </div>
       </li>
+      <li>
+        <a class="nav-link" href="?action=resultadosclube">
+          <i class="nc-icon nc-chart-bar-32"></i>
+          <p>Resultados</p>
+        </a>
+      </li>
 
       <!--<li>
       <div class="dropdown">
