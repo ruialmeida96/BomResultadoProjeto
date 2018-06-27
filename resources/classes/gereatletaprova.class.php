@@ -71,5 +71,14 @@ class GereAtletaProva {
     $bd->desligar_bd();
   }
 
+  public function elimina_atleta_prova($idatleta,$idprova) {
+    $bd = new BaseDados();
+    $bd->ligar_bd();
+    $STH = $bd->dbh->prepare("DELETE FROM atleta_prova WHERE AT_ID = '$idatleta' AND P_ID='$idprova';");
+    $res = $STH->execute();
+    $bd->desligar_bd();
+    return $res;
+  }
+
 }
 ?>

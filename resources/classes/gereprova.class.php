@@ -72,6 +72,17 @@ class GereProva {
     }
   }
 
+  public function obter_nome_apartir_prova_id($id){
+    $bd = new BaseDados();
+    $bd->ligar_bd();
+    $STH = $bd->dbh->prepare("SELECT P_NOME FROM prova WHERE P_ID = ?");
+    $STH->bindParam(1,$id);
+    $STH->execute();
+    $bd->desligar_bd();
+    $row = $STH->fetch(PDO::FETCH_NUM);
+    return$row[0];
+  }
+
 }
 
 

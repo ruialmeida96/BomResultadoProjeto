@@ -134,6 +134,18 @@ class GereAtleta {
     $bd->desligar_bd();
   }
 
+  public function verificar_atleta_clube($atleta,$clube) {
+    $bd = new BaseDados();
+    $bd->ligar_bd();
+    $STH = $bd->dbh->query("SELECT * FROM atleta WHERE AT_ID='$atleta' AND C_ID='$clube';");
+    if($STH->rowCount() === 0){
+      return null;
+    }else{
+      return true;
+    }
+    $bd->desligar_bd();
+  }
+
   //caso precise, ir ver a gereclube.class.php
 
 }
