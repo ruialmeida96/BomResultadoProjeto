@@ -68,7 +68,9 @@ var seq2 = 0,
 
 $(document).ready(function() {
 
+
    $('body').bootstrapMaterialDesign();
+     $('.modal').appendTo("body");
 
     $sidebar = $('.sidebar');
 

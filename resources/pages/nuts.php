@@ -73,37 +73,8 @@ $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Lis
       </div>
     </div>
   </div>
-<?php } ?>
+<?php }
 
-
-<div class="modal fade modal-primary" id="myModaladdNuts" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header justify-content-center">
-        <h4 class="modal-title" id="exampleModalLabel">Adicionar Região</h4>
-        <div style=" position:absolute;top:0;right:0;">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-      </div>
-      <div class="modal-body text-center">
-        <form method="POST" id="AddRegForm" action="">
-          Nome da Região
-          <input type="text" name="nomeregiao" id="nomeregiao" class="form-control" placeholder="Nome da região..." required ><br>
-        </div>
-        <div class="modal-footer">
-          <span></span>
-          <button type="submit" class="btn btn-success" name="btnAdd" >Adicionar</button>
-        </div>
-      </form>
-
-    </div>
-  </div>
-</div>
-
-
-<?php
 if($_SERVER['REQUEST_METHOD']==='POST'){
 
   //Adicionar região
@@ -130,3 +101,29 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
 
 
 ?>
+
+<div class="modal fade modal-primary" id="myModaladdNuts" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header justify-content-center">
+        <h4 class="modal-title" id="exampleModalLabel">Adicionar Região</h4>
+        <div style=" position:absolute;top:0;right:0;">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+      <div class="modal-body text-center">
+        <form method="POST" id="AddRegForm" action="">
+          Nome da Região
+          <input type="text" name="nomeregiao" id="nomeregiao" class="form-control" placeholder="Nome da região..." required ><br>
+        </div>
+        <div class="modal-footer">
+          <span></span>
+          <button type="submit" class="btn btn-success" name="btnAdd" >Adicionar</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>

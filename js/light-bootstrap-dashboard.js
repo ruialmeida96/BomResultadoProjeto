@@ -31,6 +31,8 @@ var mobile_menu_visible = 0,
 $(document).ready(function() {
     window_width = $(window).width();
 
+    $('.modal').appendTo("body");
+
     // check if there is an image set for the sidebar's background
     lbd.checkSidebarImage();
 
