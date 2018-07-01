@@ -113,7 +113,7 @@ $local =  $eventoinfo->get_local();
                                   //quer dizer que nao existe historico desse atleta inserido
                                   echo "<div style='margin-right: 5px;'>";
                                   echo "<div div class='card'> <div class='card-body'>";
-                                  echo "<h5 class='card-title'>".$DAO4->obter_nome_apartir_atleta_id($atletas_nesta_prova[$y]->get_idatleta())."</h5>";
+                                  echo "<h5 class='card-title' style='text-align: center;'>".$DAO4->obter_nome_apartir_atleta_id($atletas_nesta_prova[$y]->get_idatleta())."</h5>";
                                   echo "<div class='card-text' style='text-align: center;'>"
                                   ?><input type="time"  <?php echo "id=time_".$provasevento[$i]->get_id()."[] name=time_".$provasevento[$i]->get_id()."[]" ?> step="0.01" required><br>
                                   <input type="number" <?php echo "id=lugar_".$provasevento[$i]->get_id()."[] name=lugar_".$provasevento[$i]->get_id()."[]" ?> min="1" max="100" required>
