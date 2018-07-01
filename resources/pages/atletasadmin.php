@@ -7,10 +7,7 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=0){
 }
 ?>
 <h3>Atletas</h3>
-
-Listar atletas e os seus respetivos clubes e associaçoes
 <br>
-
 <?php
 
 require_once('./resources/classes/gereclube.class.php');

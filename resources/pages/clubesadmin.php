@@ -7,7 +7,7 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=0){
 }
 ?>
 <h3>Clubes</h3>
-Listar clubes e as suas respetivas informações<br>
+<br>
 <?php
 require_once('./resources/classes/gereclube.class.php');
 require_once('./resources/classes/gereassociacao.class.php');
