@@ -36,7 +36,15 @@ class GereNuts {
     }else{
       return true;
     }
+  }
 
+  public function elimina_nuts($id) {
+    $bd = new BaseDados();
+    $bd->ligar_bd();
+    $STH = $bd->dbh->prepare("DELETE FROM nuts2 WHERE N_ID = '$id';");
+    $res = $STH->execute();
+    $bd->desligar_bd();
+    return $res;
   }
 
   public function regiao_igual($id) {
@@ -48,18 +56,15 @@ class GereNuts {
     }else{
       return true;
     }
-
   }
-
-  /*public function regiao_existe($regiao) {
+  public function editar_nuts($id,$nome) {
     $bd = new BaseDados();
     $bd->ligar_bd();
-    $STH = $bd->dbh->prepare("SELECT * FROM nuts2 WHERE N_REGIAO LIKE ?");
-    $STH->bindParam(1, $regiao);
-    $STH->execute();
+    $STH = $bd->dbh->prepare("UPDATE nuts2 SET N_REGIAO = '$nome' WHERE N_ID = $id;");
+    $res = $STH->execute();
     $bd->desligar_bd();
-    return $STH->fetch(PDO::FETCH_ASSOC);
-  }*/
+    return $res;
+  }
 
   public function obter_nome_apartir_id($id) {
     $bd = new BaseDados();
@@ -85,6 +90,16 @@ class GereNuts {
       $bd->desligar_bd();
       return $this->listanuts;
     }
+  }
+
+  public function obter_nuts_espec($id) {
+    $bd = new BaseDados();
+    $bd->ligar_bd();
+    $STH = $bd->dbh->query("SELECT * FROM nuts2 WHERE N_ID='$id';");
+    $STH->execute();
+    $bd->desligar_bd();
+    $row = $STH->fetch(PDO::FETCH_NUM);
+    return new Nuts ($row[0], $row[1]);
   }
 
 }

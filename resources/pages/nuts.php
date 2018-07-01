@@ -8,7 +8,6 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=0){
 ?>
 <h3>Regiões</h3>
 
-Listar regioes, adicionar regioes(botao na parte de cima), e edita-las(editar info e eliminar)
 <br>
 <div class="row">
   <div >
@@ -59,8 +58,16 @@ $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Lis
                   echo "<td>".$obter_todos_os_nuts[$i]->get_regiao()."</td>";
                   ?>
                   <td>
-                    opção
-                    <!--ver se precisar no criar gestor.php-->
+                    <?php
+                    if($obter_todos_os_nuts[$i]->get_id()>7){
+                      ?>
+                      <button class="btn btn-info" onclick="location.href='?action=editanuts&id=<?php echo $obter_todos_os_nuts[$i]->get_id()?>'" >Editar</button>
+                      <form method="POST" id="DelNuts" action="">
+                        <button type="submit" class="btn btn-danger" name="btnDelete" value="<?php echo $obter_todos_os_nuts[$i]->get_id()?>">Eliminar</button>
+                      </form>
+                      <?php
+                    }
+                     ?>
                   </td>
                 </tr>
                 <?php
@@ -85,6 +92,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
       $DAO=new GereNuts();
       if($DAO->regiao_existe($_POST['nomeregiao'])){
         echo '<script>alert("A região que adicionou já se encontra registada.");</script>';
+        header("Refresh:0");
       }else{
 
         if($DAO->inserir_nuts(new Nuts(0,$_POST['nomeregiao'],1,true))){
@@ -97,6 +105,20 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
       echo '<script>alert("Por favor preencha todos os campos.");</script>';
     }
   }
+
+//eliminar regiao
+  if(isset($_POST['btnDelete'])){
+    $valorregelimina=$_POST['btnDelete'];
+    if($DAO->elimina_nuts($valorregelimina)){
+      echo '<script>alert("Nuts eliminado com sucesso.");</script>';
+      $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Eliminação de um Nuts"));
+      header("Refresh:0");
+    }else{
+      echo '<script>alert("Ocorreu um erro ao eliminar o nuts!");</script>';
+    }
+  }
+
+
 }
 
 
