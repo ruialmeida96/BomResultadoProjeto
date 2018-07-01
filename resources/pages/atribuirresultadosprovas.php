@@ -111,12 +111,14 @@ $local =  $eventoinfo->get_local();
                               do{
                                 if(!$DAO5->historico_ja_existente($provasevento[$i]->get_id(),$atletas_nesta_prova[$y]->get_idatleta())){
                                   //quer dizer que nao existe historico desse atleta inserido
-                                  echo "<div style= 'border: 1px solid black;  margin-left:10px; border-radius: 8px; text-align: center;'>";
-                                  echo $DAO4->obter_nome_apartir_atleta_id($atletas_nesta_prova[$y]->get_idatleta());
-                                  ?><br><input type="time"  <?php echo "id=time_".$provasevento[$i]->get_id()."[] name=time_".$provasevento[$i]->get_id()."[]" ?> step="1" required><br>
+                                  echo "<div style='margin-right: 5px;'>";
+                                  echo "<div div class='card'> <div class='card-body'>";
+                                  echo "<h5 class='card-title'>".$DAO4->obter_nome_apartir_atleta_id($atletas_nesta_prova[$y]->get_idatleta())."</h5>";
+                                  echo "<div class='card-text' style='text-align: center;'>"
+                                  ?><input type="time"  <?php echo "id=time_".$provasevento[$i]->get_id()."[] name=time_".$provasevento[$i]->get_id()."[]" ?> step="0.01" required><br>
                                   <input type="number" <?php echo "id=lugar_".$provasevento[$i]->get_id()."[] name=lugar_".$provasevento[$i]->get_id()."[]" ?> min="1" max="100" required>
                                   <?php
-                                  echo "</div>";
+                                  echo "</div></div></div></div>";
                                   echo "<br><br>";
                                 }
                                 $y++;
