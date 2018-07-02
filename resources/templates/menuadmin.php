@@ -7,7 +7,12 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=0){
 }
 ?>
 <div class="wrapper">
-  <div class="sidebar" data-color="black" data-image="./img/run.jpg">
+<?php
+$num = rand(2, 8);
+
+?>
+
+  <div class="sidebar" data-color="black" data-image="./img/run<?php echo $num?>.jpg">
   <div class="sidebar-wrapper">
     <div class="logo">
       <a href="index.php" class="simple-text" data-color"black">
