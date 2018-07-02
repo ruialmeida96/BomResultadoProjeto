@@ -27,7 +27,7 @@ $clube = $DAO->obter_detalhes_clube_userid($id_user_clube);
 $atletas_clube = $DAO3->obter_todos_atletas_do_clube($clube->get_id());
 $i=0;
 
-$numatletas = count($atletas_clube);
+//$numatletas = count($atletas_clube);
 $todas_as_inscricoes=$DAO4->obter_todos_atletas_provas();
 
 /*

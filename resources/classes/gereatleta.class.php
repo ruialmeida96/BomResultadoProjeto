@@ -55,6 +55,7 @@ class GereAtleta {
   }
 
   public function obter_todos_atletas_do_clube($id) {
+    $this->listaatleta=[];
     $bd = new BaseDados();
     $bd->ligar_bd();
     $STH = $bd->dbh->query("SELECT * FROM atleta WHERE C_ID = '$id';");

@@ -224,12 +224,12 @@ if($DAO->obter_todas_assoc()==null){
       </div>
     <?php } ?>
     <?php if($obter_todos_eventos == null){ ?>
-      <h4>Não existem Atletas Disponiveis</h4><br><br>
+      <h4>Não existem Eventos Disponiveis</h4><br><br>
     <?php }else{ ?>
       <div class="col-md-6">
         <div class="card ">
           <div class="card-header ">
-            <h4 class="card-title">Eventos Proximos</h4>
+            <h4 class="card-title">Eventos deste Mês</h4>
             <p class="card-category">Conjunto de Regiões</p>
           </div>
           <div class="card-body " style="display: block; max-height: 400px; overflow-y: auto; -ms-overflow-style: -ms-autohiding-scrollbar;">
