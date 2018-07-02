@@ -8,7 +8,7 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=0){
 ?>
 <div class="wrapper">
 <?php
-$num = rand(2, 8);
+$num = rand(2, 7);
 
 ?>
 
