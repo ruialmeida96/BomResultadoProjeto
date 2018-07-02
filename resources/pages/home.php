@@ -1,7 +1,15 @@
-<h2>Pagina Inicial</h2>
+<?php
+$time = date("H");
 
-<p>Falta meter conteudo para esta pagina inicial</p>
-
+if ($time < "12") {
+  echo "<h4>Bom dia,</h4>";
+} else  if ($time >= "12" && $time < "20") {
+  echo "<h4>Boa tarde,</h4>";
+} else if ($time >= "20") {
+  echo "<h4>Boa noite,</h4>";
+}
+?>
+<br>
 <div class="row">
   <div >
     <a  class="nav-link" href="?action=addeventoanonimo">
@@ -9,6 +17,7 @@
     </a>
   </div>
 </div>
+
 
 
 <div class="row">

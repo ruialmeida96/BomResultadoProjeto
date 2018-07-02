@@ -1,1 +1,4 @@
-<h3>Sobre Nos</h3>
+<h3>Sobre Nos</h3><br>
+<p>O Bom Resultado surgiu pela implementação de um projeto universitário em que o seu principal objetivo era satisfazer a necessidade de existência de inscrições de atletas em provas de Atletismo.<br>
+Até a data, não existe nenhuma aplicação que implemente esse registo de inscrições de atletas em provas de atletismo, por isso foi decidido por mim, Rui Almeida, implementar algo que proporcionasse solução a este problema.<br>
+Nesta aplicação é possível existirem diversas associações distritais e uma nacional que coordenem eventos e tambem clubes, sendo que os clubes irão poder inscrever os seus atletas nos diversos eventos distritais ou nacionais. Após a realização dos diferentes eventos, será então passível de identificar os diferentes resultados dos atletas nas determinadas provas e por conseguinte, poderá ser possível consultar os resultados através do clube ou tambem via email, sendo este o identificador do atleta. <br><br>Este foi o nosso objetivo e motivação para que fosse possivel implemetar esta aplicação.<br><br>Esperemos que gostes.<br><br><br><br>Cumprimentos,<br>Bom Resultado.<br>
