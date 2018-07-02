@@ -78,7 +78,7 @@ $obterassocs=$DAO2->obter_todas_assoc();
           <br>
           <select name="assoc" id="assoc" required>
             <?php
-            $i = 0;
+            $i = 1;
             $tamanho2 = count($obterassocs);
             do{
               echo "<option value=".$obterassocs[$i]->get_id().">".$obterassocs[$i]->get_abreviatura()."</option>";

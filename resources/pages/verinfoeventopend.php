@@ -150,7 +150,7 @@ $organizadores =  $eventoinfo->get_organizadores();
       $hoje = strtotime($data_hoje);
       $data =  strtotime($dataprova);
 
-      if ($data > $hoje) {
+      if ($data >= $hoje) {
         //caso a prova ainda possa vir a acontecer no futuro
         ?>
         <form method="POST" id="Aceita" action="">
