@@ -32,6 +32,22 @@ $obter_todos_os_nuts = $DAO2->obter_todos_nuts();
 $DAO3 = new GereUtilizador();
 
 ?>
+
+
+			<h1>Bem-Vindo á Interface do Administrador</h1><br>
+			<h4>Nesta interface poderá ser visualizar Funcionários, Produtos/Serviços, Equipas de Venda e Tarefas para cada Equipa.</h4>
+
+			<h4>No que diz respeito a Funcionários, é possivel:</h4>
+			<p>-Adicionar Funcionário<br>-Editar Informação de Funcionário<br>-Desativar/Ativar um Funcionário<br>-Eliminar Funcionário</p><br>
+
+			<h4>No que diz respeito a Produtos/Serviços, é possivel:</h4>
+			<p>-Adicionar Produtos/Serviços<br>-Editar Informação de um Produto/Serviço<br>-Desativar/Ativar Produto/Serviço<br>Eliminar Produto/Serviço</p><br>
+
+			<h4>No que diz respeito a Equipas de Venda, é possivel:</h4>
+			<p>-Adicionar Equipa de Venda<br>-Editar Informação de uma Equipa de Venda<br>-Desativar/Ativar Equipa de Venda</p><br>
+
+			<h4>No que diz respeito a Tarefas, é possivel:</h4>
+			<p>-Visualizar Toda a Informação das Várias Tarefas Indicadas a Uma Equipa<br>-Desativar/Ativar Tarefas para Equipa(Apenas o Administrador Pode Desativar/Ativar Tarefas)</p><br>
 <br>
 <div class="row">
   <div class="col-md-4">
