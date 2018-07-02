@@ -10,9 +10,9 @@ $time = date("H");
 
 if ($time < "12") {
   echo "<h3>Bom dia,</h3>";
-} else  if ($time >= "12" && $time < "17") {
+} else  if ($time >= "12" && $time < "20") {
   echo "<h3>Boa tarde,</h3>";
-} else if ($time >= "17") {
+} else if ($time >= "20") {
   echo "<h3>Boa noite,</h3>";
 }
 ?>
