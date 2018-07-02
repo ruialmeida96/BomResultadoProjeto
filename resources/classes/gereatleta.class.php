@@ -39,6 +39,21 @@ class GereAtleta {
     }
   }
 
+  public function obter_todos_atletas_mais_recentes() {
+    $bd = new BaseDados();
+    $bd->ligar_bd();
+    $STH = $bd->dbh->query("SELECT * FROM atleta ORDER BY AT_ID DESC;");
+    if($STH->rowCount() === 0){
+      return null;
+    }else{
+      while($row = $STH->fetch(PDO::FETCH_NUM)){
+        $this->listaatleta[] = new Atleta($row[0], $row[1],$row[2],$row[3],$row[4],$row[5],$row[6],$row[7],$row[8],$row[9]);
+      }
+      $bd->desligar_bd();
+      return $this->listaatleta;
+    }
+  }
+
   public function obter_todos_atletas_do_clube($id) {
     $bd = new BaseDados();
     $bd->ligar_bd();

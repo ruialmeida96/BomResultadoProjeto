@@ -7,7 +7,12 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=1){
 }
 ?>
 <div class="wrapper">
-  <div class="sidebar" data-color="black" data-image="./img/run.jpg">
+  <?php
+  $num = rand(2, 7);
+
+  ?>
+
+    <div class="sidebar" data-color="black" data-image="./img/run<?php echo $num?>.jpg">
     <!--
     Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
 

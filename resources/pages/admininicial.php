@@ -5,17 +5,22 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=0){
   header("Location: $url");
   die();
 }
-require_once('./resources/classes/gerenuts.class.php');
 require_once('./resources/classes/gereassociacao.class.php');
 require_once('./resources/classes/gerenuts.class.php');
 require_once('./resources/classes/gereutilizador.class.php');
 require_once('./resources/classes/gerelog.class.php');
+require_once('./resources/classes/gereatleta.class.php');
+require_once('./resources/classes/gereevento.class.php');
+
+$DAO4 = new GereAtleta();
+$DAO5 = new GereEvento();
 $DAO10 = new GereLog();
 $DAO = new GereAssociacao();
-$obter_todas_as_assoc = $DAO->obter_todas_assoc();
-
 $DAO2 = new GereNuts();
+$obter_todas_as_assoc = $DAO->obter_todas_assoc();
 $obter_todos_os_nuts = $DAO2->obter_todos_nuts();
+$obter_todos_atletas_recentes = $DAO4->obter_todos_atletas_mais_recentes();
+$obter_todos_eventos = $DAO5->obter_todos_eventos();
 
 $DAO3 = new GereUtilizador();
 if($DAO->obter_todas_assoc()==null){
@@ -57,8 +62,6 @@ if($DAO->obter_todas_assoc()==null){
 
 <?php
 }else{
-
-
   $time = date("H");
 
   if ($time < "12") {
@@ -69,22 +72,7 @@ if($DAO->obter_todas_assoc()==null){
     echo "<h3>Boa noite,</h3>";
   }
 
-
   ?>
-
-  <h4>Nesta interface poderá ser visualizar Funcionários, Produtos/Serviços, Equipas de Venda e Tarefas para cada Equipa.</h4>
-
-  <h4>No que diz respeito a Funcionários, é possivel:</h4>
-  <p>-Adicionar Funcionário<br>-Editar Informação de Funcionário<br>-Desativar/Ativar um Funcionário<br>-Eliminar Funcionário</p><br>
-
-  <h4>No que diz respeito a Produtos/Serviços, é possivel:</h4>
-  <p>-Adicionar Produtos/Serviços<br>-Editar Informação de um Produto/Serviço<br>-Desativar/Ativar Produto/Serviço<br>Eliminar Produto/Serviço</p><br>
-
-  <h4>No que diz respeito a Equipas de Venda, é possivel:</h4>
-  <p>-Adicionar Equipa de Venda<br>-Editar Informação de uma Equipa de Venda<br>-Desativar/Ativar Equipa de Venda</p><br>
-
-  <h4>No que diz respeito a Tarefas, é possivel:</h4>
-  <p>-Visualizar Toda a Informação das Várias Tarefas Indicadas a Uma Equipa<br>-Desativar/Ativar Tarefas para Equipa(Apenas o Administrador Pode Desativar/Ativar Tarefas)</p><br>
   <br>
   <div class="row">
     <?php if($obter_todos_os_nuts == null){ ?>
@@ -185,86 +173,118 @@ if($DAO->obter_todas_assoc()==null){
   </div>
   <br>
   <div class="row">
-    <div class="col-md-6">
-      <div class="card ">
-        <div class="card-header ">
-          <h4 class="card-title">Atletas Recentes</h4>
-          <p class="card-category">Conjunto de Atletas</p>
-        </div>
-        <div class="card-body " style="display: block; max-height: 400px; overflow-y: auto; -ms-overflow-style: -ms-autohiding-scrollbar;">
-          <table class="table table-hover table-striped" >
-            <thead>
-              <th>ID</th>
-              <th>Nome</th>
-            </thead>
-            <tbody>
-              <?php
-              $i = 0;
-              $tamanho = count($obter_todos_os_nuts);
-              do{
-                ?>
-                <tr>
-                  <?php
-                  echo "<td>".$obter_todos_os_nuts[$i]->get_id()."</td>";
-                  echo "<td>".$obter_todos_os_nuts[$i]->get_regiao()."</td>";
-                  ?>
-                </tr>
+    <?php if($obter_todos_atletas_recentes == null){ ?>
+      <h4>Não existem Atletas Disponiveis</h4><br><br>
+    <?php }else{ ?>
+      <div class="col-md-6">
+        <div class="card ">
+          <div class="card-header ">
+            <h4 class="card-title">Atletas Recentes</h4>
+            <p class="card-category">Conjunto de Atletas</p>
+          </div>
+          <div class="card-body " style="display: block; max-height: 400px; overflow-y: auto; -ms-overflow-style: -ms-autohiding-scrollbar;">
+            <table class="table table-hover table-striped">
+              <thead>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Especialidade</th>
+                <th>Nacionalidade</th>
+                <th>Escalão</th>
+              </thead>
+              <tbody>
                 <?php
-                $i++;
-              }while ($i<$tamanho);
-              ?>
-            </tbody>
-          </table>
-        </div>
-        <div class="card-footer ">
-          <br>
-          <hr>
-          <a class="stats" href="?action=atletasadmin">
-            Mais informações >>
-          </a>
+                $i = 0;
+                $tamanho = count($obter_todos_atletas_recentes);
+                do{
+                  ?>
+                  <tr>
+                    <?php
+                    echo "<td>".$obter_todos_atletas_recentes[$i]->get_id()."</td>";
+                    echo "<td>".$obter_todos_atletas_recentes[$i]->get_nome()."</td>";
+                    echo "<td>".$obter_todos_atletas_recentes[$i]->get_especialidade()."</td>";
+                    echo "<td>".$obter_todos_atletas_recentes[$i]->get_nacionalidade()."</td>";
+                    echo "<td>".mostraescaloes($obter_todos_atletas_recentes[$i]->get_escalao())."</td>";
+                    ?>
+                  </tr>
+                  <?php
+                  $i++;
+                }while ($i<$tamanho);
+                ?>
+              </tbody>
+            </table>
+          </div>
+          <div class="card-footer ">
+            <br>
+            <hr>
+            <a class="stats" href="?action=atletasadmin">
+              Mais informações >>
+            </a>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col-md-6">
-      <div class="card ">
-        <div class="card-header ">
-          <h4 class="card-title">Eventos Proximos</h4>
-          <p class="card-category">Conjunto de Regiões</p>
-        </div>
-        <div class="card-body " style="display: block; max-height: 400px; overflow-y: auto; -ms-overflow-style: -ms-autohiding-scrollbar;">
-          <table class="table table-hover table-striped" >
-            <thead>
-              <th>ID</th>
-              <th>Nome</th>
-            </thead>
-            <tbody>
-              <?php
-              $i = 0;
-              $tamanho = count($obter_todos_os_nuts);
-              do{
-                ?>
-                <tr>
-                  <?php
-                  echo "<td>".$obter_todos_os_nuts[$i]->get_id()."</td>";
-                  echo "<td>".$obter_todos_os_nuts[$i]->get_regiao()."</td>";
-                  ?>
-                </tr>
+    <?php } ?>
+    <?php if($obter_todos_eventos == null){ ?>
+      <h4>Não existem Atletas Disponiveis</h4><br><br>
+    <?php }else{ ?>
+      <div class="col-md-6">
+        <div class="card ">
+          <div class="card-header ">
+            <h4 class="card-title">Eventos Proximos</h4>
+            <p class="card-category">Conjunto de Regiões</p>
+          </div>
+          <div class="card-body " style="display: block; max-height: 400px; overflow-y: auto; -ms-overflow-style: -ms-autohiding-scrollbar;">
+            <table class="table table-hover table-striped">
+              <thead>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Data</th>
+                <th>Organizadores</th>
+                <th>Estado</th>
+              </thead>
+              <tbody>
                 <?php
-                $i++;
-              }while ($i<$tamanho);
-              ?>
-            </tbody>
-          </table>
-        </div>
-        <div class="card-footer ">
-          <br>
-          <hr>
-          <a class="stats" href="?action=eventosadmin">
-            Mais informações >>
-          </a>
+                $i = 0;
+                $tamanho = count($obter_todos_eventos);
+                do{
+                  $data_hoje = date("Y-m-d");
+                  $pieces = explode("-", $data_hoje);
+                  $dataprova = $obter_todos_eventos[$i]->get_data();
+                  $hoje = strtotime($data_hoje);
+                  $data =  strtotime($dataprova);
+                  $pieces2 = explode("-", $dataprova);
+                  if($pieces2[1]==$pieces[1]){
+                    ?>
+                    <tr>
+                      <?php
+                      echo "<td>".$obter_todos_eventos[$i]->get_id()."</td>";
+                      echo "<td>".$obter_todos_eventos[$i]->get_nome()."</td>";
+                      if ($data < $hoje) {
+                        echo "<td> <p style=color:red;>".$obter_todos_eventos[$i]->get_data()."*</p></td>";
+                      }else{
+                        echo "<td>".$obter_todos_eventos[$i]->get_data()."</td>";
+                      }
+                      echo "<td>".$obter_todos_eventos[$i]->get_organizadores()."</td>";
+                      echo "<td>".mostraEstado($obter_todos_eventos[$i]->get_estado())."</td>";
+                      ?>
+                    </tr>
+                  <?php
+                  }
+                  $i++;
+                }while ($i<$tamanho);
+                ?>
+              </tbody>
+            </table>
+          </div>
+          <div class="card-footer ">
+            <br>
+            <hr>
+            <a class="stats" href="?action=eventosadmin">
+              Mais informações >>
+            </a>
+          </div>
         </div>
       </div>
-    </div>
+    <?php } ?>
 
   </div>
 
@@ -390,4 +410,77 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
 
 }
 
+function mostraescaloes($num){
+  if($num==1){
+    return "Benjamins A";
+  }else if($num==2){
+    return "Benjamins B";
+  }else if($num==3){
+    return "Infantis";
+  }else if($num==4){
+    return "Iniciados";
+  }else if($num==5){
+    return "Juvenis";
+  }else if($num==6){
+    return "Juniores";
+  }else if($num==7){
+    return "Sub-23";
+  }else if($num==8){
+    return "Seniores";
+  }else if($num==9){
+    return "Veteranos 35";
+  }else if($num==10){
+    return "Veteranos 40";
+  }else if($num==11){
+    return "Veteranos 45";
+  }else if($num==12){
+    return "Veteranos 50";
+  }else if($num==13){
+    return "Veteranos 55";
+  }else if($num==14){
+    return "Veteranos 60";
+  }else if($num==15){
+    return "Veteranos 65";
+  }else if($num==16){
+    return "Veteranos 70";
+  }else if($num==17){
+    return "Veteranos 75";
+  }else if($num==18){
+    return "Veteranos 80";
+  }else if($num==19){
+    return "Veteranos 85";
+  }else if($num==20){
+    return "Veteranos 90";
+  }
+}
+
+function mostraEstado($num){
+  if($num==1){
+    return "Ativo";
+  }else if($num==0){
+    return "Pendente";
+  }else if($num==2){
+    return "Recusado";
+  }else if($num==4){
+    return "Concluido";
+  }else if($num==3){
+    return "Com inscrições";
+  }
+}
 ?>
+
+<br>
+<h5>Como Administrador poderá ser possivel visualizar <strong>Regiões</strong>, <strong>Associações</strong>, <strong>Listagens</strong> e <strong>Logs</strong>.</h5><br>
+
+<h5>No que diz respeito a <strong>Regiões</strong>, é possivel:</h5>
+<p>-Adicionar Região<br>-Gerir informaçao de Região (Editar e Eliminar)</p><br>
+
+<h5>No que diz respeito a <strong>Associações</strong>, é possivel:</h5>
+<p>-Adicionar Associações<br>-Gerir informação de uma Associação (Editar, Desativar/Ativar e Eliminar)</p><br>
+
+<h5>No que diz respeito a <strong>Listagens</strong>, é possivel:</h5>
+<p>-Listar Clubes, Atletas e Eventos</p><br>
+
+<h5>No que diz respeito a <strong>Logs</strong>, é possivel:</h5>
+<p>-Listar as ações dos utilizadores</p><br>
+<br>
