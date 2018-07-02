@@ -12,6 +12,8 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=1){
 
 require_once('./resources/classes/gereprova.class.php');
 $DAO = new GereProva();
+require_once('./resources/classes/gerelog.class.php');
+$DAO10 = new GereLog();
 
 $eventoid = $_GET["id"];
 

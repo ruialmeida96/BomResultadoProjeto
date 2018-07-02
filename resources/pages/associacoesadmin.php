@@ -130,7 +130,7 @@ $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Lis
           <label>Região</label><br>
           <select name="regiao" id="regiao">
             <?php
-            $i = 0;
+            $i = 1;
             $tamanho2 = count($obter_todos_os_nuts);
             do{
               echo "<option value=".$obter_todos_os_nuts[$i]->get_id().">".$obter_todos_os_nuts[$i]->get_regiao()."</option>";
@@ -253,7 +253,6 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
               $corpomensagem = "Olá<br><br>,A sua palavra passe para utilização na nossa aplicação é:$passwordgera.<br>Agradecemos pela disponibilizade<br>BomResultado";
               enviaMail($email, 'Password Inicial', $corpomensagem);
               $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Inserção de uma nova Associação"));
-              header('Location:index.php');
               header("Refresh:0");
 
             }else{

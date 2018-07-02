@@ -83,7 +83,7 @@ class GereEvento {
   public function obter_todos_eventos_assoc_especial_inscriçao($id) {
     $bd = new BaseDados();
     $bd->ligar_bd();
-    $STH = $bd->dbh->query("SELECT * FROM evento WHERE A_ID = '$id' AND E_ESTADO = 1 OR E_ESTADO=3;");
+    $STH = $bd->dbh->query("SELECT * FROM evento WHERE A_ID = '$id' OR A_ID= 1 AND E_ESTADO = 1 OR E_ESTADO=3;");
     if($STH->rowCount() === 0){
       return null;
     }else{

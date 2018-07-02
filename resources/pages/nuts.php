@@ -59,7 +59,7 @@ $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Lis
                   ?>
                   <td>
                     <?php
-                    if($obter_todos_os_nuts[$i]->get_id()>7){
+                    if($obter_todos_os_nuts[$i]->get_id()>8){
                       ?>
                       <button class="btn btn-info" onclick="location.href='?action=editanuts&id=<?php echo $obter_todos_os_nuts[$i]->get_id()?>'" >Editar</button>
                       <form method="POST" id="DelNuts" action="">
