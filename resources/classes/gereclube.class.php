@@ -136,57 +136,5 @@ class GereClube {
     return $row[0];
   }
 
-
-/*
-  public function obter_todas_assoc() {
-    $bd = new BaseDados();
-    $bd->ligar_bd();
-    $STH = $bd->dbh->query("SELECT * FROM associacao");
-    if($STH->rowCount() === 0){
-      return null;
-    }else{
-      while($row = $STH->fetch(PDO::FETCH_NUM)){
-        $this->listaassoc[] = new Associacao($row[0], $row[1],$row[2],$row[3]);
-      }
-      $bd->desligar_bd();
-      return $this->listaassoc;
-    }
-  }
-
-
-
-
-  public function obter_iduser_apartir_idassoc($id) {
-    $bd = new BaseDados();
-    $bd->ligar_bd();
-    $STH = $bd->dbh->prepare("SELECT U_ID FROM associacao WHERE A_ID = ?");
-    $STH->bindParam(1,$id);
-    $STH->execute();
-    $bd->desligar_bd();
-    $row = $STH->fetch(PDO::FETCH_NUM);
-    return $row[0];
-  }
-
-  */
-
-
-
-
-
-
-  /*public function editar_associacao(Associacao $associacao) {
-  $bd = new BaseDados();
-  $bd->ligar_bd();
-  $STH = $bd->dbh->prepare("UPDATE associacao SET U_NOME = ?, U_EMAIL = ?, U_PASS = ?, U_CONTACTO = ? WHERE U_ID = ?");
-  $STH->bindValue(1, $utilizador->get_nome());
-  $STH->bindValue(2, $utilizador->get_email());
-  $STH->bindValue(3, $utilizador->get_password());
-  $STH->bindValue(4, $utilizador->get_contacto());
-  $STH->bindValue(5, $utilizador->get_id());
-  $res = $STH->execute();
-  $bd->desligar_bd();
-  return $res;
-}*/
-
 }
 ?>

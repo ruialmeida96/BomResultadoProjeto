@@ -213,17 +213,6 @@ class GereUtilizador {
     return $row[0];
   }
 
-
-/*  public function alterar_estado_utilizador($id) {
-		$bd = new BaseDados();
-    $bd->ligar_bd();
-		$STH = $bd->dbh->prepare("UPDATE utilizador SET U_ESTADO = NOT U_ESTADO WHERE U_ID = ?");
-    $STH->bindParam(1,$id);
-		$res = $STH->execute();
-		$bd->desligar_bd();
-    return $res;
-	}*/
-
   public function inativa_utilizador($id) {
 		$bd = new BaseDados();
     $bd->ligar_bd();
@@ -234,20 +223,4 @@ class GereUtilizador {
     return $res;
 	}
 
-
-
-
-
-  //FALTA PREPARAR ISTO PARA INSERIR LOG
-  /*public function inserir_log(Log $log, Utilizador $utilizador) {
-		$bd = new BaseDados();
-    $bd->ligar_bd();
-		$STH = $bd->dbh->prepare("INSERT INTO log(U_ID, L_DATA,L_HORA,L_DESCRICAO) values(?, ?, ?,?)");
-		$STH->bindValue(1, $utilizador->get_id());
-		$STH->bindValue(2, $log->get_acao());
-		$STH->bindValue(3, $log->get_data_hora());
-		$res = $STH->execute();
-		$bd->desligar_bd();
-		return $res;
-	}*/
 }

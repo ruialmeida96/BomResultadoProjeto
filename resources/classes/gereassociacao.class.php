@@ -110,22 +110,4 @@ class GereAssociacao {
     return $row[0];
   }
 
-
-
-
-
-  /*public function editar_associacao(Associacao $associacao) {
-  $bd = new BaseDados();
-  $bd->ligar_bd();
-  $STH = $bd->dbh->prepare("UPDATE associacao SET U_NOME = ?, U_EMAIL = ?, U_PASS = ?, U_CONTACTO = ? WHERE U_ID = ?");
-  $STH->bindValue(1, $utilizador->get_nome());
-  $STH->bindValue(2, $utilizador->get_email());
-  $STH->bindValue(3, $utilizador->get_password());
-  $STH->bindValue(4, $utilizador->get_contacto());
-  $STH->bindValue(5, $utilizador->get_id());
-  $res = $STH->execute();
-  $bd->desligar_bd();
-  return $res;
-}*/
-
 }

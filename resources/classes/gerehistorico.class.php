@@ -80,18 +80,6 @@ class GereHistorico {
       return false;
     }
   }
-  /*
-  public function verificar_atletas_provas($atleta,$prova) {
-  $bd = new BaseDados();
-  $bd->ligar_bd();
-  $STH = $bd->dbh->query("SELECT * FROM atleta_prova WHERE AT_ID='$atleta' AND P_ID='$prova';");
-  if($STH->rowCount() === 0){
-  return null;
-}else{
-return true;
-}
-$bd->desligar_bd();
-}*/
 
 }
 ?>
