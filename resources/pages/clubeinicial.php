@@ -96,7 +96,11 @@ $obter_todos_os_atletas = $DAO3->obter_todos_atletas_do_clube($clubeid);
   }
   if($todas_as_inscricoes == null){ ?>
     <h4>Não existem Inscrições em Eventos </h4><br><br>
-  <?php }else{ $y=0;
+  <?php }else{
+    if( $atletas_clube ==null){
+      ?><h4>Não existem Atletas no Clube inscritos em Eventos </h4><br><br><?php
+    }else{
+    $y=0;
   $a=0;
   do{
     if($DAO4->verificar_atleta_inscricao_geral($atletas_clube[$y]->get_id())){
@@ -173,7 +177,8 @@ $obter_todos_os_atletas = $DAO3->obter_todos_atletas_do_clube($clubeid);
   <?php }else if($a==0){
     ?><h4>Não existem nenhum Atleta do Clube Inscrito em Eventos </h4><?php
   }
-} ?>
+}
+}?>
 </div>
 <?php
 function mostraescaloes($num){

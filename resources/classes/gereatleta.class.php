@@ -65,9 +65,9 @@ class GereAtleta {
       while($row = $STH->fetch(PDO::FETCH_NUM)){
         $this->listaatleta[] = new Atleta($row[0], $row[1],$row[2],$row[3],$row[4],$row[5],$row[6],$row[7],$row[8],$row[9]);
       }
-      $bd->desligar_bd();
       return $this->listaatleta;
     }
+    $bd->desligar_bd();
   }
 
   public function obter_todos_atletas_sexo_e_escalao($sexo,$escalao) {
