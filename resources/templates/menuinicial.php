@@ -92,7 +92,7 @@
 
 
 //Footer
-require_once('./resources/templates/footer.html');
+require_once('./resources/templates/footer.php');
 ?>
 
 <!-- MODAL ORIGINAL-->

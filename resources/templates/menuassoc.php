@@ -171,7 +171,7 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=1){
 
 
   <?php
-  require_once('./resources/templates/footer.html');
+  require_once('./resources/templates/footer.php');
   ?>
 </div>
 </div>

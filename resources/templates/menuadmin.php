@@ -144,7 +144,7 @@ $num = rand(2, 7);
 
 
   <?php
-  require_once('./resources/templates/footer.html');
+  require_once('./resources/templates/footer.php');
   ?>
 </div>
 </div>

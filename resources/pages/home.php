@@ -2,26 +2,113 @@
 $time = date("H");
 
 if ($time < "12") {
-  echo "<h4>Bom dia,</h4>";
+  echo "<h4>Bom dia</h4>";
 } else  if ($time >= "12" && $time < "20") {
-  echo "<h4>Boa tarde,</h4>";
+  echo "<h4>Boa tarde</h4>";
 } else if ($time >= "20") {
-  echo "<h4>Boa noite,</h4>";
+  echo "<h4>Boa noite</h4>";
 }
+
+
+require_once('./resources/classes/gereatleta.class.php');
+require_once('./resources/classes/gerehistorico.class.php');
+require_once('./resources/classes/gereprova.class.php');
+require_once('./resources/classes/gereevento.class.php');
+require_once('./resources/classes/gerelog.class.php');
+$DAO10 = new GereLog();
+$DAO = new GereAtleta();
+$DAO2 = new GereHistorico();
+$DAO3 = new GereProva();
+$DAO4 = new GereEvento();
+$obter_todos_eventos = $DAO4->obter_todos_eventos();
+
+function mostraEstado($num){
+  if($num==1){
+    return "Ativo";
+  }else if($num==0){
+    return "Pendente";
+  }else if($num==2){
+    return "Recusado";
+  }else if($num==4){
+    return "Concluido";
+  }else if($num==3){
+    return "Com inscrições";
+  }
+}
+
 ?>
 <br>
 <div class="row">
   <div >
-    <a  class="nav-link" href="?action=addeventoanonimo">
-      <span class="nc-icon nc-simple-add"> Adicionar Evento</span>
+    <a  class="nav-link" style="text-decoration:none;"  href="?action=addeventoanonimo" >Pretendes registar um evento?
+      <img src="img/click.png" alt="Trulli" width="24" height="24">
     </a>
   </div>
+</div>
+<br>
+<div class="row">
+  <?php if($obter_todos_eventos == null){ ?>
+    <h4>Não existem Eventos Disponiveis</h4><br><br>
+  <?php }else{ ?>
+    <div class="col-md-8">
+      <div class="card ">
+        <div class="card-header ">
+          <h4 class="card-title">Agenda <img src="img/calendar.png" alt="Trulli" width="24" height="24"></h4>
+          <p class="card-category">Conjunto de Eventos deste Mês</p>
+        </div>
+        <div class="card-body " style="display: block; max-height: 400px; overflow-y: auto; -ms-overflow-style: -ms-autohiding-scrollbar;">
+          <table class="table table-hover table-striped">
+            <thead>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>Data</th>
+              <th>Organizadores</th>
+              <th>Estado</th>
+            </thead>
+            <tbody>
+              <?php
+              $i = 0;
+              $tamanho = count($obter_todos_eventos);
+              do{
+                $data_hoje = date("Y-m-d");
+                $pieces = explode("-", $data_hoje);
+                $dataprova = $obter_todos_eventos[$i]->get_data();
+                $hoje = strtotime($data_hoje);
+                $data =  strtotime($dataprova);
+                $pieces2 = explode("-", $dataprova);
+                if($pieces2[1]==$pieces[1]){
+                  ?>
+                  <tr>
+                    <?php
+                    echo "<td>".$obter_todos_eventos[$i]->get_id()."</td>";
+                    echo "<td>".$obter_todos_eventos[$i]->get_nome()."</td>";
+                    if ($data < $hoje) {
+                      echo "<td> <p style=color:red;>".$obter_todos_eventos[$i]->get_data()."*</p></td>";
+                    }else{
+                      echo "<td>".$obter_todos_eventos[$i]->get_data()."</td>";
+                    }
+                    echo "<td>".$obter_todos_eventos[$i]->get_organizadores()."</td>";
+                    echo "<td>".mostraEstado($obter_todos_eventos[$i]->get_estado())."</td>";
+                    ?>
+                  </tr>
+                <?php
+                }
+                $i++;
+              }while ($i<$tamanho);
+              ?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  <?php } ?>
+
 </div>
 
 
 
 <div class="row">
-  <div><br><br><br><br>
+  <div>
     <p>Es atleta e pretendes receber os teus resultados via email?</p>
     <div id="erroemail" style="color:red;"></div>
     <form  name="formMail" onsubmit="return validaRegisto()" method="POST" id="AddAssociacao" action="">
@@ -74,17 +161,6 @@ function validaRegisto() {
 </script>
 
 <?php
-
-require_once('./resources/classes/gereatleta.class.php');
-require_once('./resources/classes/gerehistorico.class.php');
-require_once('./resources/classes/gereprova.class.php');
-require_once('./resources/classes/gereevento.class.php');
-require_once('./resources/classes/gerelog.class.php');
-$DAO10 = new GereLog();
-$DAO = new GereAtleta();
-$DAO2 = new GereHistorico();
-$DAO3 = new GereProva();
-$DAO4 = new GereEvento();
 
 
 if($_SERVER['REQUEST_METHOD']==='POST'){
@@ -142,3 +218,10 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
   }
 }
 ?>
+<br>
+<h4>Sobre Nós</h4>
+<p>O Bom Resultado surgiu pela implementação de um projeto universitário em que o seu principal objetivo era satisfazer a necessidade de existência de inscrições de atletas em provas de Atletismo.<br>
+Até a data, não existe nenhuma aplicação que implemente esse registo de inscrições de atletas em provas de atletismo, por isso foi decidido implementar algo que proporcionasse solução a este problema.<br>
+Nesta aplicação é possível existirem diversas associações distritais e uma nacional que coordenem eventos e tambem clubes, sendo que os clubes irão poder inscrever os seus atletas nos diversos eventos distritais ou nacionais. Após a realização dos diferentes eventos, será então passível de identificar os diferentes resultados dos atletas nas determinadas provas e por conseguinte, poderá ser possível consultar os resultados através do clube ou tambem via email, sendo este o identificador do atleta. Este foi o nosso objetivo e motivação para que fosse possível implementar esta aplicação.<br> Esperemos que gostes. <br><br>Cumprimentos,<br>Bom Resultado.
+
+<h6>Contacto:</h6><p>bomresultadoproj1718@gmail.com</p>
