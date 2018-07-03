@@ -7,16 +7,12 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=1){
 }
 ?>
 <h3>Resultados de Eventos Concluidos</h3>
-
-Eventos que já se encontram concluidos
 <br>
 <?php
-
 require_once('./resources/classes/gereevento.class.php');
 require_once('./resources/classes/gereassociacao.class.php');
 require_once('./resources/classes/gerelog.class.php');
 $DAO10 = new GereLog();
-
 $DAO = new GereEvento();
 $DAO2= new GereAssociacao();
 
@@ -25,7 +21,6 @@ $associacao = $DAO2->obter_detalhes_associação_id($associacaoid);
 $nomeAssoc = $associacao->get_abreviatura();
 
 $obter_todos_os_eventos=$DAO->obter_todos_eventos_assoc_concluidos($associacaoid);
-
 
 if($obter_todos_os_eventos == null){ ?>
   <h4>Não existem eventos concluidos disponiveis.</h4><br><br>

@@ -7,8 +7,6 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=1){
 }
 ?>
 <h3>Info Clubes</h3>
-
-Editar informação de um clube
 <br>
 <?php
 $idclube = $_GET["id"];
@@ -32,8 +30,6 @@ if($DAO->obter_detalhes_clube_id($idclube)){
     $email = $utilizador->get_email();
   }
 }
-
-//editar nome, email,abreviatura e localizacao
 
 ?>
 

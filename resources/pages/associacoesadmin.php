@@ -73,19 +73,19 @@ $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Lis
                     </form>
                     <?php
                     if($DAO3->obter_estado_utilizador_id($obter_todas_as_assoc[$i]->get_userid())==1){
-                     ?>
-                    <form method="POST" id="DesativaAssociacao" action="">
-                      <button type="submit" class="btn btn-default" name="btnDesativa" value="<?php echo $obter_todas_as_assoc[$i]->get_id()?>">Desativar</button>
-                    </form>
-                    <?php
+                      ?>
+                      <form method="POST" id="DesativaAssociacao" action="">
+                        <button type="submit" class="btn btn-default" name="btnDesativa" value="<?php echo $obter_todas_as_assoc[$i]->get_id()?>">Desativar</button>
+                      </form>
+                      <?php
 
-                  }else if ($DAO3->obter_estado_utilizador_id($obter_todas_as_assoc[$i]->get_userid())==0){ ?>
-                    <form method="POST" id="AtivaAssociacao" action="">
-                      <button type="submit" class="btn btn-success" name="btnAtiva" value="<?php echo $obter_todas_as_assoc[$i]->get_id()?>">Ativar</button>
-                    </form>
-                    <?php
-                  }
-                     ?>
+                    }else if ($DAO3->obter_estado_utilizador_id($obter_todas_as_assoc[$i]->get_userid())==0){ ?>
+                      <form method="POST" id="AtivaAssociacao" action="">
+                        <button type="submit" class="btn btn-success" name="btnAtiva" value="<?php echo $obter_todas_as_assoc[$i]->get_id()?>">Ativar</button>
+                      </form>
+                      <?php
+                    }
+                    ?>
                   </td>
                 </tr>
                 <?php
@@ -99,9 +99,6 @@ $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Lis
     </div>
   </div>
 <?php } ?>
-
-
-<!--email,contacto, nuts id e abreviatura-->
 
 <div class="modal fade modal-primary" id="myModaladdAssoc" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -179,7 +176,7 @@ function validaRegisto() {
   //Expressões regulares para validar contacto, e-mail e password
   var regexContacto = /[0-9]{9}/;
   var regexEmail = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-//  var regexPassword = /^(?=.*\d)(?=.*[A-Z])(?=.*[!#$%&()*+,-.:;<=>?@_{|}~])/;
+  //  var regexPassword = /^(?=.*\d)(?=.*[A-Z])(?=.*[!#$%&()*+,-.:;<=>?@_{|}~])/;
 
   if(!regexContacto.test(String(input[2]))){
     showNotification('top','center','<strong>Erro!</strong> Por favor insira um contacto válido.');
@@ -198,9 +195,6 @@ function validaRegisto() {
   return res;
 }
 </script>
-
-
-
 <?php
 
 function gera_password() {
@@ -220,9 +214,6 @@ function gera_password() {
 
   return $password;
 }
-
-
-//  nomeassoc, email, contacto, regiao
 
 if($_SERVER['REQUEST_METHOD']==='POST'){
   require_once('./resources/configs/email.php');

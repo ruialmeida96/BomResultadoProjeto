@@ -7,24 +7,19 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=2){
 }
 ?>
 <h3>Inscrição em Eventos</h3>
-
-
+<br>
 <?php
-
 $id_user_clube = $_SESSION['U_ID'];
 require_once('./resources/classes/gereclube.class.php');
 require_once('./resources/classes/gereevento.class.php');
 require_once('./resources/classes/gerelog.class.php');
 $DAO10 = new GereLog();
-
-
 $DAO = new GereClube();
 $DAO2 = new GereEvento();
 
 $clube = $DAO->obter_detalhes_clube_userid($id_user_clube);
 
 $associaçao_pretence = $clube->get_associd();
-
 
 $eventos_assoc_disponiveis= $DAO2->obter_todos_eventos_assoc_especial_inscriçao($associaçao_pretence);
 

@@ -11,7 +11,6 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=2){
 $id_user_clube = $_SESSION['U_ID'];
 $evento_id = $_GET["id"];
 
-
 require_once('./resources/classes/gereclube.class.php');
 require_once('./resources/classes/gereevento.class.php');
 require_once('./resources/classes/gereprova.class.php');
@@ -24,7 +23,6 @@ $DAO2 = new GereEvento();
 $DAO3 = new GereProva();
 $DAO4 = new GereAtleta();
 $DAO5 = new GereAtletaProva();
-
 
 $clube = $DAO->obter_detalhes_clube_userid($id_user_clube);
 

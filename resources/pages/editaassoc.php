@@ -7,8 +7,6 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=0){
 }
 ?>
 <h3>Info Associação</h3>
-
-Editar informação da associação
 <br>
 <?php
 $idassoc = $_GET["id"];

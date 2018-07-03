@@ -8,7 +8,6 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=1){
 ?>
 <h3>Informação de Evento</h3>
 <?php
-
 $eventoid = $_GET["id"];
 require_once('./resources/classes/gereevento.class.php');
 require_once('./resources/classes/gereprova.class.php');
@@ -19,7 +18,6 @@ $DAO = new GereEvento();
 $DAO2 = new GereProva();
 
 $provasevento = $DAO2->obter_todas_provas_eventoid($eventoid);
-
 
 $eventoinfo=$DAO->obter_info_evento($eventoid);
 $nome = $eventoinfo->get_nome();
@@ -141,12 +139,11 @@ $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Apr
       </div>
     </div>
     <br>
-     <button class="btn btn-primary" onclick="location.href='?action=eventosassoc'">Voltar</button>
+    <button class="btn btn-primary" onclick="location.href='?action=eventosassoc'">Voltar</button>
   </div>
 </div>
 
 <?php
-
 function mostraescaloes($num){
   if($num==1){
     return "Benjamins A";
@@ -190,5 +187,4 @@ function mostraescaloes($num){
     return "Veteranos 90";
   }
 }
-
- ?>
+?>

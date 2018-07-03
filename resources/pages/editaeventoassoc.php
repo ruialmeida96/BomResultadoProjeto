@@ -30,8 +30,6 @@ if($provasevento!=null){
   $tamanho=0;
 }
 
-
-
 $eventoinfo=$DAO->obter_info_evento($eventoid);
 $nome = $eventoinfo->get_nome();
 $data =  $eventoinfo->get_data();

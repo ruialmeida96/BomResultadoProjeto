@@ -21,7 +21,6 @@ $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Apr
 
 $provasevento = $DAO2->obter_todas_provas_eventoid($eventoid);
 
-
 $eventoinfo=$DAO->obter_info_evento($eventoid);
 $nome = $eventoinfo->get_nome();
 $data =  $eventoinfo->get_data();
@@ -233,6 +232,4 @@ function mostraescaloes($num){
     return "Veteranos 90";
   }
 }
-
-
 ?>

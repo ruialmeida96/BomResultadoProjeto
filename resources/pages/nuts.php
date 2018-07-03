@@ -7,7 +7,6 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=0){
 }
 ?>
 <h3>Regiões</h3>
-
 <br>
 <div class="row">
   <div >
@@ -15,7 +14,6 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=0){
       <span class="nc-icon nc-simple-add"> Adicionar Região</span>
     </a>
   </div>
-
 </div>
 
 <?php
@@ -67,7 +65,7 @@ $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Lis
                       </form>
                       <?php
                     }
-                     ?>
+                    ?>
                   </td>
                 </tr>
                 <?php
@@ -106,7 +104,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
     }
   }
 
-//eliminar regiao
+  //eliminar regiao
   if(isset($_POST['btnDelete'])){
     $valorregelimina=$_POST['btnDelete'];
     if($DAO->elimina_nuts($valorregelimina)){
@@ -117,11 +115,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
       echo '<script>alert("Ocorreu um erro ao eliminar o nuts!");</script>';
     }
   }
-
-
 }
-
-
 ?>
 
 <div class="modal fade modal-primary" id="myModaladdNuts" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

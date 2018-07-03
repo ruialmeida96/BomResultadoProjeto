@@ -7,8 +7,6 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=2){
 }
 ?>
 <h3>Atletas</h3>
-Listar atletas, adicionar e edita-los(editar info e eliminar)
-
 <br>
 <div class="row">
   <div >
@@ -39,9 +37,7 @@ $obter_todos_os_atletas = $DAO->obter_todos_atletas_do_clube($clubeid);
 
 $DAO3 = new GereUtilizador();
 
-
 $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Listagem de Atletas ao Clube"));
-
 
 if($obter_todos_os_atletas == null){ ?>
   <h4>Não existem Atletas Disponiveis</h4><br><br>
@@ -101,7 +97,6 @@ if($obter_todos_os_atletas == null){ ?>
     </div>
   </div>
 <?php }  ?>
-
 
 <div class="modal fade modal-primary" id="myModaladdAtleta" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -252,9 +247,6 @@ function mostraescaloes($num){
   }
 }
 
-
-
-//nome,nomeex,email,contacto,especialidade,nacionalidade,escalao,sexo
 if($_SERVER['REQUEST_METHOD']==='POST'){
 
   //Adicionar associação

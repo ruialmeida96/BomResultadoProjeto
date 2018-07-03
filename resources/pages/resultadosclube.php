@@ -7,10 +7,8 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=2){
 }
 ?>
 <h3>Resultados de Eventos</h3>
-
-<p>Listagem de Resultados de Eventos</p>
+<br>
 <?php
-
 require_once('./resources/classes/gereclube.class.php');
 require_once('./resources/classes/gereevento.class.php');
 require_once('./resources/classes/gereatleta.class.php');
@@ -28,7 +26,6 @@ $associacaoid = $clube->get_associd();
 $obter_todos_os_eventos=$DAO2->obter_todos_eventos_assoc_concluidos($associacaoid);
 
 $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Listagem de Resultados aos Clubes"));
-
 
 if($obter_todos_os_eventos == null){ ?>
   <h4>Não existem eventos concluidos disponiveis.</h4><br><br>

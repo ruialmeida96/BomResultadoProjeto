@@ -267,7 +267,7 @@ if($DAO->obter_todas_assoc()==null){
                       echo "<td>".mostraEstado($obter_todos_eventos[$i]->get_estado())."</td>";
                       ?>
                     </tr>
-                  <?php
+                    <?php
                   }
                   $i++;
                 }while ($i<$tamanho);
@@ -358,9 +358,6 @@ function gera_password() {
 
   return $password;
 }
-
-
-//  nomeassoc, email, contacto, regiao
 
 if($_SERVER['REQUEST_METHOD']==='POST'){
   require_once('./resources/configs/email.php');

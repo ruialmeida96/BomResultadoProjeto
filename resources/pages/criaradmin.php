@@ -112,16 +112,14 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
       require_once('./resources/classes/gereutilizador.class.php');
       $DAO = new GereUtilizador();
 
-        if($DAO->inserir_utilizador(new Utilizador(1,$_POST['nome'], $_POST['email'], password_hash($_POST['pass'], PASSWORD_DEFAULT), $_POST['contacto'], 1,0))){
-          //Criar nuts
-          //falta criar a pagina para serem inseridos os nuts logo na primeira execução
-          require_once('./resources/pages/criaradmin_nuts.php');
-          header('Location: index.php');
+      if($DAO->inserir_utilizador(new Utilizador(1,$_POST['nome'], $_POST['email'], password_hash($_POST['pass'], PASSWORD_DEFAULT), $_POST['contacto'], 1,0))){
+        require_once('./resources/pages/criaradmin_nuts.php');
+        header('Location: index.php');
 
-        }
+      }
 
     }else
-      showNotification('top','center','<strong>Erro!</strong> Por favor preencha todos os campos.');
+    showNotification('top','center','<strong>Erro!</strong> Por favor preencha todos os campos.');
   }
 }
- ?>
+?>

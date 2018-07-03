@@ -8,8 +8,6 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO'])){
 
 ?>
 <h3>Perfil</h3>
-
-Editar informação do utilizador
 <br>
 <?php
 require_once('./resources/classes/gereutilizador.class.php');
@@ -87,8 +85,6 @@ if($DAO->obter_detalhes_utilizador_id($_SESSION['U_ID'])){
     </form>
   </div>
 </div>
-
-
 
 <script>
 

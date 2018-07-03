@@ -7,9 +7,6 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=0){
 }
 ?>
 <h3>Info Região</h3>
-
-Editar informação da Região
-
 <br>
 <?php
 $idnuts = $_GET["id"];

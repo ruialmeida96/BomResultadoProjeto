@@ -8,7 +8,6 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=1){
 ?>
 <h3>Informação de Evento</h3>
 <?php
-
 $eventoid = $_GET["id"];
 require_once('./resources/classes/gereevento.class.php');
 require_once('./resources/classes/gereprova.class.php');
@@ -19,7 +18,6 @@ $DAO = new GereEvento();
 $DAO2 = new GereProva();
 
 $provasevento = $DAO2->obter_todas_provas_eventoid($eventoid);
-
 
 $eventoinfo=$DAO->obter_info_evento($eventoid);
 $nome = $eventoinfo->get_nome();
@@ -143,7 +141,6 @@ $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Apr
     <br>
     <div class="row">
       <button class="btn btn-primary" onclick="location.href='?action=eventosrecusados'">Voltar</button>
-
       <?php
       $data_hoje = date("Y-m-d");
       $dataprova = $data;
@@ -185,8 +182,6 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
   }
 
 }
-
-
 
 function mostraescaloes($num){
   if($num==1){

@@ -7,8 +7,7 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=2){
 }
 ?>
 <h3>Info Atletas</h3>
-
-Editar informação de um atleta
+<br>
 <?php
 $idatleta = $_GET["id"];
 
@@ -36,15 +35,9 @@ if($DAO->obter_detalhes_atleta_id($idatleta)){
 $DAO2 = new GereClube();
 $obter_todos_os_clubes = $DAO2->obter_todas_clubes();
 
-
-//$clubeid= $DAO2->obter_clube_id_clube_userid($id_user_clube);
-
-//$obter_todos_os_atletas = $DAO->obter_todos_atletas_do_clube($clubeid);
-
 $DAO3 = new GereUtilizador();
 
 ?>
-
 
 <div class="card">
   <div class="card-header">

@@ -7,8 +7,6 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=1){
 }
 ?>
 <h3>Clubes</h3>
-
-Listar clubes, adicionar clubes(botao na parte de cima), e edita-los(editar info e eliminar)
 <br>
 <div class="row">
   <div >
@@ -39,7 +37,7 @@ $obter_todos_os_clubes = $DAO->obter_todas_clubes_apartir_da_associd($associacao
 
 $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Listagem de Clubes"));
 
- if($obter_todos_os_clubes == null){ ?>
+if($obter_todos_os_clubes == null){ ?>
   <h4>Não existem Clubes Disponiveis</h4><br><br>
 <?php }else{ ?>
   <div class="row">
@@ -80,19 +78,19 @@ $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Lis
                     </form>
                     <?php
                     if($DAO3->obter_estado_utilizador_id($obter_todas_as_assoc[$i]->get_userid())==1){
-                     ?>
-                    <form method="POST" id="DesativaAssociacao" action="">
-                      <button type="submit" class="btn btn-default" name="btnDesativa" value="<?php echo $obter_todas_as_assoc[$i]->get_id()?>">Desativar</button>
-                    </form>
-                    <?php
+                      ?>
+                      <form method="POST" id="DesativaAssociacao" action="">
+                        <button type="submit" class="btn btn-default" name="btnDesativa" value="<?php echo $obter_todas_as_assoc[$i]->get_id()?>">Desativar</button>
+                      </form>
+                      <?php
 
-                  }else if ($DAO3->obter_estado_utilizador_id($obter_todas_as_assoc[$i]->get_userid())==0){ ?>
-                    <form method="POST" id="AtivaAssociacao" action="">
-                      <button type="submit" class="btn btn-success" name="btnAtiva" value="<?php echo $obter_todas_as_assoc[$i]->get_id()?>">Ativar</button>
-                    </form>
-                    <?php
-                  }
-                     ?>
+                    }else if ($DAO3->obter_estado_utilizador_id($obter_todas_as_assoc[$i]->get_userid())==0){ ?>
+                      <form method="POST" id="AtivaAssociacao" action="">
+                        <button type="submit" class="btn btn-success" name="btnAtiva" value="<?php echo $obter_todas_as_assoc[$i]->get_id()?>">Ativar</button>
+                      </form>
+                      <?php
+                    }
+                    ?>
                   </td>
                 </tr>
                 <?php
@@ -170,7 +168,6 @@ function showNotification(from, align,communication){
   });
 }
 
-
 function validaRegisto() {
   var res = true;
   var input = [document.forms["formAddClube"]["email"].value, document.forms["formAddClube"]["contacto"].value];
@@ -180,7 +177,7 @@ function validaRegisto() {
   //Expressões regulares para validar contacto, e-mail e password
   var regexContacto = /[0-9]{9}/;
   var regexEmail = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-//  var regexPassword = /^(?=.*\d)(?=.*[A-Z])(?=.*[!#$%&()*+,-.:;<=>?@_{|}~])/;
+  //  var regexPassword = /^(?=.*\d)(?=.*[A-Z])(?=.*[!#$%&()*+,-.:;<=>?@_{|}~])/;
 
   if(!regexContacto.test(String(input[1]))){
     //showNotification('top','center','<strong>Erro!</strong> Por favor insira um contacto válido.');
@@ -301,8 +298,6 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
       echo '<script>alert("Ocorreu um erro ao ativar a associação");</script>';
     }
   }
-
-
 }
 
- ?>
+?>

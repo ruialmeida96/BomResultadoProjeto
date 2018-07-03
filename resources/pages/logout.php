@@ -5,7 +5,6 @@ if(!isset($_SESSION['U_ID'])){
   header("Location: $url");
   die();
 }
-
 //Destruir sessão
 $_SESSION = array();
 if(isset($_COOKIE[session_name()])){

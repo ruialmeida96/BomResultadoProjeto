@@ -100,85 +100,85 @@ $obter_todos_os_atletas = $DAO3->obter_todos_atletas_do_clube($clubeid);
     if( $atletas_clube ==null){
       ?><h4>Não existem Atletas no Clube inscritos em Eventos </h4><br><br><?php
     }else{
-    $y=0;
-  $a=0;
-  do{
-    if($DAO4->verificar_atleta_inscricao_geral($atletas_clube[$y]->get_id())){
-      $a=1;
-    }
-    $y++;
-  }while($y<count($atletas_clube));
+      $y=0;
+      $a=0;
+      do{
+        if($DAO4->verificar_atleta_inscricao_geral($atletas_clube[$y]->get_id())){
+          $a=1;
+        }
+        $y++;
+      }while($y<count($atletas_clube));
 
-  if($a==1){
-    ?>
-    <div class="col-md-6">
-      <div class="card ">
-        <div class="card-header ">
-          <h4 class="card-title">Inscrições em Eventos</h4>
-          <p class="card-category">Conjunto de Inscrições</p>
-        </div>
-        <div class="card-body " style="display: block; max-height: 400px; overflow-y: auto; -ms-overflow-style: -ms-autohiding-scrollbar;">
-          <table class="table table-hover table-striped">
-            <thead>
-              <th>Atleta ID</th>
-              <th>Nome Atleta</th>
-              <th>Prova ID</th>
-              <th>Nome Prova</th>
-              <th>Evento</th>
-            </thead>
-            <tbody>
-              <?php
-              $i = 0;
-              $tamanho = count($todas_as_inscricoes);
-              do{
-                ?>
-                <tr>
+      if($a==1){
+        ?>
+        <div class="col-md-6">
+          <div class="card ">
+            <div class="card-header ">
+              <h4 class="card-title">Inscrições em Eventos</h4>
+              <p class="card-category">Conjunto de Inscrições</p>
+            </div>
+            <div class="card-body " style="display: block; max-height: 400px; overflow-y: auto; -ms-overflow-style: -ms-autohiding-scrollbar;">
+              <table class="table table-hover table-striped">
+                <thead>
+                  <th>Atleta ID</th>
+                  <th>Nome Atleta</th>
+                  <th>Prova ID</th>
+                  <th>Nome Prova</th>
+                  <th>Evento</th>
+                </thead>
+                <tbody>
                   <?php
-                  if($DAO3->verificar_atleta_clube($todas_as_inscricoes[$i]->get_idatleta(),$clube->get_id())){
-                    $detalhes_prova = $DAO5->obter_dados_provaid($todas_as_inscricoes[$i]->get_idprova());
-                    $evento = $detalhes_prova->get_eventoid();
-                    $infoevento = $DAO2->obter_info_evento($evento);
-                    $data_hoje = date("Y-m-d");
-                    $dataevento = $infoevento->get_data();
+                  $i = 0;
+                  $tamanho = count($todas_as_inscricoes);
+                  do{
+                    ?>
+                    <tr>
+                      <?php
+                      if($DAO3->verificar_atleta_clube($todas_as_inscricoes[$i]->get_idatleta(),$clube->get_id())){
+                        $detalhes_prova = $DAO5->obter_dados_provaid($todas_as_inscricoes[$i]->get_idprova());
+                        $evento = $detalhes_prova->get_eventoid();
+                        $infoevento = $DAO2->obter_info_evento($evento);
+                        $data_hoje = date("Y-m-d");
+                        $dataevento = $infoevento->get_data();
 
-                    $hoje = strtotime($data_hoje);
-                    $data =  strtotime($dataevento);
+                        $hoje = strtotime($data_hoje);
+                        $data =  strtotime($dataevento);
 
-                    if(($infoevento->get_estado())==3){
-                      if ($data > $hoje) {
-                        echo "<td>".$todas_as_inscricoes[$i]->get_idatleta()."</td>";
-                        echo "<td>".$DAO3->obter_nome_apartir_atleta_id($todas_as_inscricoes[$i]->get_idatleta())."</td>";
-                        echo "<td>".$todas_as_inscricoes[$i]->get_idprova()."</td>";
-                        echo "<td>".$DAO5->obter_nome_apartir_prova_id($todas_as_inscricoes[$i]->get_idprova())."</td>";
-                        echo "<td>".$infoevento->get_nome()."</td>";?>
-                        <?php
+                        if(($infoevento->get_estado())==3){
+                          if ($data > $hoje) {
+                            echo "<td>".$todas_as_inscricoes[$i]->get_idatleta()."</td>";
+                            echo "<td>".$DAO3->obter_nome_apartir_atleta_id($todas_as_inscricoes[$i]->get_idatleta())."</td>";
+                            echo "<td>".$todas_as_inscricoes[$i]->get_idprova()."</td>";
+                            echo "<td>".$DAO5->obter_nome_apartir_prova_id($todas_as_inscricoes[$i]->get_idprova())."</td>";
+                            echo "<td>".$infoevento->get_nome()."</td>";?>
+                            <?php
+                          }
+                        }
+
                       }
-                    }
-
-                  }
+                      ?>
+                    </tr>
+                    <?php
+                    $i++;
+                  }while ($i<$tamanho);
                   ?>
-                </tr>
-                <?php
-                $i++;
-              }while ($i<$tamanho);
-              ?>
-            </tbody>
-          </table>
+                </tbody>
+              </table>
+            </div>
+            <div class="card-footer ">
+              <br>
+              <hr>
+              <a class="stats" href="?action=inscricaoprovas">
+                Mais informações >>
+              </a>
+            </div>
+          </div>
         </div>
-        <div class="card-footer ">
-          <br>
-          <hr>
-          <a class="stats" href="?action=inscricaoprovas">
-            Mais informações >>
-          </a>
-        </div>
-      </div>
-    </div>
-  <?php }else if($a==0){
-    ?><h4>Não existem nenhum Atleta do Clube Inscrito em Eventos </h4><?php
-  }
-}
-}?>
+      <?php }else if($a==0){
+        ?><h4>Não existem nenhum Atleta do Clube Inscrito em Eventos </h4><?php
+      }
+    }
+  }?>
 </div>
 <?php
 function mostraescaloes($num){

@@ -8,10 +8,7 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=2){
 ?>
 <h3>Informação de Resultados de Evento</h3>
 
-<p>Listar os Resultados das diferentes Provas de um determinado Evento</p>
-
 <?php
-
 $eventoid = $_GET["id"];
 require_once('./resources/classes/gereevento.class.php');
 require_once('./resources/classes/gereprova.class.php');
@@ -32,7 +29,6 @@ $clube = $DAO5->obter_detalhes_clube_userid($_SESSION['U_ID']);
 $provasevento = $DAO2->obter_todas_provas_eventoid($eventoid);
 
 $DAO10->inserir_log(new Log(0,$_SESSION['U_ID'],date("Y-m-d"),date("H:i:s"),"Listagem de Resultados de Eventos"));
-
 
 if($provasevento == null){ ?>
   <h4>Não existem provas disponiveis para este evento.</h4><br><br>
@@ -95,43 +91,41 @@ if($provasevento == null){ ?>
 if(isset($_GET["prova"])){
   $idprovaselecionada=$_GET["prova"];
 
+  $resultadosprova = $DAO3->obter_historicos_provaid($idprovaselecionada);
 
-$resultadosprova = $DAO3->obter_historicos_provaid($idprovaselecionada);
-
-
-if($resultadosprova == null){ ?>
-  <h4>Não existe historicos de resultados para esta prova.</h4><br><br>
-<?php }else{ ?>
-  <div class="row">
-    <div class="col-md-8">
-      <div class="card strpied-tabled-with-hover">
-        <div class="card-header ">
-          <h4 class="card-title">Prova com ID <?php echo $resultadosprova[0]->get_provaid(); ?></h4>
-          <p class="card-category">Detalhes dos resultados  para esta prova</p>
-        </div>
-        <div class="card-body table-full-width table-responsive">
-          <table class="table table-hover table-striped">
-            <thead>
-              <th>ID</th>
-              <th>Nome Atleta</th>
-              <th>Tempo</th>
-              <th>Lugar</th>
-            </thead>
-            <tbody>
-              <?php
-              $x = 0;
-              $tamanho2 = count($resultadosprova);
-              do{
-                ?>
-                <tr>
-                  <?php
-                  if($DAO4->verificar_atleta_clube($resultadosprova[$x]->get_atletaid(),$clube->get_id())){
-                    echo "<td>".$resultadosprova[$x]->get_id()."</td>";
-                    echo "<td>".$DAO4->obter_nome_apartir_atleta_id($resultadosprova[$x]->get_atletaid())."</td>";
-                    echo "<td>".$resultadosprova[$x]->get_tempo()."</td>";
-                    echo "<td>".$resultadosprova[$x]->get_local()."</td>";
-                  }
+  if($resultadosprova == null){ ?>
+    <h4>Não existe historicos de resultados para esta prova.</h4><br><br>
+  <?php }else{ ?>
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card strpied-tabled-with-hover">
+          <div class="card-header ">
+            <h4 class="card-title">Prova com ID <?php echo $resultadosprova[0]->get_provaid(); ?></h4>
+            <p class="card-category">Detalhes dos resultados  para esta prova</p>
+          </div>
+          <div class="card-body table-full-width table-responsive">
+            <table class="table table-hover table-striped">
+              <thead>
+                <th>ID</th>
+                <th>Nome Atleta</th>
+                <th>Tempo</th>
+                <th>Lugar</th>
+              </thead>
+              <tbody>
+                <?php
+                $x = 0;
+                $tamanho2 = count($resultadosprova);
+                do{
                   ?>
+                  <tr>
+                    <?php
+                    if($DAO4->verificar_atleta_clube($resultadosprova[$x]->get_atletaid(),$clube->get_id())){
+                      echo "<td>".$resultadosprova[$x]->get_id()."</td>";
+                      echo "<td>".$DAO4->obter_nome_apartir_atleta_id($resultadosprova[$x]->get_atletaid())."</td>";
+                      echo "<td>".$resultadosprova[$x]->get_tempo()."</td>";
+                      echo "<td>".$resultadosprova[$x]->get_local()."</td>";
+                    }
+                    ?>
                   </tr>
                   <?php
                   $x++;
@@ -145,11 +139,7 @@ if($resultadosprova == null){ ?>
 
     </div>
   <?php }
-
-  }
-
-
-
+}
 
 function mostraescaloes($num){
   if($num==1){

@@ -7,19 +7,12 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=1){
 }
 ?>
 <h3>Eventos Recusados</h3>
-
-
-Listagem de Eventos que foram anteriormente recusados
 <br>
-
 <?php
-
 require_once('./resources/classes/gereevento.class.php');
 require_once('./resources/classes/gereassociacao.class.php');
 require_once('./resources/classes/gerelog.class.php');
 $DAO10 = new GereLog();
-
-
 $DAO = new GereEvento();
 $DAO2= new GereAssociacao();
 

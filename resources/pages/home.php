@@ -9,7 +9,6 @@ if ($time < "12") {
   echo "<h4>Boa noite</h4>";
 }
 
-
 require_once('./resources/classes/gereatleta.class.php');
 require_once('./resources/classes/gerehistorico.class.php');
 require_once('./resources/classes/gereprova.class.php');
@@ -35,7 +34,6 @@ function mostraEstado($num){
     return "Com inscrições";
   }
 }
-
 ?>
 <br>
 <div class="row">
@@ -91,7 +89,7 @@ function mostraEstado($num){
                     echo "<td>".mostraEstado($obter_todos_eventos[$i]->get_estado())."</td>";
                     ?>
                   </tr>
-                <?php
+                  <?php
                 }
                 $i++;
               }while ($i<$tamanho);
@@ -221,7 +219,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
 <br>
 <h4>Sobre Nós</h4>
 <p>O Bom Resultado surgiu pela implementação de um projeto universitário em que o seu principal objetivo era satisfazer a necessidade de existência de inscrições de atletas em provas de Atletismo.<br>
-Até a data, não existe nenhuma aplicação que implemente esse registo de inscrições de atletas em provas de atletismo, por isso foi decidido implementar algo que proporcionasse solução a este problema.<br>
-Nesta aplicação é possível existirem diversas associações distritais e uma nacional que coordenem eventos e tambem clubes, sendo que os clubes irão poder inscrever os seus atletas nos diversos eventos distritais ou nacionais. Após a realização dos diferentes eventos, será então passível de identificar os diferentes resultados dos atletas nas determinadas provas e por conseguinte, poderá ser possível consultar os resultados através do clube ou tambem via email, sendo este o identificador do atleta. Este foi o nosso objetivo e motivação para que fosse possível implementar esta aplicação.<br> Esperemos que gostes. <br><br>Cumprimentos,<br>Bom Resultado.
+  Até a data, não existe nenhuma aplicação que implemente esse registo de inscrições de atletas em provas de atletismo, por isso foi decidido implementar algo que proporcionasse solução a este problema.<br>
+  Nesta aplicação é possível existirem diversas associações distritais e uma nacional que coordenem eventos e tambem clubes, sendo que os clubes irão poder inscrever os seus atletas nos diversos eventos distritais ou nacionais. Após a realização dos diferentes eventos, será então passível de identificar os diferentes resultados dos atletas nas determinadas provas e por conseguinte, poderá ser possível consultar os resultados através do clube ou tambem via email, sendo este o identificador do atleta. Este foi o nosso objetivo e motivação para que fosse possível implementar esta aplicação.<br> Esperemos que gostes. <br><br>Cumprimentos,<br>Bom Resultado.
 
-<h6>Contacto:</h6><p>bomresultadoproj1718@gmail.com</p>
+  <h6>Contacto:</h6><p>bomresultadoproj1718@gmail.com</p>

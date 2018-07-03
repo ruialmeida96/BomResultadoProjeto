@@ -27,17 +27,7 @@ $clube = $DAO->obter_detalhes_clube_userid($id_user_clube);
 $atletas_clube = $DAO3->obter_todos_atletas_do_clube($clube->get_id());
 $i=0;
 
-//$numatletas = count($atletas_clube);
 $todas_as_inscricoes=$DAO4->obter_todos_atletas_provas();
-
-/*
-do{
-$DAO4->verificar_atleta_inscricao_geral($atletas_clube[$i]->get_id());
-
-
-$i++;
-}while ($i<$numatletas);*/
-
 
 if($todas_as_inscricoes == null){ ?>
   <h4>Não existem Inscrições em Eventos </h4><br><br>
@@ -96,10 +86,10 @@ if($todas_as_inscricoes == null){ ?>
                           echo "<td>".$DAO5->obter_nome_apartir_prova_id($todas_as_inscricoes[$i]->get_idprova())."</td>";
                           echo "<td>".$infoevento->get_nome()."</td>";?>
                           <td>
-                          <form name="formAtletasProvas" method="POST" id="formAtletasProvas" action="">
-                            <button type="submit" class="btn btn-danger" name="btnDel" value="<?php echo $todas_as_inscricoes[$i]->get_idatleta()."_".$todas_as_inscricoes[$i]->get_idprova() ?>">Cancelar Inscrição</button>
-                          </form>
-                        </td>
+                            <form name="formAtletasProvas" method="POST" id="formAtletasProvas" action="">
+                              <button type="submit" class="btn btn-danger" name="btnDel" value="<?php echo $todas_as_inscricoes[$i]->get_idatleta()."_".$todas_as_inscricoes[$i]->get_idprova() ?>">Cancelar Inscrição</button>
+                            </form>
+                          </td>
                           <?php
                         }
                       }

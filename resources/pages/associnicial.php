@@ -167,17 +167,17 @@ function mostraEstado($num){
     return "Com inscrições";
   }
 }
- ?>
+?>
 
- <br>
- <h5>Como Associação poderá ser possivel visualizar <strong>Clubes</strong>, <strong>Eventos</strong> e <strong>Resultados</strong>.</h5><br>
+<br>
+<h5>Como Associação poderá ser possivel visualizar <strong>Clubes</strong>, <strong>Eventos</strong> e <strong>Resultados</strong>.</h5><br>
 
- <h5>No que diz respeito a <strong>Clubes</strong>, é possivel:</h5>
- <p>-Adicionar Clube<br>-Gerir informaçao do Clube (Editar, Desativar/Ativar e Eliminar)</p><br>
+<h5>No que diz respeito a <strong>Clubes</strong>, é possivel:</h5>
+<p>-Adicionar Clube<br>-Gerir informaçao do Clube (Editar, Desativar/Ativar e Eliminar)</p><br>
 
- <h5>No que diz respeito a <strong>Eventos</strong>, é possivel:</h5>
- <p>-Adicionar Evento e respetivas Provas<br>-Gerir informação de um Evento (Editar e Eliminar)<br>-Aceitar/Recusar Eventos<br>Listar informações de Eventos</p><br>
+<h5>No que diz respeito a <strong>Eventos</strong>, é possivel:</h5>
+<p>-Adicionar Evento e respetivas Provas<br>-Gerir informação de um Evento (Editar e Eliminar)<br>-Aceitar/Recusar Eventos<br>Listar informações de Eventos</p><br>
 
- <h5>No que diz respeito a <strong>Resultados</strong>, é possivel:</h5>
- <p>-Identificar Resultados dos Eventos e suas Provas<br>-Listar Resultados de Eventos</p><br>
- <br>
+<h5>No que diz respeito a <strong>Resultados</strong>, é possivel:</h5>
+<p>-Identificar Resultados dos Eventos e suas Provas<br>-Listar Resultados de Eventos</p><br>
+<br>

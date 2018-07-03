@@ -118,7 +118,7 @@ $local =  $eventoinfo->get_local();
                                     echo "<div class='card-text' style='text-align: center;'>"
                                     ?><input type="time"  <?php echo "id=time_".$provasevento[$i]->get_id()."[] name=time_".$provasevento[$i]->get_id()."[]" ?> step="0.01" value="00:00:00" readonly required><br>
                                     <input type="number" <?php echo "id=lugar_".$provasevento[$i]->get_id()."[] name=lugar_".$provasevento[$i]->get_id()."[]" ?> min="1" max="100" required>
-                                    
+
                                     <?php
                                     echo "</div></div></div></div>";
                                     echo "<br><br>";
@@ -162,8 +162,6 @@ $local =  $eventoinfo->get_local();
       </div>
     </div></form>
   </div>
-
-
 
   <?php
   if($_SERVER['REQUEST_METHOD']==='POST'){

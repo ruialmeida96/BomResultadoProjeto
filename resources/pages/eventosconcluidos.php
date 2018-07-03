@@ -7,17 +7,12 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=1){
 }
 ?>
 <h3>Eventos Concluidos</h3>
-
-
-Eventos que já se encontram concluidos
 <br>
 <?php
-
 require_once('./resources/classes/gereevento.class.php');
 require_once('./resources/classes/gereassociacao.class.php');
 require_once('./resources/classes/gerelog.class.php');
 $DAO10 = new GereLog();
-
 $DAO = new GereEvento();
 $DAO2= new GereAssociacao();
 
@@ -68,8 +63,8 @@ if($obter_todos_os_eventos == null){ ?>
                   $data =  strtotime($dataprova);
 
                   if ($data < $hoje) {
-                     echo "<br><div><p><small>Este evento já passou de data</small></p></div></td>";
-                   }
+                    echo "<br><div><p><small>Este evento já passou de data</small></p></div></td>";
+                  }
 
                   echo "<td>".$obter_todos_os_eventos[$i]->get_dias()."</td>";
                   echo "<td>".$obter_todos_os_eventos[$i]->get_tipo()."</td>";

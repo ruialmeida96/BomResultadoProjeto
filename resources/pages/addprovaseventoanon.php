@@ -1,22 +1,14 @@
-
 <h3>Atribuir Provas ao Evento</h3>
 
 <?php
-
 require_once('./resources/classes/gereprova.class.php');
 require_once('./resources/classes/gerelog.class.php');
 $DAO10 = new GereLog();
 $DAO = new GereProva();
-
-
-
 $eventoid = $_GET["id"];
-
 
 $valortotal=0;
 ?>
-
-
 
 <div class="card">
   <div class="card-body">

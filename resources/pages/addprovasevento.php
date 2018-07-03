@@ -7,7 +7,6 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=1){
 }
 ?>
 <h3>Atribuir Provas ao Evento</h3>
-
 <?php
 
 require_once('./resources/classes/gereprova.class.php');
@@ -20,8 +19,6 @@ $eventoid = $_GET["id"];
 
 $valortotal=0;
 ?>
-
-
 
 <div class="card">
   <div class="card-body">
@@ -211,118 +208,3 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
 }
 
 ?>
-
-<!--
-<form name="formAddProva"  method="POST" id="formAddProva" action="">
-<div class="form-group">
-<label><b>Número de Provas</b></label><br>
-<button type="button" class="btn btn-light" id="subtrai_provas"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
-<label id="num_provas">1</label>
-<button type="button" class="btn btn-light" id="adiciona_provas"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
-<label id="aviso_max" style="color:red"></label>
-<br><br>
-<div id="provas" class="row">
-
-</div>
-<script>
-var num_provas = document.getElementById('num_provas'),
-subtrai_provas = document.getElementById('subtrai_provas'),
-adiciona_provas = document.getElementById('adiciona_provas'),
-num_provas_atual,
-aviso_max = document.getElementById('aviso_max');
-
-function adicionaprovas(num){
-var div = document.createElement('div');
-div.setAttribute("class", "col");
-div.setAttribute("style", "margin: 3px; border: 1px solid rgba(192,192,192,0.6); border-radius: 5px")
-div.setAttribute("id", "provas_"+num);
-
-var lbl_num = document.createElement('label');
-lbl_num.innerHTML = "<h5><b>provas "+num+"</b></h5>";
-
-var lbl_detalhes = document.createElement('label');
-lbl_detalhes.innerHTML = "<h5>Detalhes</h5>";
-
-var lbl_renda = document.createElement('label');
-lbl_renda.innerHTML = "Renda:";
-
-var input_renda = document.createElement('input');
-input_renda.setAttribute("type", "range");
-input_renda.setAttribute("name", "renda_provas"+num);
-input_renda.setAttribute("class", "form-control");
-input_renda.setAttribute("style", "width: 200px");
-
-var cb_wc = document.createElement('input');
-cb_wc.setAttribute("type", "checkbox");
-cb_wc.setAttribute("name", "caracteristicas_provas"+num)
-cb_wc.setAttribute("value", "wc_privado");
-
-var lbl_wc = document.createElement('label');
-lbl_wc.innerHTML = "&nbsp;WC Privado";
-
-var cb_varanda = document.createElement('input');
-cb_varanda.setAttribute("type", "checkbox");
-cb_varanda.setAttribute("name", "caracteristicas_provas"+num)
-cb_varanda.setAttribute("value", "varanda");
-
-var lbl_varanda = document.createElement('label');
-lbl_varanda.innerHTML = "&nbsp;Possui varanda";
-
-var lbl_fotos = document.createElement('label');
-lbl_fotos.innerHTML = "Fotos do provas:";
-
-var input_foto1 = document.createElement('input');
-input_foto1.setAttribute("type", "file");
-input_foto1.setAttribute("class", "form-control-file");
-
-var input_foto2 = document.createElement('input');
-input_foto2.setAttribute("type", "file");
-input_foto2.setAttribute("class", "form-control-file");
-
-div.appendChild(document.createElement('br'));
-div.appendChild(lbl_num);
-div.appendChild(document.createElement('br'));
-div.appendChild(lbl_detalhes);
-div.appendChild(document.createElement('br'));
-div.appendChild(lbl_renda);
-div.appendChild(input_renda);
-div.appendChild(document.createElement('br'));
-div.appendChild(cb_wc);
-div.appendChild(lbl_wc);
-div.appendChild(document.createElement('br'));
-div.appendChild(cb_varanda);
-div.appendChild(lbl_varanda);
-div.appendChild(document.createElement('br'));
-div.appendChild(lbl_fotos);
-div.appendChild(document.createElement('br'));
-div.appendChild(input_foto1);
-div.appendChild(document.createElement('br'));
-div.appendChild(input_foto2);
-document.getElementById('provas').appendChild(div);
-div.appendChild(document.createElement('br'));
-}
-
-adicionaprovas(1);
-
-subtrai_provas.addEventListener('click', function(){
-num_provas_atual = num_provas.innerHTML;
-if(num_provas_atual > 1){
-document.getElementById("provas_"+num_provas_atual).remove();
-num_provas.innerHTML = num_provas_atual-1;
-aviso_max.innerHTML = "";
-}else aviso_max.innerHTML = "Atingiu valor mínimo de provas!";
-}, false);
-
-adiciona_provas.addEventListener('click', function(){
-num_provas_atual = num_provas.innerHTML;
-if(num_provas_atual < 6){
-adicionaprovas(parseInt(num_provas_atual)+parseInt(1));
-num_provas.innerHTML = parseInt(num_provas_atual)+parseInt(1);
-aviso_max.innerHTML = "";
-}else aviso_max.innerHTML = "Atingiu valor máximo de provas!";
-}, false);
-</script>
-</div>
-
-<button type="submit" class="btn btn-success" name="btnAdd" >Adicionar</button>
-</form> -->

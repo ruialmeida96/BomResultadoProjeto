@@ -7,17 +7,12 @@ if(!isset($_SESSION['U_ID'],$_SESSION['U_TIPO']) || $_SESSION['U_TIPO']!=1){
 }
 ?>
 <h3>Eventos Pendentes</h3>
-
-
-Aceitar eventos ou recusa-los pendentes atribuidos a nossa associação
 <br>
 <?php
-
 require_once('./resources/classes/gereevento.class.php');
 require_once('./resources/classes/gereassociacao.class.php');
 require_once('./resources/classes/gerelog.class.php');
 $DAO10 = new GereLog();
-
 $DAO = new GereEvento();
 $DAO2= new GereAssociacao();
 
